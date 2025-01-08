@@ -8,7 +8,7 @@
             name="motivo"
             placeholder="Introduce un motivo justificado"
             rows="4"
-            cols="50"><?php echo $partido->observaciones ? $partido->observaciones : ''; ?></textarea>
+            cols="50"></textarea>
     </div>
 
     <button class="partidos__boton-filtro" type="submit">Enviar</button>
