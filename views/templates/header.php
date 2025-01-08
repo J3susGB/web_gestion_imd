@@ -1,10 +1,22 @@
 <div class="header">
-    
     <div class="header__texto">
         <h6>
             <?php 
-                setlocale(LC_TIME, 'es_ES.UTF-8', 'es_ES', 'esp'); // Configura el idioma a español
-                echo strftime("%d de %B de %Y"); // Ejemplo: 15 de diciembre de 2024
+                // Asegúrate de que la zona horaria está configurada
+                date_default_timezone_set('Europe/Madrid');
+
+                // Usar IntlDateFormatter para mostrar la fecha en español
+                $formatter = new IntlDateFormatter(
+                    'es_ES', // Locale en español
+                    IntlDateFormatter::FULL, // Formato de fecha completo
+                    IntlDateFormatter::NONE, // Sin hora
+                    'Europe/Madrid', // Zona horaria
+                    IntlDateFormatter::GREGORIAN, // Calendario Gregoriano
+                    'dd de MMMM de yyyy' // Formato de salida de la fecha
+                );
+
+                // Mostrar la fecha actual formateada
+                echo $formatter->format(new DateTime());
             ?>
         </h6>
     </div>
@@ -17,3 +29,4 @@
         </picture>
     </div>
 </div>
+

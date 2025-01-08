@@ -10,64 +10,6 @@ use MVC\Router;
 class AuthController
 {
 
-    // public static function login(Router $router) {
-
-    //     $alertas = [];
-
-    //     if($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    //         $usuario = new Perfiles($_POST);
-
-    //         $alertas = $usuario->validarLogin();
-
-    //         if(empty($alertas)) {
-    //             // Verificar quel el usuario exista
-    //             $usuario = Perfiles::where('usuario', $usuario->usuario);
-    //             if(!$usuario ) {
-    //                 Perfiles::setAlerta('error', 'El usuario no existe');
-    //             } else {
-    //                 // El Usuario existe
-    //                 // if( password_verify($_POST['password'], $usuario->password) ) {
-    //                 $contraseña_ok = password_verify($_POST['password'], $usuario->password);
-    //                 if( $contraseña_ok ) {
-
-    //                     // Iniciar la sesión
-    //                     session_start();    
-    //                     $_SESSION['id'] = $usuario->id;
-    //                     $_SESSION['nombre'] = $usuario->nombre;
-    //                     $_SESSION['apellido1'] = $usuario->apellido1;
-    //                     $_SESSION['apellido2'] = $usuario->apellido2;
-    //                     $_SESSION['usuario'] = $usuario->usuario;
-    //                     $_SESSION['email'] = $usuario->email;
-    //                     $_SESSION['admin'] = $usuario->admin ?? null;
-    //                     $_SESSION['password'] = $usuario->password ?? null;
-
-    //                     if( $usuario->admin ) {
-    //                         header('Location: /admin/dashboard');
-    //                     } else if ($usuario->usuario) {
-    //                         header('Location: /usuario/dashboard');
-    //                     } else {
-    //                         header('Location: /dashboard');
-    //                     } 
-
-    //                     // debuguear($usuario);
-
-    //                 } else {
-    //                     Perfiles::setAlerta('error', 'Password Incorrecto');
-    //                 }
-    //             }
-    //         }
-    //     }
-
-    //     $alertas = Perfiles::getAlertas();
-
-    //     // Render a la vista 
-    //     $router->render('auth/login', [
-    //         'titulo' => 'Iniciar Sesión',
-    //         'alertas' => $alertas
-    //     ]);
-    // }
-
     public static function login(Router $router)
     {
 
