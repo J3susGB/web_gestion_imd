@@ -2,20 +2,20 @@
     <div class="header__texto">
         <h6>
             <?php 
-                // Asegúrate de que la zona horaria está configurada
+                // Configurar la zona horaria
                 date_default_timezone_set('Europe/Madrid');
 
-                // Usar IntlDateFormatter para mostrar la fecha en español
+                // Crear un formateador de fechas para español
                 $formatter = new IntlDateFormatter(
-                    'es_ES', // Locale en español
-                    IntlDateFormatter::FULL, // Formato de fecha completo
-                    IntlDateFormatter::NONE, // Sin hora
+                    'es_ES', // Idioma español
+                    IntlDateFormatter::NONE, // Sin formato de fecha predefinido
+                    IntlDateFormatter::NONE, // Sin formato de hora
                     'Europe/Madrid', // Zona horaria
-                    IntlDateFormatter::GREGORIAN, // Calendario Gregoriano
-                    'dd de MMMM de yyyy' // Formato de salida de la fecha
+                    IntlDateFormatter::GREGORIAN, // Calendario gregoriano
+                    "dd 'de' MMMM 'de' yyyy" // Formato personalizado
                 );
 
-                // Mostrar la fecha actual formateada
+                // Mostrar la fecha actual
                 echo $formatter->format(new DateTime());
             ?>
         </h6>
@@ -29,4 +29,3 @@
         </picture>
     </div>
 </div>
-
