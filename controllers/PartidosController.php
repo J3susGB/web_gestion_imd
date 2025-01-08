@@ -219,22 +219,22 @@ class PartidosController
 
                                 if ($resultado && $resultado2) {
                                     //Enviamos designaciones por correo
-                                    $email = new Email(
-                                        $designacion->id,
-                                        $designacion->id_partido,
-                                        $a->email,
-                                        $a->apellido1,
-                                        $a->apellido2,
-                                        $a->nombre,
-                                        $designacion->fecha,
-                                        $designacion->hora,
-                                        $designacion->terreno,
-                                        $designacion->categoria,
-                                        $designacion->grupo,
-                                        $designacion->local,
-                                        $designacion->visitante,
-                                        $designacion->observaciones
-                                    );
+                                    $email = new Email([
+                                        'id' => $designacion->id,
+                                        'id_partido' => $designacion->id_partido,
+                                        'email' => $a->email,
+                                        'apellido1' => $a->apellido1,
+                                        'apellido2' => $a->apellido2,
+                                        'nombre' => $a->nombre,
+                                        'fecha' => $designacion->fecha,
+                                        'hora' => $designacion->hora,
+                                        'terreno' => $designacion->terreno,
+                                        'categoria' => $designacion->categoria,
+                                        'grupo' => $designacion->grupo,
+                                        'local' => $designacion->local,
+                                        'visitante' => $designacion->visitante,
+                                        'observaciones' => $designacion->observaciones
+                                    ]);
 
                                     $email->enviar_partido();
                                     header('Location: /admin/partidos');
