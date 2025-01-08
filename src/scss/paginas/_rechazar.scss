@@ -1,0 +1,19 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+#motivo_rechazo{
+    width: 95%;
+    @include m.tablet {
+        display: flex;
+        flex-direction: column;
+        .partidos__campo{
+            width: 100%;
+        }
+    }
+
+    #motivo{
+        width: 100%;
+    }
+    
+}
+

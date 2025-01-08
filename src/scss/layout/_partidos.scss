@@ -1,0 +1,929 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.partidos {
+    @include m.contenedor-md2;
+
+    &__titulo-filtro {
+        margin-left: 3%;
+        font-size: 1.9rem;
+        color: v.$gris;
+        font-weight: v.$regular;
+    }
+
+    &__filtro {
+        padding: 2rem;
+    }
+
+    &__campo {
+
+        input[type="text"] {
+            padding: .5rem;
+            border: 1px solid v.$negro;
+            border-radius: .5rem;
+            background-color: lighten(v.$gris-oscuro, 35);
+            color: v.$gris-oscuro;
+            width: min(95%, 24.855rem);
+            cursor: pointer;
+
+            &::placeholder {
+                color: lighten(v.$gris-oscuro, 20);
+            }
+
+            &:focus {
+                border: 2px solid v.$negro;
+                /* Cambia el color del borde al enfocar */
+                outline: none;
+                /* Elimina el resplandor predeterminado en algunos navegadores */
+                box-shadow: 0 0 10px lighten(v.$gris-oscuro, 5);
+            }
+        }
+
+        .estado-opciones {
+            display: flex;
+            flex-direction: column;
+            /* Esto pone los labels en columna */
+            gap: 10px;
+            /* Espacio entre los radio buttons */
+
+            @include m.telefono_small {
+                flex-direction: row;
+                /* Los elementos se colocan en una fila */
+                gap: 15px;
+                /* Espacio entre radio buttons y el texto */
+
+            }
+        }
+
+        .estado-opciones label {
+            display: flex;
+            align-items: center;
+            color: v.$gris;
+            /* Cambia el color del texto a gris */
+            cursor: pointer;
+            width: 14rem;
+        }
+
+        .estado-opciones input[type="radio"] {
+            display: none;
+            /* Ocultamos el radio button original */
+        }
+
+        .estado-opciones input[type="radio"]+.radio-custom {
+            width: 18px;
+            /* Tamaño del radio más grande */
+            height: 18px;
+            /* Tamaño del radio más grande */
+            border-radius: 50%;
+            /* Redondeamos el borde para hacerlo circular */
+            border: 2px solid v.$gris;
+            /* Borde gris por defecto */
+            margin-right: 10px;
+            /* Espacio entre el radio y el texto */
+            display: inline-block;
+            position: relative;
+            background-color: v.$gris;
+            cursor: pointer;
+        }
+
+        .estado-opciones input[type="radio"]:checked+.radio-custom {
+            background-color: v.$botones;
+            /* Color de fondo rosa cuando se selecciona */
+            border-color: lighten(v.$botones, 10);
+            /* El borde será rosa */
+        }
+
+        .estado-opciones input[type="radio"]:checked+.radio-custom::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            /* Tamaño del círculo interior */
+            height: 8px;
+            /* Tamaño del círculo interior */
+            border-radius: 50%;
+            background-color: lighten(v.$botones, 10);
+            /* Color blanco para el centro */
+            top: 3px;
+            /* Alinea verticalmente */
+            left: 3px;
+            /* Alinea horizontalmente */
+        }
+    }
+
+    &__titulo-filtros {
+        color: v.$gris;
+        font-weight: v.$delgada;
+        margin: 1.5rem 0;
+    }
+
+    &__boton-filtro {
+        @include m.boton(v.$gris, v.$azul-oscuro);
+        margin: 2rem 0;
+
+        @include m.telefono_small {
+            margin-top: 2.5rem;
+
+        }
+    }
+
+    // &__titulo-filtros:not(:last-of-type){
+    //     margin-bottom: 2rem;
+    // }
+
+    &__box-loader {
+        display: flex;
+        justify-content: center;
+        align-items: c
+    }
+
+    &__subir {
+        @include m.contenedor-md2;
+        border: 5px double v.$gris;
+        padding: 2rem;
+        border-radius: .5rem;
+        margin-bottom: 2rem;
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+
+            @include m.telefono {
+                @include m.grid(2, 1rem);
+            }
+
+            @include m.tablet {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            @include m.desktop {
+                justify-content: space-evenly;
+            }
+        }
+
+        .subir {
+            padding: 5px 10px;
+            background: v.$botones;
+            color: v.$gris;
+            border: 0px solid #fff;
+            border-radius: .5rem;
+            width: 15rem;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color .2s ease-in-out, color .2s ease-in-out;
+        }
+
+        .subir:hover {
+            color: #fff;
+            background: darken(v.$botones, 5);
+            transition: background-color .2s ease-in-out, color .2s ease-in-out;
+        }
+
+        button {
+            // border: 1px solid v.$gris;
+            padding: .5rem;
+            border-radius: .5rem;
+            font-size: 1.8rem;
+            color: darken(v.$gris, 5);
+            background-color: transparent;
+            cursor: pointer;
+            transition: color .2s ease-in-out, transform .2s ease-in-out;
+
+            @include m.telefono {
+                grid-column: 1 / 3;
+                /* Desde la columna 1 hasta antes de la columna 3 */
+                grid-row: 2 / 3;
+
+            }
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            transition: color .2s ease-in-out, transform .2s ease-in-out;
+        }
+
+        #info {
+            text-align: center;
+            font-size: 1.5rem;
+            color: v.$gris;
+        }
+    }
+
+    &__reset {
+        @include m.contenedor-md2;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 2rem;
+
+        @include m.telefono {
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        @include m.tablet_small {
+            justify-content: space-around;
+        }
+
+        @include m.tablet {
+            justify-content: center;
+        }
+
+        @include m.desktop {
+            form {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+        img {
+            width: 10rem;
+            cursor: pointer;
+        }
+
+        p {
+            color: v.$gris;
+        }
+    }
+
+    &__seleccionar-todo {
+        @include m.contenedor-md2;
+        color: v.$gris;
+        margin-bottom: 2rem;
+        margin-left: 5%;
+        margin-top: 5%;
+
+        label {
+            display: flex;
+            /* Alinea el contenido del label en línea */
+            align-items: center;
+            /* Centra el checkbox verticalmente con el texto */
+            gap: .8rem;
+            /* Espaciado entre el checkbox y el texto */
+        }
+
+        label:hover {
+            cursor: pointer;
+        }
+
+        /* Estilo base del checkbox */
+        input[type="checkbox"] {
+            -webkit-appearance: none;
+            /* Elimina el estilo predeterminado */
+            -moz-appearance: none;
+            appearance: none;
+            width: 2rem;
+            /* Anchura del checkbox */
+            height: 2rem;
+            /* Altura del checkbox */
+            border: 2px solid darken(v.$gris, 5);
+            /* Borde del checkbox */
+            border-radius: .5rem;
+            /* Bordes redondeados */
+            background-color: v.$gris;
+            /* Fondo blanco */
+            cursor: pointer;
+            /* Cambia el cursor al pasar por encima */
+            display: inline-block;
+            position: relative;
+            transition: all 0.2s ease;
+            /* Transición para suavizar los cambios */
+        }
+
+        /* Estilo cuando el checkbox está marcado */
+        input[type="checkbox"]:checked {
+            background-color: #28a745;
+            /* Fondo verde al seleccionar */
+            border-color: #28a745;
+            /* Borde verde al seleccionar */
+        }
+
+        /* Check personalizado dentro del checkbox */
+        input[type="checkbox"]:checked::after {
+            content: "✓";
+            /* Icono del check */
+            color: white;
+            /* Color del check */
+            font-size: 16px;
+            /* Tamaño del check */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    &__partido {
+        &--logos {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+        }
+    }
+
+    &__partido,
+    &__partido-1 {
+        @include m.contenedor-md2;
+        margin-bottom: 1rem;
+        border: 5px double v.$gris;
+        border-radius: .5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        background-color: lighten(v.$azul-oscuro, 4);
+
+        .check {
+            color: v.$verde2;
+        }
+    }
+
+    &__partido-1 {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+
+        p {
+            color: v.$gris;
+        }
+    }
+
+    &__loader {
+        height: 20px;
+        width: 20px;
+        background-image: linear-gradient(to right top, v.$botones, #124FEB);
+        border-radius: 50%;
+        position: relative;
+        animation: rotate 2s infinite;
+        transition: all 2s;
+        // margin: 0 auto; /* Centra el loader horizontalmente */
+    }
+
+    @keyframes rotate {
+        0% {
+            transform: rotate(0deg);
+            background-image: linear-gradient(to right top, v.$botones, #124FEB);
+        }
+
+        100% {
+            transform: rotate(360deg);
+            background-image: linear-gradient(to right top, v.$botones, #12EBAE);
+        }
+    }
+
+    &__loader:after {
+        content: '';
+        position: absolute;
+        background-color: lighten(v.$azul-oscuro, 4);
+        width: 19px;
+        height: 19px;
+        top: 2px;
+        left: 2px;
+        border-radius: 50%;
+    }
+
+    .partidos__mensaje {
+        text-align: center;
+        font-size: 1.5rem;
+        color: #666;
+        /* Ajusta según tu variable o estilo deseado */
+        margin-top: 1rem;
+        /* Espaciado entre el loader y el mensaje */
+    }
+
+    &__partido--id,
+    &__partido--id1  {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 2rem;
+        color: v.$botones;
+        font-weight: v.$delgada;
+        background-color: darken(v.$azul-oscuro, 5);
+        width: 100%;
+        height: auto;
+        text-align: center;
+
+        @include m.tablet {
+            justify-content: space-between;
+            padding: 0 5rem;
+        }
+
+        /* Estilo base del checkbox */
+        input[type="checkbox"] {
+            -webkit-appearance: none;
+            /* Elimina el estilo predeterminado */
+            -moz-appearance: none;
+            appearance: none;
+            width: 1.7rem;
+            /* Anchura del checkbox */
+            height: 1.7rem;
+            /* Altura del checkbox */
+            border: 2px solid darken(v.$gris, 5);
+            /* Borde del checkbox */
+            border-radius: .5rem;
+            /* Bordes redondeados */
+            background-color: v.$gris;
+            /* Fondo blanco */
+            cursor: pointer;
+            /* Cambia el cursor al pasar por encima */
+            display: inline-block;
+            position: relative;
+            transition: all 0.2s ease;
+            /* Transición para suavizar los cambios */
+        }
+
+        /* Estilo cuando el checkbox está marcado */
+        input[type="checkbox"]:checked {
+            background-color: #28a745;
+            /* Fondo verde al seleccionar */
+            border-color: #28a745;
+            /* Borde verde al seleccionar */
+        }
+
+        /* Check personalizado dentro del checkbox */
+        input[type="checkbox"]:checked::after {
+            content: "✓";
+            /* Icono del check */
+            color: white;
+            /* Color del check */
+            font-size: 1.1rem;
+            /* Tamaño del check */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        i {
+            color: v.$amarillo;
+        }
+    }
+
+    &__partido--id1 {
+        justify-content: center;
+    }
+
+    &__partido--facturacion {
+        border-top: 1px solid v.$azul-oscuro;
+    }
+
+    &__partido--texto,
+    &__partido--facturacion {
+        padding: 0 1rem 1rem 1rem;
+        background-color: v.$gris;
+        color: v.$azul-oscuro;
+        font-weight: v.$delgada;
+        width: 100%;
+
+        @include m.tablet_small {
+            font-size: 1.3rem;
+            letter-spacing: 0.02em;
+        }
+
+        p a {
+            font-size: 1.5rem;
+            color: v.$azul-oscuro;
+            font-weight: v.$delgada;
+            text-decoration: none;
+        }
+
+        a {
+            color: inherit;
+            font-style: italic;
+            font-weight: bold;
+        }
+
+        @include m.tablet_small {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+
+    &__partido__unidad {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+           
+        p {
+            margin: 0;
+            margin: .2rem 5rem;
+        }
+    }
+
+    &__partido--facturacion {
+        margin-top: .21rem;
+        padding-top: 2rem;
+        box-shadow: 1px  1px 6px rgb(163, 163, 163) inset;
+    }
+    
+
+    &__partido--fecha {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        @include m.tablet_small {
+            justify-content: flex-start;
+            gap: 1rem;
+        }
+    }
+
+    &__partido--arbitro {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        @include m.tablet_small {
+            gap: 1rem;
+        }
+
+        i {
+            color: v.$botones;
+            // font-weight: bold;
+            transition: transform .3s ease-in-out;
+        }
+
+        i:hover {
+            transform: scale(1.1);
+            transition: transform .3s ease-in-out;
+        }
+    }
+
+    &__acciones {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 3rem;
+        background-color: darken(v.$azul-oscuro, 5);
+        padding: 1rem 0;
+        width: 100%;
+        font-size: 2.5rem;
+
+        @include m.tablet_small {
+            justify-content: space-evenly;
+            padding: 1rem 3rem;
+        }
+
+        &--editar,
+        &--enviar {
+            color: v.$gris;
+        }
+
+        &--eliminar {
+            color: darken(v.$botones, 25);
+        }
+
+        &--eliminar,
+        &--enviar {
+            background-color: transparent;
+            border: none;
+            // cursor: pointer;
+            cursor: url("/public/build/img/arbi.png") 0 0, no-drop;
+        }
+
+        &--editar,
+        &--eliminar,
+        &--enviar {
+            transition: transform .3s ease-in-out;
+        }
+
+        &--editar:hover,
+        &--eliminar:hover,
+        &--enviar:hover {
+            transform: scale(1.1);
+            transition: transform .3s ease-in-out;
+        }
+    }
+
+    &__container {
+        // @include m.contenedor-md2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 2rem 1.2rem;
+
+        @include m.tablet_small {
+            margin: 2rem 1.5rem 2rem 0;
+            justify-content: flex-end;
+            gap: 2rem;
+        }
+
+        @include m.desktop {
+            margin-right: 2.5rem;
+
+        }
+    }
+
+    &__enviar {
+        padding: 10px 20px;
+        /* Espaciado interno del botón */
+        font-size: 18px;
+        /* Tamaño del texto */
+        background-color: v.$gris;
+        color: v.$azul-oscuro;
+        border: none;
+        /* Sin bordes */
+        border-radius: 5px;
+        /* Bordes redondeados */
+        cursor: pointer;
+        transition: background-color .2s ease-in-out;
+        width: 10.6rem;
+    }
+
+    &__enviar:hover {
+        background-color: darken(v.$gris, 10);
+        transition: background-color .2s ease-in-out;
+    }
+
+    &__enviar--eliminar {
+        background-color: v.$botones;
+        color: v.$gris;
+        width: 10.6rem;
+    }
+
+    &__enviar--eliminar:hover {
+        background-color: darken(v.$botones, 5);
+    }
+
+}
+
+.reset-button {
+    // background: radial-gradient(circle at center, #ff0000, #cc0000);
+    border: none;
+    border-radius: 50%;
+    /* Botón redondo */
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+    width: 110px;
+    height: 110px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    position: relative;
+    // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease-in-out;
+}
+
+.reset-button:hover {
+    // transform: scale(1.05); /* Efecto de aumento en hover */
+    animation: pulse 1s infinite;
+    /* Añade la animación */
+}
+
+/* Efecto de pulsación */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.5);
+        border-radius: 50%;
+    }
+
+    70% {
+        box-shadow: 0 0 0 2rem rgba(255, 0, 0, 0);
+        border-radius: 50%;
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+        border-radius: 50%;
+    }
+}
+
+// @media (min-width: 601px) {
+//     .partidos__filtro {
+//         display: flex;
+//         flex-wrap: wrap;
+//         gap: 1.5rem; /* Espacio entre los elementos */
+//     }
+
+//     .partidos__campo {
+//         display: flex;
+//         align-items: center; /* Alinea los elementos verticalmente al centro */
+//         gap: 1rem; /* Espacio entre los elementos */
+
+//         h4, legend {
+//             margin: 0; /* Elimina márgenes para que estén alineados con los inputs */
+//             width: 19.3rem;
+//         }
+
+//         input[type="text"] {
+//             width: auto; /* Ajusta el ancho para que no ocupe todo el espacio */
+//             margin: 0; /* Elimina márgenes innecesarios */
+//         }
+//     }
+// }
+
+// .disabled:disabled {
+//     opacity: 0.5;
+//     pointer-events: none;
+//     cursor: not-allowed;
+//     transform: none; 
+// }
+// button.disabled:hover {
+//     transform: none;               /* Elimina transformaciones en el hover */
+// }
+
+#send,
+#nombrado {
+    width: 3.1rem;
+}
+
+#save,
+#rechazado {
+    width: 3.8rem;
+}
+
+#rechazado {
+    &:hover {
+        cursor: help;
+    }
+}
+
+/* Estilo del Modal */
+.modal-hover,
+.modal-hover-modi {
+    position: absolute;
+    display: none;
+    background-color: v.$gris;
+    border: 1px solid v.$botones;
+    padding: 8px 12px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    font-size: 12px;
+    color: v.$azul-oscuro;
+    // white-space: nowrap;
+}
+
+#excla,
+#enviado {
+    width: 2.8rem;
+}
+
+#aceptado,
+#modi {
+    width: 2.5rem;
+}
+
+#modi {
+    &:hover {
+        cursor: help;
+    }
+}
+
+#sended {
+    width: 2rem;
+}
+
+#lupita {
+    width: 2rem;
+    transition: transform .3s ease-in-out;
+
+    &:hover {
+        transform: scale(1.1);
+        transition: transform .3s ease-in-out;
+    }
+}
+
+
+
+/* Estilos para el formulario específico */
+.partidos__filtro-especifico {
+    display: grid;
+    grid-template-columns: 1fr;
+    /* Una columna por defecto */
+    gap: 2rem;
+    /* Espacio entre los elementos */
+    margin-bottom: 5rem;
+}
+
+.partidos__filtro-especifico .partidos__campo {
+    display: flex;
+    flex-direction: column;
+    /* Los elementos h4 y los inputs estarán uno encima del otro */
+    gap: 0.5rem;
+    /* Espacio entre el título y el input/select */
+}
+
+
+/* Estilos cuando la pantalla tiene más de 1024px */
+@media (min-width: 1024px) {
+    .partidos__filtro-especifico {
+        grid-template-columns: repeat(2, 1fr);
+        /* Dos columnas de igual tamaño */
+        gap: 2rem;
+        /* Espacio entre columnas */
+    }
+}
+
+.partidos__filtro-especifico .partidos__campo h4,
+.partidos__filtro-especifico .partidos__campo legend {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.partidos__filtro-especifico .partidos__campo input[type="text"],
+.partidos__filtro-especifico .partidos__campo select {
+    width: 100%;
+    /* Hace que los inputs y selects ocupen todo el ancho disponible */
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid v.$gris;
+}
+
+.partidos__filtro-especifico .estado-opciones {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.partidos__filtro-especifico .estado-label {
+    display: flex;
+    align-items: center;
+}
+
+.partidos__filtro-especifico .estado-label input[type="radio"] {
+    margin-right: 0.5rem;
+}
+
+.partidos__filtro-especifico .partidos__boton-filtro {
+    padding: 0.5rem 1rem;
+    background-color: v.$gris;
+    color: v.$azul-oscuro;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.partidos__filtro-especifico .partidos__seleccionar-todo {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.partidos__filtro-especifico .partidos__seleccionar-todo label {
+    display: flex;
+    align-items: center;
+}
+
+.partidos__filtro-especifico .partidos__boton-filtro:hover {
+    background-color: v.$botones;
+}
+
+/* Estilo para los botones de enviar y eliminar */
+.partidos__filtro-especifico .partidos__enviar {
+    padding: 0.5rem 1rem;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.partidos__filtro-especifico .partidos__enviar--eliminar {
+    background-color: #dc3545;
+}
+
+.partidos__filtro-especifico .partidos__enviar:hover {
+    background-color: #218838;
+}
+
+.partidos__filtro-especifico .partidos__enviar--eliminar:hover {
+    background-color: #c82333;
+}
+
+#arbitro_suggestions {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    border: none;
+    max-height: 200px;
+    overflow-y: auto;
+    position: absolute;
+    width: 100%;
+}
+
+#arbitro_suggestions li {
+    padding: 8px;
+    cursor: pointer;
+}
+
+#arbitro_suggestions li:hover {
+    background-color: #f1f1f1;
+}

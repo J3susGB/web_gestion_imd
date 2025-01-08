@@ -1,0 +1,43 @@
+@use 'base/variables' as v;
+
+//ESTILOS PARA ALERT, ALERT2, ALERT3 Y ALERT4
+
+/* Oscurecer el fondo detrás de la alerta */
+.swal2-backdrop {
+    background-color: rgba(0, 0, 0, 0.1);  // Fondo oscuro detrás de la alerta (ajustable)
+}
+
+/* Personalización de la caja de la alerta */
+.custom-popup {
+    border: 2px solid #efd3aa;  // Borde blanco alrededor de la alerta
+    box-shadow: 
+    rgba(128, 116, 74, 0.25) 0px 50px 100px -20px, 
+    rgba(128, 116, 74, 0.3) 0px 30px 60px -30px, 
+    rgba(128, 116, 74, 0.35) 0px -2px 6px 0px inset;   
+    border-radius: 10px;  // Bordes redondeados (ajustable)
+    padding: 20px;  // Espaciado interno (ajustable)
+}
+
+/* Estilo personalizado para el título */
+.custom-title {
+    color: #DDDDDD;  // Color del título (blanco suave)
+    font-size: 20px;  // Tamaño de la fuente (ajustable)
+    font-weight: bold;  // Hacer el título más destacado
+}
+
+/* Estilos personalizados para los botones */
+.custom-button {
+    background-color: #71B100;  // Botón de confirmación verde
+    color: white;                // Texto blanco en los botones
+    border-radius: 5px;          // Bordes redondeados
+    padding: 10px 20px;          // Espaciado interno de los botones (ajustable)
+}
+
+/* Estilo para el botón de cancelación */
+.custom-button:focus {
+    outline: none;  // Eliminar el contorno predeterminado al hacer foco en el botón
+}
+
+.custom-button:hover {
+    background-color: #4a8d00;  // Color más oscuro cuando el botón se pasa el mouse
+}

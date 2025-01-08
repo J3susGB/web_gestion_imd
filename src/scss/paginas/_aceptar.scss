@@ -1,0 +1,39 @@
+@use 'base/mixins' as m;
+@use 'base/variables' as v;
+
+.aceptar {
+    @include m.contenedor;
+    margin-bottom: 3rem;
+
+    @include m.tablet {
+        padding: 5rem 20rem;
+    }
+
+    &__box-pagina {
+        border: 1px solid v.$gris;
+        border-radius: 1rem;
+        box-shadow: rgba(221, 221, 221, 0.2) 0px 2px 8px 0px;
+        background-color: lighten(v.$gris, 7);
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        // gap: .5rem;
+    }
+
+    &__icono {
+
+        #rechazado {
+            width: 20rem;
+        }
+
+        #aceptado {
+            width: 15rem;
+        }
+    }
+
+    &__titulo {
+        font-size: 2.3rem;
+    }
+}

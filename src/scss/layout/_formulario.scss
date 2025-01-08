@@ -1,0 +1,186 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+
+    #ingresosGastos {
+        color: v.$primario;
+    }
+
+    #registrar {
+        margin-top: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    &--cuentas {
+        @include m.tablet_small {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+
+            @include m.tablet {
+                justify-content: space-around;
+            }
+        }
+
+        .formulario__campo {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: auto 2rem;
+
+
+        }
+    }
+
+    &__campo {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin: 1.5rem 0;
+    }
+
+    &__label {
+        display: block;
+        font-size: 1.8rem;
+        color: v.$gris;
+    }
+
+    &__input {
+        padding: 1rem;
+        border: 1px solid v.$negro;
+        border-radius: .5rem;
+        background-color: lighten(v.$gris-oscuro, 35);
+        color: v.$gris-oscuro;
+        &::placeholder {
+            color: lighten(v.$gris-oscuro, 20);
+        }
+        &:focus {
+            border: 2px solid v.$negro; /* Cambia el color del borde al enfocar */
+            outline: none; /* Elimina el resplandor predeterminado en algunos navegadores */
+            box-shadow: 0 0 10px lighten(v.$gris-oscuro, 5); /* Añade una sombra al enfocar */
+    }
+        &--file {
+            border: none;
+            display: block;
+            width: 27rem;
+            // display: none;
+
+            padding: 1rem;
+            border: 1px solid v.$negro;
+            border-radius: .5rem;
+            background-color: v.$gris-oscuro;
+            color: lighten(v.$gris-oscuro, 20);
+            &::placeholder {
+                color: lighten(v.$gris-oscuro, 20);
+            }
+            &:focus {
+                border: 2px solid v.$negro; /* Cambia el color del borde al enfocar */
+                outline: none; /* Elimina el resplandor predeterminado en algunos navegadores */
+                box-shadow: 0 0 10px lighten(v.$gris-oscuro, 5); /* Añade una sombra al enfocar */
+                }
+            &:focus {
+                cursor: pointer
+            }
+            @extend .formulario__label;
+        }
+
+        // &__input--file::file-selector-button {
+        //     display: none;
+        // }
+    }
+
+    &__texto {
+        margin-top: 3rem;
+        color: lighten(grey, 20);
+    }
+
+    &__imagen {
+        max-width: 20rem;
+        & img {
+            border-radius: 1rem;
+        }
+    }
+
+    &__submit {
+        @include m.boton(v.$amarillo, v.$blanco);
+        @include m.tablet {
+            width: auto;
+            align-self: flex-start;
+        } 
+
+        &--registrar {
+            width: 100%;
+        }
+    }
+}
+
+select {
+    @extend .formulario__label;
+    padding: .5rem;
+    border: 1px solid v.$negro;
+    border-radius: .5rem;
+    background-color: lighten(v.$gris-oscuro, 35);
+    color: lighten(v.$gris-oscuro, 20);
+    width: 24.855rem;
+    cursor: pointer;
+
+    &::placeholder {
+        color: lighten(v.$gris-oscuro, 20);
+    }
+
+    &:focus {
+        border: 2px solid v.$negro; /* Cambia el color del borde al enfocar */
+        outline: none; /* Elimina el resplandor predeterminado en algunos navegadores */
+        box-shadow: 0 0 10px lighten(v.$gris-oscuro, 5); /* Añade una sombra al enfocar */
+    }
+
+    /* Cambiar el color del menú desplegable */
+    &:focus-visible {
+        background-color: v.$azul-oscuro; /* Color del menú desplegable */
+        color: v.$gris; /* Color del texto dentro del select */
+    }
+
+    /* Cambiar el color de las opciones del menú */
+    option {
+        background-color: v.$azul-oscuro; /* Fondo de las opciones */
+        color: v.$gris; /* Color del texto de las opciones */
+    }
+
+    option:focus {
+        background-color: v.$azul-oscuro;
+        color: v.$gris;
+    }
+    option:selected {
+        background-color: v.$azul-oscuro;
+        color: v.$gris;
+    }
+    option:checked {
+        background-color: v.$azul-oscuro;
+        color: v.$gris;
+    }
+}
+
+
+input[type="date"] {
+    border: none;
+}
+
+.formulario__file-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.formulario__input--file {
+    display: block;
+}
+
+/* Ocultar el mensaje predeterminado de "Ningún archivo seleccionado" */
+.formulario__input--file::file-selector-button {
+    display: none;
+}

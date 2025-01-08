@@ -1,0 +1,37 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.facturas {
+    @include m.contenedor-md;
+    border: 5px double v.$gris;
+
+    &__caja {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 3rem;
+        border-bottom: solid 1px v.$gris;
+
+        @include m.telefono_small {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    &__jornada {
+        color: v.$gris;
+    }
+
+    &__acciones {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+    }
+}

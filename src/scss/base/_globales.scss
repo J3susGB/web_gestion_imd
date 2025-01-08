@@ -1,0 +1,56 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+.header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    // gap: 5rem;
+    background-color: v.$gris;
+
+    &__logo {
+        picture img {
+            width: 10rem;
+        }
+    }
+
+    &__texto  {
+        color: v.$azul-oscuro;
+    }
+}
+
+body {
+    font-family: v.$fuente_principal;
+    font-size: 1.8rem;
+    background-color: v.$azul-oscuro;
+}
+
+h2 {
+    color: v.$gris;
+    text-align: center;
+
+    @include m.tablet_small {
+        text-align: left;
+        margin-left: 7%;
+    }
+
+    @include m.tablet {
+        text-align: center;
+        margin-left: 0;
+    }
+}
+a {
+    text-decoration: none;
+}
+img {
+    width: 100%;
+    height: auto;
+}

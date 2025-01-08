@@ -1,0 +1,187 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.arbitros {
+    margin-bottom: 5rem !important;
+
+    @include m.contenedor;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5rem;
+    width: 30.5rem;
+    margin-top: 4rem;
+
+    @include m.tablet_small2 {
+        @include m.grid(2, 5rem);
+    }
+
+    @include m.desktop {
+        @include m.grid(3, 2.5rem);
+    }
+    @include m.xl_desktop {
+        @include m.grid(4, 2.5rem);
+    }
+
+    &__card {
+        border: 5px double v.$gris;
+        // padding: 1rem;
+        border-radius: .5rem;
+        background-color: lighten(v.$azul-oscuro, 6);
+        box-shadow: 3px 3px 5px 1px rgb(108, 108, 105);
+        width: 30rem;
+
+        &-top {
+            display:flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        &-titulo,
+        &-texto,
+        p,
+        &-acciones  {
+            max-width: 30rem;
+        }
+
+        &--titulo1,
+        &--titulo {
+            margin-top: 0;
+            padding: 1rem;
+            background-color: v.$gris;
+            font-weight: v.$bold;
+            text-align: center;
+            font-size: 1.2rem;
+            color: v.$azul-oscuro;
+        }
+
+        &--titulo1-rojo,
+        &--titulo-rojo {
+            margin-top: 0;
+            padding: 1rem;
+            background-color: lighten(v.$botones, 2);
+            font-weight: v.$bold;
+            text-align: center;
+            font-size: 1.2rem;
+            color: v.$gris-oscuro;
+        }
+
+        &--titulo1,
+        &--titulo1-rojo {
+            margin-bottom: 0;
+        }
+
+        &--titulo,
+        &--titulo-rojo {
+            padding-top: 0;
+        }
+
+        &--email{
+            max-width: 30rem;
+            font-size: 1.5rem;
+        }
+
+        &-texto {
+            padding: 0 1rem;
+            color: darken(v.$gris, 10);
+        }
+
+        &-acciones {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            padding: 1rem;
+            background-color: darken(v.$azul-oscuro, 4);
+
+            &--editar {
+                color: v.$gris;
+            }
+
+            &--restablecer,
+            &--eliminar,
+            &--editar {
+                img {
+                    width: 3.5rem;
+                }
+            }
+
+            &--eliminar {
+                border: none;
+                background-color: transparent;
+                color: darken(v.$botones, 3);
+                cursor: pointer;
+                transition: transform .3s ease-in-out;
+
+                // Efectos hover y transform para botones habilitados
+                &:hover {
+                    transform: scale(1.1);
+                    transition: transform .3s ease;
+                }
+
+                // Estilos para botones deshabilitados
+                &.disabled:disabled,
+                &[disabled] {
+                    opacity: 0.5;
+                    pointer-events: none; // Desactiva la interacción
+                    cursor: not-allowed;  // Cambia el cursor a 'no permitido'
+                    transform: none;      // Elimina cualquier transformación
+                    transition: none;     // Elimina cualquier transición
+                }
+
+                // Anulación específica para hover en deshabilitados
+                &.disabled:disabled:hover,
+                &[disabled]:hover {
+                    transform: none;
+                    cursor: not-allowed;
+                }
+            }
+
+            &--editar,
+            &--restablecer {
+                cursor: pointer;
+                transition: transform .3s ease-in-out;
+            }
+
+            &--editar:hover,
+            &--restablecer:hover {
+                transform: scale(1.1);
+                transition: transform .3s ease;
+            }
+
+            &--editar.disabled:disabled,
+            &--restablecer.disabled:disabled,
+            &--editar[disabled],
+            &--restablecer[disabled] {
+                opacity: 0.5;
+                pointer-events: none;
+                // cursor: not-allowed;
+                cursor: url("nombrado.png") 0 0, pointer !important;
+                transform: none;
+                transition: none;
+            }
+
+            &--editar.disabled:disabled:hover,
+            &--restablecer.disabled:disabled:hover,
+            &--editar[disabled]:hover,
+            &--restablecer[disabled]:hover {
+                transform: none;
+                // cursor: not-allowed;
+                cursor: url("nombrado.png") 0 0, pointer !important;
+            }
+        }
+        
+        
+
+    }
+}
+
+.contar_arbitros,
+.contar_partidos {
+    text-align: center;
+    color: v.$gris;
+    margin-top: 3.5rem;
+    h3 {
+        font-size: 2rem;
+    }
+}

@@ -1,0 +1,304 @@
+@use 'base/variables' as v;
+
+$background_color: darken(v.$azul_oscuro,7); // Define el color de fondo del menú
+$menu_color: v.$gris; // Define el color principal del menú
+$hamburger_color: v.$gris;; // Define el color de la hamburguesa igual al color de fondo
+$icon_hover_color: v.$botones; // Define el color al pasar el cursor sobre los íconos
+$arrow_hover_color: #ff947f; // Define el color al pasar el cursor sobre las flechas
+
+$hamburger_width: 20px; // Ancho de las barras de la hamburguesa
+$hamburger_height: 2px; // Alto de las barras de la hamburguesa
+$hamburger_animation_duration: 1s; // Duración de las animaciones del menú hamburguesa
+
+$arrow_size: 20px; // Tamaño de las flechas
+$menu_toggle_size: 140px; // Tamaño del botón para activar/desactivar el menú
+$menu_whole_size: $menu_toggle_size * 3 + $arrow_size * 2; // Tamaño total del menú calculado
+
+$li_count: 10; // Número de elementos de lista en el círculo
+$li_angle: 360deg / $li_count; // Ángulo entre elementos de la lista
+$skew_angle: -(90deg - $li_angle); // Ángulo de inclinación para alineación
+$skew_angle_content: -$skew_angle; // Ángulo de inclinación del contenido
+$li_angle_content: $li_angle / 2; // Ángulo de rotación del contenido
+
+.icon {
+  position: absolute; // Posición absoluta respecto a su contenedor
+  top: 70%; // Posicionado al 70% desde la parte superior del contenedor
+  left: 70%; // Posicionado al 70% desde la izquierda del contenedor
+  transform: translateX(-50%) translateY(-50%); // Centra el ícono en su posición
+}
+
+.hamburger {
+  content: ''; // Agrega contenido vacío (necesario para pseudo-elementos)
+  position: relative; // Posición relativa para posicionar sus pseudo-elementos
+  width: $hamburger_width; // Aplica el ancho definido
+  height: $hamburger_height; // Aplica el alto definido
+  background-color: $hamburger_color; // Color de fondo de la barra de hamburguesa
+  border-radius: 5px; // Redondeo de esquinas
+  transition: all ($hamburger_animation_duration / 3) ease; // Transición para todas las propiedades con duración
+
+  &::after, // Define el pseudo-elemento ::after
+  &::before { // Define el pseudo-elemento ::before
+    content: ''; // Contenido vacío
+    position: absolute; // Posición absoluta respecto al contenedor
+    left: 50%; // Centrado horizontalmente
+    width: 100%; // Mismo ancho que el contenedor
+    height: $hamburger_height; // Mismo alto que el contenedor
+    background-color: $hamburger_color; // Color de fondo
+    border-radius: 5px; // Bordes redondeados
+    transform: translateX(-50%); // Centrado en el eje X
+    transition-property: top, bottom, transform; // Propiedades a animar
+    transition-duration: ($hamburger_animation_duration / 1), ($hamburger_animation_duration / 1), ($hamburger_animation_duration / 4); // Duraciones específicas
+  }
+
+  &::after {
+    top: -($hamburger_height * 4); // Posición superior del pseudo-elemento ::after
+  }
+  &::before {
+    bottom: -($hamburger_height * 4); // Posición inferior del pseudo-elemento ::before
+  }
+}
+
+.menu {
+  pointer-events: none; // Desactiva eventos de puntero por defecto
+  height: 20rem !important;
+  background-color: transparent !important;
+
+  &--circle {
+    position: absolute; // Posición absoluta para formar el círculo
+    z-index: 13; // Prioridad en la pila de elementos
+    width: ($menu_whole_size / 3 + $arrow_size + 10); // Ancho del círculo
+    height: ($menu_whole_size / 3 + $arrow_size + 10); // Altura del círculo
+    background-color: $background_color; // Color de fondo del círculo
+    overflow: hidden; // Oculta el contenido que sobresale del círculo
+  }
+
+  &__active {
+    position: relative; // Posición relativa para activar estilos específicos
+  }
+
+  &__toggle {
+    z-index: 11; // Prioridad del botón de alternancia
+    position: absolute; // Posición absoluta dentro del círculo
+    top: -($menu_toggle_size / 2); // Centrado vertical
+    left: -($menu_toggle_size / 2); // Centrado horizontal
+    width: $menu_toggle_size; // Tamaño ancho del botón
+    height: $menu_toggle_size; // Tamaño alto del botón
+    background-color: darken(v.$azul_oscuro,7); // Color de fondo del botón
+    border-radius: 50%; // Forma circular
+    transition: transform ($hamburger_animation_duration * 1.3); // Transición de transformaciones
+    cursor: pointer; // Cambia el cursor al pasar
+    pointer-events: auto; // Reactiva eventos de puntero
+  }
+
+  &__listings {
+    z-index: 10; // Prioridad inferior respecto al toggle
+    position: absolute; // Posición absoluta dentro del círculo
+    top: -($menu_toggle_size); // Centrado superior
+    left: -($menu_toggle_size); // Centrado izquierdo
+    width: ($menu_toggle_size * 2); // Tamaño doble del botón de alternancia
+    height: ($menu_toggle_size * 2); // Tamaño doble del botón de alternancia
+    border-radius: 50%; // Forma circular
+    transform: scale(.1) rotate(150deg); // Escala inicial y rotación
+    transition: transform $hamburger_animation_duration; // Transición suave
+  }
+
+  &__arrow {
+    visibility: hidden; // Oculta las flechas por defecto
+    position: absolute; // Posiciona las flechas
+
+    input[type="radio"] { // Define los radios ocultos para control
+      position: fixed; // Fuera del flujo visual
+      top: -99999px; // Fuera de la vista
+      left: -99999px; // Fuera de la vista
+    }
+
+    ul {
+    //   padding: 0; // Sin padding
+    //   margin: 0; // Sin margen
+    //   margin: 1rem 0;
+      list-style: none; // Sin estilo de lista
+    }
+
+    &--top {
+      top: .5em; // Posición superior
+      left: ($menu_toggle_size + $arrow_size); // Posición izquierda calculada
+      .arrow {
+        transform: rotate(-45deg); // Rotación inicial de la flecha superior
+      }
+    }
+
+    &--left {
+      top: ($menu_toggle_size + $arrow_size); // Posición superior calculada
+      left: .5em; // Posición izquierda
+      .arrow {
+        transform: rotate(-135deg); // Rotación inicial de la flecha izquierda
+      }
+    }
+  }
+}
+
+.arrow {
+  width: $arrow_size; // Ancho de las flechas
+  height: $arrow_size; // Altura de las flechas
+  border-right: ($arrow_size / 3) solid $menu_color; // Borde derecho estilo flecha
+  border-top: ($arrow_size / 3) solid $menu_color; // Borde superior estilo flecha
+  border-radius: 3px; // Bordes ligeramente redondeados
+  transition: border-color .3s; // Transición de color del borde
+  cursor: pointer; // Cambia el cursor al pasar
+  pointer-events: auto; // Activa eventos de puntero
+  &:hover {
+    border-color: $arrow_hover_color; // Cambia el color al pasar el cursor
+    transition: border-color .3s; // Transición suave
+  }
+}
+
+.circle {
+  position: relative; // Posición relativa dentro del contenedor
+  margin: 1rem; //DAR MÁRGENES A LOS ICONOS DENTRO DEL MENU CIRCULAR
+  height: 100%; // Altura completa
+  width: 100%; // Ancho completo
+  background-color: $menu_color; // Color de fondo del círculo
+  border-radius: 50%; // Forma circular
+  transform: rotate($li_angle * ($li_count / 2 - 2)); // Rotación inicial
+  overflow: hidden; // Oculta contenido desbordado
+  list-style: none; // Sin estilo de lista
+
+  li {
+    position: absolute; // Posición absoluta dentro del círculo
+    top: 0; // Parte superior
+    right: 0; // Parte derecha
+    width: 50%; // Mitad del ancho
+    height: 50%; // Mitad de la altura
+    transform-origin: 0 100%; // Punto de transformación
+
+    .placeholder {
+      position: absolute; // Posición absoluta para contenido
+      left: -100%; // Posición inicial
+      padding-top: .9em; // CENTRAR ICONOS EN BARRA
+      width: 200%; // Doble ancho
+      height: 200%; // Doble altura
+      text-align: center; // Centrado de texto
+    //   margin: 1rem -0.5rem;
+      transform: skewY($skew_angle_content) rotate($li_angle_content); // Inclinación y rotación
+
+      .upside {
+        transform: rotate(180deg); // Rotación invertida para contenido boca arriba
+    }
+
+      a {
+        text-decoration: none; // Sin subrayado
+        pointer-events: auto; // Activa eventos
+      }
+
+      button {
+        pointer-events: auto; // Activa eventos para botones
+      }
+
+      .button {
+        font-size: 3rem; // TAMAÑO DE LOS ICONOS DEL MENU
+        background-color: transparent; // Fondo transparente
+        border: none; // Sin borde
+        color: $background_color; // Color del texto
+        cursor: pointer; // Cambia el cursor
+      }
+
+      .button1 {
+        font-size: 5rem !important;
+      }
+    }
+
+    @for $i from 1 through $li_count { // Itera por cada elemento
+      &:nth-child(#{$i}) {
+        transform: rotate((($i - 1) * $li_angle)) skewY($skew_angle); // Ajusta rotación y inclinación
+        background-color: $menu_color; // Color de fondo del ítem
+      }
+    }
+  }
+}
+
+#menu__active {
+  position: fixed; // Posición fija para control
+  top: -99999px; // Fuera de la vista
+  left: -99999px; // Fuera de la vista
+
+  &:checked ~ label {
+    .menu__listings {
+      transform: rotate(10deg) scale(1); // Expande y rota el menú
+      transition: transform $hamburger_animation_duration; // Transición suave
+    }
+
+    .menu__toggle {
+      background-color: $background_color; // Cambia el color del botón
+      transition: all $hamburger_animation_duration; // Transición general
+    }
+
+    .hamburger {
+        
+      background-color: transparent; // Hace transparente la barra
+      transition: background-color ($hamburger_animation_duration / 3); // Transición de color
+    
+      &::after {
+        top: -($hamburger_height); // Ajusta la posición
+        background-color: v.$gris; // Cambia el color
+        transform: translateX(-50%) rotate(45deg); // Aplica rotación
+        transition-property: top, transform; // Propiedades animadas
+        transition-duration: ($hamburger_animation_duration / 4), $hamburger_animation_duration; // Duraciones específicas
+      }
+
+      &::before {
+        bottom: -($hamburger_height); // Ajusta la posición
+        background-color: v.$gris; // Cambia el color
+        transform: translateX(-50%) rotate(-45deg); // Aplica rotación
+        transition-property: bottom, transform; // Propiedades animadas
+        transition-duration: ($hamburger_animation_duration / 4), $hamburger_animation_duration; // Duraciones específicas
+      }
+    }
+
+    .button {
+      &:hover {
+        color: $icon_hover_color; // Cambia el color al pasar
+      }
+    }
+
+    .menu__arrow {
+      visibility: hidden; // Muestra las flechas
+      transition: all $hamburger_animation_duration ($hamburger_animation_duration / .9); // Transición suave
+    }
+
+    .menu__arrow--top {
+      label {
+        display: none; // Oculta todos los labels
+      }
+      label[for="degree--up-0"] {
+        display: block; // Muestra un label específico
+      }
+    }
+
+    #degree--up {
+      &-0:checked {
+        & ~ .menu__listings {
+          transform: rotate(116deg); // Ajusta rotación del menú
+        }
+        & ~ .menu__arrow--top {
+          label {
+            display: none; // Oculta labels
+          }
+          label[for="degree--up-1"] {
+            display: block; // Muestra un label específico
+          }
+        }
+      }
+      &-1:checked ~ .menu__listings {
+        transform: rotate(224deg); // Ajusta rotación adicional
+        & ~ .menu__arrow--top {
+          label {
+            display: none; // Oculta labels
+          }
+          label[for="degree--up-2"] {
+            display: block; // Muestra un label específico
+          }
+        }
+      }
+    }
+  }
+}

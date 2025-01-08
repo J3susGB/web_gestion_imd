@@ -1,0 +1,35 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.formulario {
+    // margin-top: 5rem;
+    width: 100%;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    justify-content: flex-start; 
+    width: 98%;
+
+    label {
+       color: v.$blanco; 
+    }
+
+    input {
+        flex: 1;
+        border: none;
+        padding: calc(5rem / 4);
+        border-radius: 1rem;
+        background-color: darken(v.$gris, 5);
+        color: lighten(v.$gris-oscuro, 30);
+        &::placeholder {
+            color: lighten(v.$gris-oscuro, 30);
+        }
+        &:focus {
+            color: lighten(v.$gris-oscuro, 50);
+        }
+    }
+}

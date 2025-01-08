@@ -1,0 +1,180 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.prueba {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.auth__heading {
+    font-size: 3rem;
+    color: v.$gris;
+}
+
+.header {
+    border-bottom: 3px solid v.$azul-oscuro;
+}
+
+.header__texto {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+
+    i {
+        color: v.$botones;
+    }
+
+    i:hover {
+        cursor: pointer;
+    }
+
+    form button {
+        border: none;
+        background-color: transparent;
+
+        img {
+            width: 2.5rem;
+            cursor: pointer;
+            transition: all .3s ease-in-out;
+        }
+
+        img:hover {
+            transform: scale(1.1);
+            /* Efecto de aumento en hover */
+            animation: pulse2 1s infinite;
+            transition: all .3s ease-in-out;
+        }
+
+        /* Efecto de pulsación */
+        @keyframes pulse2 {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.5);
+                border-radius: 50%;
+            }
+
+            70% {
+                box-shadow: 0 0 0 .7rem rgba(255, 0, 0, 0);
+                border-radius: 50%;
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+                border-radius: 50%;
+            }
+        }
+
+        // border-radius: 1rem;
+        // box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;    }
+    }
+}
+
+
+
+.contenedor-app {
+    background-color: v.$azul-oscuro;
+    width: 100%;
+    overflow-x: hidden;
+
+    .imagen {
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100vw;
+            height: 10px;
+            background-image: linear-gradient(currentColor,
+                    currentColor 33.33%,
+                    transparent 33.33%,
+                    transparent 100%);
+            background-size: 100% 6px;
+            color: v.$azul-oscuro;
+            z-index: 1;
+
+            @include m.tablet_small {
+                z-index: -1;
+            }
+        }
+    }
+
+    @include m.tablet {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        min-height: 100vh;
+
+        &::before {
+            content: '';
+            position: absolute;
+            // top: 0;
+            left: 50%; // Centra el separador (puedes ajustarlo según el diseño)
+            transform: translateX(-50%); // Asegura que quede centrado en el contenedor
+            width: 1.5rem; // Fijar el ancho del separador
+            height: 103%; // Ocupa todo el alto del contenedor
+            background-image: linear-gradient(currentColor,
+                    currentColor 33.33%,
+                    transparent 33.33%,
+                    transparent 100%);
+            background-size: 100% 6px; // Define el espaciado entre líneas
+            color: v.$azul-oscuro; // Cambiar por tu variable de color si es necesario
+            z-index: 1; // Coloca el separador detrás o delante según el contexto
+        }
+    }
+
+    .imagen {
+        background-image: url(/build/img/portada.jpg);
+        // background-image: url(/build/img/delegacion.png);
+        background-size: cover;
+        background-position: center center;
+        height: 30rem;
+
+        // overflow: hidden;
+        @include m.tablet {
+            height: auto;
+        }
+    }
+
+    .app {
+        width: 95%;
+        margin: 0 auto;
+        padding: 3rem;
+    }
+}
+
+.acciones {
+    margin-top: 5rem;
+
+    @include m.tablet {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    a {
+        color: v.$gris;
+        display: block;
+        margin-bottom: calc(5rem / 2);
+        text-align: center;
+        font-weight: v.$delgada;
+        font-size: 1.3rem;
+    }
+}
+
+.boton {
+    @include m.boton(v.$botones, v.$blanco);
+}
+
+.boton-eliminar {
+    @include m.boton(v.$rojo, v.$blanco);
+}
+
+.partidos__subir {
+
+    button {
+        border: none;
+    }
+}
