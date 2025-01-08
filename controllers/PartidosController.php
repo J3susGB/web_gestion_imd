@@ -21,7 +21,7 @@ class PartidosController
     public static function index(Router $router)
     {
 
-        if(!is_admin()) {
+        if (!is_admin()) {
             header('Location: /');
         }
 
@@ -93,7 +93,7 @@ class PartidosController
         // Capturar filtros si vienen por GET
         if ($_SERVER['REQUEST_METHOD'] === 'GET' && !empty($_GET)) {
 
-            if(!is_admin()) {
+            if (!is_admin()) {
                 header('Location: /');
             }
 
@@ -182,7 +182,7 @@ class PartidosController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            if(!is_admin()) {
+            if (!is_admin()) {
                 header('Location: /');
             }
 
@@ -264,7 +264,7 @@ class PartidosController
 
     public static function subir(Router $router)
     {
-        if(!is_admin()) {
+        if (!is_admin()) {
             header('Location: /');
         }
 
@@ -275,7 +275,7 @@ class PartidosController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            if(!is_admin()) {
+            if (!is_admin()) {
                 header('Location: /');
             }
 
@@ -405,7 +405,7 @@ class PartidosController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            if(!is_admin()) {
+            if (!is_admin()) {
                 header('Location: /');
             }
 
@@ -423,7 +423,7 @@ class PartidosController
     public static function agregar(Router $router)
     {
 
-        if(!is_admin()) {
+        if (!is_admin()) {
             header('Location: /');
         }
 
@@ -436,7 +436,7 @@ class PartidosController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            if(!is_admin()) {
+            if (!is_admin()) {
                 header('Location: /');
             }
 
@@ -483,7 +483,7 @@ class PartidosController
     public static function editar(Router $router)
     {
 
-        if(!is_admin()) {
+        if (!is_admin()) {
             header('Location: /');
         }
 
@@ -518,7 +518,7 @@ class PartidosController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            if(!is_admin()) {
+            if (!is_admin()) {
                 header('Location: /');
             }
 
@@ -627,10 +627,10 @@ class PartidosController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            if(!is_admin()) {
+            if (!is_admin()) {
                 header('Location: /');
             }
-            
+
             // Obtener el ID del partido desde los parámetros de la URL
             $id = $_GET['id'] ?? null;
             $id = filter_var($id, FILTER_VALIDATE_INT);
@@ -719,21 +719,43 @@ class PartidosController
 
     public static function autocompletarArbitrosAction()
     {
-        // Recuperamos el parámetro de búsqueda enviado por el frontend
+        // Asegurar el encabezado JSON con codificación UTF-8
+        header('Content-Type: application/json; charset=utf-8');
+
+        // Obtener el parámetro de búsqueda
         $busqueda = $_POST['q'] ?? '';
 
-        // Verificamos si hay algo para buscar
+        // Validar si hay algo que buscar
         if (empty($busqueda)) {
             echo json_encode([]);
             return;
         }
 
-        // Buscamos los árbitros que coincidan con la búsqueda
+        // Evitar problemas con caracteres especiales
+        $busqueda = htmlentities($busqueda, ENT_QUOTES, 'UTF-8');
         $arbitros = Arbitros::busquedaParcial($busqueda);
 
-        // Devolvemos los resultados en formato JSON
-        echo json_encode($arbitros ?: []);
+        // Enviar respuesta JSON con codificación UTF-8
+        echo json_encode($arbitros ?: [], JSON_UNESCAPED_UNICODE);
     }
+
+    // public static function autocompletarArbitrosAction()
+    // {
+    //     // Recuperamos el parámetro de búsqueda enviado por el frontend
+    //     $busqueda = $_POST['q'] ?? '';
+
+    //     // Verificamos si hay algo para buscar
+    //     if (empty($busqueda)) {
+    //         echo json_encode([]);
+    //         return;
+    //     }
+
+    //     // Buscamos los árbitros que coincidan con la búsqueda
+    //     $arbitros = Arbitros::busquedaParcial($busqueda);
+
+    //     // Devolvemos los resultados en formato JSON
+    //     echo json_encode($arbitros ?: []);
+    // }
 
     public static function nombrar(Router $router)
     {

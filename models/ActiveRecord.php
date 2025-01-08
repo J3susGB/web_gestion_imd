@@ -219,24 +219,52 @@ class ActiveRecord {
         return $resultado;
     }
 
-    //Para buscar árbitros por apellidos o nombre y que estén activos en la BD
+    // //Para buscar árbitros por apellidos o nombre y que estén activos en la BD
+    // public static function busquedaParcial($busqueda) {
+    //     // Dividimos la búsqueda en palabras
+    //     $palabras = explode(' ', mysqli_real_escape_string(self::$db, $busqueda)); 
+    //     $query = "SELECT * FROM " . static::$tabla . " WHERE activo = 1"; // Filtramos por 'activo = 1'
+    //     $condiciones = [];
+    
+    //     foreach ($palabras as $palabra) {
+    //         // Para cada palabra, buscamos en los campos apellido1, apellido2 y nombre
+    //         $condiciones[] = "(apellido1 LIKE '%{$palabra}%' OR apellido2 LIKE '%{$palabra}%' OR nombre LIKE '%{$palabra}%')";
+    //     }
+    
+    //     // Unimos las condiciones con AND (coincidirán todas las palabras)
+    //     if (count($condiciones) > 0) {
+    //         $query .= " AND (" . implode(' AND ', $condiciones) . ")";
+    //     }
+    
+    //     // Añadimos el ordenamiento por los campos especificados
+    //     $query .= " ORDER BY apellido1 ASC, apellido2 ASC, nombre ASC";
+    
+    //     $resultado = self::consultarSQL($query);
+    //     return $resultado;
+    // }
+
     public static function busquedaParcial($busqueda) {
-        // Dividimos la búsqueda en palabras
-        $palabras = explode(' ', mysqli_real_escape_string(self::$db, $busqueda)); 
-        $query = "SELECT * FROM " . static::$tabla . " WHERE activo = 1"; // Filtramos por 'activo = 1'
+        // Asegurar que la búsqueda está limpia
+        $busqueda = mysqli_real_escape_string(self::$db, $busqueda);
+        $palabras = explode(' ', $busqueda);
+    
+        // Base de la consulta
+        $query = "SELECT * FROM " . static::$tabla . " WHERE activo = 1";
         $condiciones = [];
     
         foreach ($palabras as $palabra) {
-            // Para cada palabra, buscamos en los campos apellido1, apellido2 y nombre
-            $condiciones[] = "(apellido1 LIKE '%{$palabra}%' OR apellido2 LIKE '%{$palabra}%' OR nombre LIKE '%{$palabra}%')";
+            $palabra = trim($palabra);
+            $condiciones[] = "(CONVERT(apellido1 USING utf8mb4) LIKE '%{$palabra}%' 
+                            OR CONVERT(apellido2 USING utf8mb4) LIKE '%{$palabra}%'
+                            OR CONVERT(nombre USING utf8mb4) LIKE '%{$palabra}%')";
         }
     
-        // Unimos las condiciones con AND (coincidirán todas las palabras)
+        // Agregar condiciones
         if (count($condiciones) > 0) {
             $query .= " AND (" . implode(' AND ', $condiciones) . ")";
         }
     
-        // Añadimos el ordenamiento por los campos especificados
+        // Ordenar resultados
         $query .= " ORDER BY apellido1 ASC, apellido2 ASC, nombre ASC";
     
         $resultado = self::consultarSQL($query);
