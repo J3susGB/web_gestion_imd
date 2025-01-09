@@ -26,8 +26,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const observaciones = icon.getAttribute('data-observaciones') || 'Sin observaciones';
 
         modal.textContent = observaciones; // Mostrar el valor único de observaciones
-        modal.style.left = `${rect.left + window.scrollX - 150}px`;
-        modal.style.top = `${rect.top + window.scrollY + 5}px`;
+        modal.style.left = `${rect.left + window.scrollX - 10}px`;
+        modal.style.top = `${rect.top + window.scrollY - 5}px`;
 
         modal.style.display = 'block';
     }

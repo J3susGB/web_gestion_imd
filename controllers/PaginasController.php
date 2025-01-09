@@ -105,6 +105,7 @@ class PaginasController
 
         // Render a la vista 
         $router->render('paginas/rechazar', [
+            'titulo' => 'Partido rechazado',
             'id_partido' => $id_partido
         ]);
     }
