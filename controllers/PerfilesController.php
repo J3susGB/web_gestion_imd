@@ -206,31 +206,82 @@ class PerfilesController
         }
     }
 
+    // public static function restablecer_password()
+    // {
+    //     // Verifica que la solicitud sea POST
+    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    //         // Accede a los datos enviados a través del formulario (no JSON)
+    //         $id = $_POST['id'];
+    //         $activo = isset($_POST['activo']) ? $_POST['activo'] : 0; // Define un valor predeterminado si no se recibe 'activo'
+
+    //         // Busca el perfil por ID
+    //         $perfil = Perfiles::find($id);
+
+    //         if ($perfil) {
+
+    //             // Enviar el email
+    //             $email = new Email([
+    //                 'email' => $perfil->email,
+    //                 'nombre' => $perfil->nombre
+    //             ]);
+
+    //             $resultado = $email->enviarInstrucciones();
+
+    //             echo json_encode(['success' => $resultado]);
+    //         } else {
+    //             echo json_encode(['success' => false]);
+    //         }
+    //     }
+    // }
+
     public static function restablecer_password()
     {
         // Verifica que la solicitud sea POST
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Accede a los datos enviados a través del formulario (no JSON)
-            $id = $_POST['id'];
-            $activo = isset($_POST['activo']) ? $_POST['activo'] : 0; // Define un valor predeterminado si no se recibe 'activo'
+            $id = $_POST['id'] ?? null;
 
-            // Busca el perfil por ID
-            $perfil = Perfiles::find($id);
+            if ($id) {
+                // Busca el perfil por ID
+                $perfil = Perfiles::find($id);
 
-            if ($perfil) {
+                if ($perfil) {
+                    // Enviar el email
+                    $email = new Email([
+                        'email' => $perfil->email,
+                        'nombre' => $perfil->nombre
+                    ]);
 
-                // Enviar el email
-                $email = new Email([
-                    'email' => $perfil->email,
-                    'nombre' => $perfil->nombre
-                ]);
+                    $resultado = $email->enviarInstrucciones();
 
-                $resultado = $email->enviarInstrucciones();
-
-                echo json_encode(['success' => $resultado]);
+                    // Validar resultado del envío de email
+                    if ($resultado) {
+                        echo json_encode([
+                            'success' => true,
+                            'message' => 'Email enviado correctamente.'
+                        ]);
+                    } else {
+                        echo json_encode([
+                            'success' => false,
+                            'message' => 'El envío del email falló.'
+                        ]);
+                    }
+                } else {
+                    echo json_encode([
+                        'success' => false,
+                        'message' => 'Perfil no encontrado.'
+                    ]);
+                }
             } else {
-                echo json_encode(['success' => false]);
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'ID no recibido.'
+                ]);
             }
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Método no permitido.'
+            ]);
         }
     }
 
@@ -265,7 +316,6 @@ class PerfilesController
 
             if ($usuario->usuario !== $_POST['user']) {
                 Perfiles::setAlerta('error', 'El usuario no existe');
-
             } else {
 
                 // Añadir el nuevo password

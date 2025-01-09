@@ -118,7 +118,6 @@
             </div>
         </div>
 
-
         <!-- Botones -->
         <div style="display: flex; flex-direction: row;" class="partidos__campo filtros_botones">
             <button type="button" class="partidos__boton-filtro" onclick="enviarFormularioManualmente()">Aplicar Filtros</button>
@@ -315,7 +314,6 @@
                                 <?php } ?>
                             </div>
 
-
                             <?php if ($p->estado == 1) { ?>
                                 <picture>
                                     <source srcset="/build/img/guardado.avif" type="image/avif">
@@ -438,7 +436,6 @@
 
 <?php } ?> <!--CIERRE FINAL FINAL-->
 
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // ✅ Seleccionar/Deseleccionar todos los checkboxes
@@ -473,3 +470,5 @@
         });
     });
 </script>
+
+

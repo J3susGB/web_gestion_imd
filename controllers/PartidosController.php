@@ -262,6 +262,202 @@ class PartidosController
         ]);
     }
 
+    // public static function index(Router $router)
+    // {
+    //     if (!is_admin()) {
+    //         header('Location: /');
+    //     }
+
+    //     session_start();
+    //     $usuario = new Perfiles($_SESSION);
+
+    //     $partidos = Partidos::all('ASC');
+    //     $categorias = Categorias::all('ASC');
+    //     $designaciones = Designaciones::all('ASC');
+
+    //     // Fechas únicas asociativas
+    //     $fechas = [];
+    //     foreach ($partidos as $p) {
+    //         $fechas[] = $p->fecha;
+    //     }
+    //     $fechasUnicas = array_unique($fechas);
+    //     sort($fechasUnicas);
+    //     $fechasAsociativo = [];
+    //     foreach ($fechasUnicas as $index => $fecha) {
+    //         $fechasAsociativo[] = [
+    //             'id' => $index,
+    //             'fecha' => $fecha
+    //         ];
+    //     }
+
+    //     // Distritos únicos asociativos
+    //     $distritos = [];
+    //     foreach ($partidos as $p) {
+    //         $distritos[] = $p->distrito;
+    //     }
+    //     $distritosUnicos = array_unique($distritos);
+    //     sort($distritosUnicos);
+    //     $distritosAsociativo = [];
+    //     foreach ($distritosUnicos as $index => $distrito) {
+    //         $distritosAsociativo[] = [
+    //             'id' => $index,
+    //             'distrito' => $distrito
+    //         ];
+    //     }
+
+    //     $arbitros = Arbitros::all_apellidos_y_nombre('ASC');
+    //     $perfiles = Perfiles::all();
+
+    //     // Capturar filtros si vienen por GET
+    //     if ($_SERVER['REQUEST_METHOD'] === 'GET' && !empty($_GET)) {
+    //         if (!is_admin()) {
+    //             header('Location: /');
+    //         }
+
+    //         $filtros = $_GET;
+
+    //         $partidos_filtro = Partidos::all('ASC');
+    //         $arbis = Arbitros::all_apellidos_y_nombre();
+    //         $cate = Categorias::all('ASC');
+    //         $mod = Modalidades::all('ASC');
+
+    //         foreach ($partidos_filtro as $p) {
+    //             $p->nombre_arbitro = obtenerNombreArbitro($p, $arbis);
+    //             $p->nombre_categoria = obtenerNombreCategoria($p, $cate);
+    //             $p->nombre_modalidad = obtenerNombreModalidad($p, $mod);
+    //         }
+
+    //         // Aplicar filtros
+    //         $partidos_filtro = array_filter($partidos_filtro, function ($partido) use ($filtros) {
+    //             // Filtro por árbitro
+    //             if (!empty($filtros['arbitro']) && stripos(trim($partido->nombre_arbitro), trim($filtros['arbitro'])) === false) {
+    //                 return false;
+    //             }
+
+    //             // Filtro por ID Partido
+    //             if (!empty($filtros['id_partido']) && $partido->id_partido != $filtros['id_partido']) {
+    //                 return false;
+    //             }
+
+    //             // Filtro por Campo
+    //             if (!empty($filtros['campo']) && stripos(trim($partido->terreno), trim($filtros['campo'])) === false) {
+    //                 return false;
+    //             }
+
+    //             // Filtro por Equipo (Local o Visitante)
+    //             if (!empty($filtros['equipo']) && stripos(trim($partido->local), trim($filtros['equipo'])) === false && stripos(trim($partido->visitante), trim($filtros['equipo'])) === false) {
+    //                 return false;
+    //             }
+
+    //             // Filtro por Categoría
+    //             if (!empty($filtros['categoria']) && $partido->nombre_categoria != $filtros['categoria']) {
+    //                 return false;
+    //             }
+
+    //             // Filtro por Fecha
+    //             if (!empty($filtros['fecha']) && $partido->fecha != $filtros['fecha']) {
+    //                 return false;
+    //             }
+
+    //             // Filtro por Distrito
+    //             if (!empty($filtros['distrito']) && $partido->distrito != $filtros['distrito']) {
+    //                 return false;
+    //             }
+
+    //             // Filtro por Estado
+    //             if (!empty($filtros['estado'])) {
+    //                 if ($filtros['estado'] === '0' && !empty($partido->id_arbitro)) {
+    //                     return false; // Excluir "Pendiente"
+    //                 }
+    //                 if ($filtros['estado'] === 'pendiente' && empty($partido->id_arbitro)) {
+    //                     return false; // Excluir "Sin nombrar"
+    //                 }
+    //                 if ($filtros['estado'] !== (string)$partido->estado && $filtros['estado'] !== 'pendiente') {
+    //                     return false;
+    //                 }
+    //             }
+
+    //             // Filtro por Deporte (Modalidad)
+    //             if (!empty($filtros['deporte']) && strtolower(trim($partido->nombre_modalidad)) != strtolower(trim($filtros['deporte']))) {
+    //                 return false;
+    //             }
+
+    //             return true;
+    //         });
+
+    //         $partidos = !empty($partidos_filtro) ? $partidos_filtro : [];
+    //         $sinResultados = empty($partidos_filtro);
+    //     } else {
+    //         $partidos = Partidos::all('ASC');
+    //         $sinResultados = false;
+    //     }
+
+    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    //         if (!is_admin()) {
+    //             header('Location: /');
+    //         }
+
+    //         $envio_partidos = $_POST['seleccionar'];
+
+    //         foreach ($partidos as $p) {
+    //             foreach ($envio_partidos as $id_partido) {
+    //                 if ($p->id_partido == $id_partido) {
+    //                     $partido = Partidos::encuentra_partido($id_partido);
+    //                     $designacion = Designaciones::encuentra_partido($id_partido);
+    //                     $arbitros = Arbitros::all();
+
+    //                     foreach ($arbitros as $a) {
+    //                         if ($a->id == $designacion->id_arbitro) {
+    //                             $partido->estado = 2;
+    //                             $designacion->estado = 2;
+
+    //                             $resultado = $partido->guardar();
+    //                             $resultado2 = $designacion->guardar();
+
+    //                             if ($resultado && $resultado2) {
+    //                                 $email = new Email([
+    //                                     'id' => $designacion->id,
+    //                                     'id_partido' => $designacion->id_partido,
+    //                                     'email' => $a->email,
+    //                                     'apellido1' => $a->apellido1,
+    //                                     'apellido2' => $a->apellido2,
+    //                                     'nombre' => $a->nombre,
+    //                                     'fecha' => $designacion->fecha,
+    //                                     'hora' => $designacion->hora,
+    //                                     'terreno' => $designacion->terreno,
+    //                                     'categoria' => $designacion->categoria,
+    //                                     'grupo' => $designacion->grupo,
+    //                                     'local' => $designacion->local,
+    //                                     'visitante' => $designacion->visitante,
+    //                                     'observaciones' => $designacion->observaciones
+    //                                 ]);
+
+    //                                 $email->enviar_partido();
+    //                                 header('Location: /admin/partidos');
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+
+    //     $router->render('admin/partidos/index', [
+    //         'titulo' => 'Gestión de partidos',
+    //         'partidos' => $partidos,
+    //         'categorias' => $categorias,
+    //         'fechasAsociativo' => $fechasAsociativo,
+    //         'distritosAsociativo' => $distritosAsociativo,
+    //         'usuario' => $usuario,
+    //         'arbitros' => $arbitros,
+    //         'designaciones' => $designaciones,
+    //         'filtros' => $_GET ?? [],
+    //         'sinResultados' => $sinResultados,
+    //         'perfiles' => $perfiles
+    //     ]);
+    // }
+
+
     public static function subir(Router $router)
     {
         if (!is_admin()) {

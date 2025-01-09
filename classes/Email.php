@@ -73,36 +73,76 @@ class Email
         $mail->send();
     }
 
+    // public function enviarInstrucciones()
+    // {
+
+    //     // create a new object
+    //     $mail = new PHPMailer();
+    //     $mail->isSMTP();
+    //     $mail->Host = $_ENV['EMAIL_HOST'];
+    //     $mail->SMTPAuth = true;
+    //     $mail->Port = $_ENV['EMAIL_PORT'];
+    //     $mail->Username = $_ENV['EMAIL_USER'];
+    //     $mail->Password = $_ENV['EMAIL_PASS'];
+
+    //     $mail->setFrom('arbitros@cuentasrfaf.es');
+    //     $mail->addAddress($this->email, $this->nombre);
+    //     $mail->Subject = 'Reestablece tu contraseña';
+
+    //     // Set HTML
+    //     $mail->isHTML(TRUE);
+    //     $mail->CharSet = 'UTF-8';
+
+    //     $contenido = '<html>';
+    //     $contenido .= " Hola, <strong>" . $this->nombre .  "</strong> <br><br>El Administrador a restablecido tu perfil de la web de gestión del IMD, sigue el siguiente enlace para crear tu nueva contraseña.</p>";
+    //     $contenido .= "<p>Presiona aquí: <a href='" . $_ENV['HOST'] . "/admin/perfiles/restablecer?email=" . $this->email . "'>Crear contraseña</a>";
+    //     // $contenido .= "<p>Si tu no solicitaste este cambio, puedes ignorar el mensaje.</p>";
+    //     $contenido .= '</html>';
+    //     $mail->Body = $contenido;
+
+    //     //Enviar el mail
+    //     $mail->send();
+    // }
+
     public function enviarInstrucciones()
     {
+        try {
+            // Crear un nuevo objeto PHPMailer
+            $mail = new PHPMailer();
+            $mail->isSMTP();
+            $mail->Host = $_ENV['EMAIL_HOST'];
+            $mail->SMTPAuth = true;
+            $mail->Port = $_ENV['EMAIL_PORT'];
+            $mail->Username = $_ENV['EMAIL_USER'];
+            $mail->Password = $_ENV['EMAIL_PASS'];
 
-        // create a new object
-        $mail = new PHPMailer();
-        $mail->isSMTP();
-        $mail->Host = $_ENV['EMAIL_HOST'];
-        $mail->SMTPAuth = true;
-        $mail->Port = $_ENV['EMAIL_PORT'];
-        $mail->Username = $_ENV['EMAIL_USER'];
-        $mail->Password = $_ENV['EMAIL_PASS'];
+            $mail->setFrom('arbitros@cuentasrfaf.es');
+            $mail->addAddress($this->email, $this->nombre);
+            $mail->Subject = 'Reestablece tu contraseña';
 
-        $mail->setFrom('arbitros@cuentasrfaf.es');
-        $mail->addAddress($this->email, $this->nombre);
-        $mail->Subject = 'Reestablece tu contraseña';
+            // Configuración HTML
+            $mail->isHTML(true);
+            $mail->CharSet = 'UTF-8';
 
-        // Set HTML
-        $mail->isHTML(TRUE);
-        $mail->CharSet = 'UTF-8';
+            $contenido = '<html>';
+            $contenido .= "Hola, <strong>" . $this->nombre .  "</strong><br><br>El Administrador ha restablecido tu perfil de la web de gestión del IMD. Sigue el siguiente enlace para crear tu nueva contraseña.</p>";
+            $contenido .= "<p>Presiona aquí: <a href='" . $_ENV['HOST'] . "/admin/perfiles/restablecer?email=" . $this->email . "'>Crear contraseña</a>";
+            $contenido .= '</html>';
+            $mail->Body = $contenido;
 
-        $contenido = '<html>';
-        $contenido .= " Hola, <strong>" . $this->nombre .  "</strong> <br><br>El Administrador a restablecido tu perfil de la web de gestión del IMD, sigue el siguiente enlace para crear tu nueva contraseña.</p>";
-        $contenido .= "<p>Presiona aquí: <a href='" . $_ENV['HOST'] . "/admin/perfiles/restablecer?email=" . $this->email . "'>Crear contraseña</a>";
-        // $contenido .= "<p>Si tu no solicitaste este cambio, puedes ignorar el mensaje.</p>";
-        $contenido .= '</html>';
-        $mail->Body = $contenido;
-
-        //Enviar el mail
-        $mail->send();
+            // Enviar el correo
+            if ($mail->send()) {
+                return true; // Envío exitoso
+            } else {
+                return false; // Envío fallido
+            }
+        } catch (Exception $e) {
+            // Registrar el error para depuración
+            error_log('Error al enviar el email: ' . $e->getMessage());
+            return false; // Envío fallido
+        }
     }
+
 
     public function enviar_partido()
     {
@@ -253,8 +293,8 @@ class Email
             $contenido .= '<p class="info">Equipo visitante: ' . $this->visitante . '</p><br>';
 
             $contenido .= '<div class="buttons">';
-            $contenido .= '<a href="' . $_ENV['HOST'] . '/admin/perfiles/restablecer?email=' . $this->email . '" class="accept">Aceptar</a>';
-            $contenido .= '<a href="' . $_ENV['HOST'] . '/admin/perfiles/restablecer?email=' . $this->email . '" class="reject">Rechazar</a>';
+            $contenido .= '<a href="' . $_ENV['HOST'] . '/paginas/aceptar?id_partido=' . $this->id_partido . '" class="accept">Aceptar</a>';
+            $contenido .= '<a href="' . $_ENV['HOST'] . '/paginas/motivo_rechazo?id_partido=' . $this->id_partido . '" class="reject">Rechazar</a>';
             $contenido .= '</div><br>';
 
             $contenido .= '<p class="info">En caso de suspensión del partido, introduce el ID DEL PARTIDO en el siguiente enlace: <a href="https://forms.office.com/e/mcqeAWEjvA">Enlace partidos suspendidos</a></p><br>';

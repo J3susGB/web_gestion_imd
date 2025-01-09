@@ -182,6 +182,9 @@ class ArbitrosController
         $usuario = new Perfiles($_SESSION);
         // debuguear($usuario);
 
+        // Inicializar la variable $arbitro
+        $arbitro = new Arbitros(); // Crear una instancia vacía para la vista
+
         // Comprobar si se ha enviado el formulario
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
