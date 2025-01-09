@@ -437,6 +437,23 @@
 
 <?php } ?> <!--CIERRE FINAL FINAL-->
 
+<div class="botones__scroll">
+    <div class="botones__scroll--boton">
+        <picture>
+            <source srcset="/build/img/scroll.avif" type="image/avif">
+            <source srcset="/build/img/scroll.webp" type="image/webp">
+            <img id="arriba" loading="lazy" width="20" height="20" src="/build/img/scroll.png" alt="botón para aceptar">
+        </picture>
+    </div>
+    <div class="botones__scroll--boton">
+        <picture>
+            <source srcset="/build/img/scroll.avif" type="image/avif">
+            <source srcset="/build/img/scroll.webp" type="image/webp">
+            <img id="abajo" loading="lazy" width="20" height="20" src="/build/img/scroll.png" alt="botón para aceptar">
+        </picture>
+    </div>
+</div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // ✅ Seleccionar/Deseleccionar todos los checkboxes
@@ -471,5 +488,3 @@
         });
     });
 </script>
-
-

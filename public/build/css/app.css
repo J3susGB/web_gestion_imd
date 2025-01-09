@@ -2578,6 +2578,44 @@ input[type=date] {
   display: block;
 }
 
+.botones__scroll {
+  position: fixed;
+  right: 5px; /* Posición desde el borde derecho */
+  display: flex;
+  flex-direction: column; /* Alinear los botones verticalmente */
+  gap: 1rem; /* Separación entre los botones */
+  opacity: 0.7;
+  transition: top 0.3s ease, bottom 0.3s ease, opacity 0.3s ease-in-out; /* Transiciones suaves */
+  z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+  pointer-events: auto; /* Permitir interacción */
+}
+@media (min-width: 1024px) {
+  .botones__scroll {
+    right: 15px;
+    gap: 0;
+  }
+}
+
+.botones__scroll--boton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.botones__scroll.hidden {
+  opacity: 0; /* Ocultar los botones */
+  pointer-events: none; /* Deshabilitar interacción mientras están ocultos */
+}
+
+.botones__scroll--boton img {
+  width: 2.8rem; /* Tamaño del ícono */
+}
+
+#arriba {
+  transform: rotate(180deg); /* Rotar para que apunte hacia arriba */
+}
+
 .aceptar {
   width: min(95%, 120rem);
   margin: 0 auto;
