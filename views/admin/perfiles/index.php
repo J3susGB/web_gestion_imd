@@ -29,7 +29,7 @@
 
 <?php } else { ?>
 
-    <h3 class="partidos__titulo-filtro">Realice su búsqueda:</h3>
+    <!-- <h3 class="partidos__titulo-filtro">Realice su búsqueda:</h3>
     <div class="partidos__partido partidos__filtro partidos__filtro-especifico">
         <div class="partidos__campo">
             <h4 class="partidos__titulo-filtros">Búsqueda por nombre y apellidos</h4>
@@ -70,7 +70,7 @@
         <div class="partidos__campo">
             <button class="partidos__boton-filtro" type="button">Borrar filtros</button>
         </div>
-    </div>
+    </div> -->
 
     <div class="arbitros">
         <?php foreach ($perfiles as $a) { ?>
@@ -155,6 +155,23 @@
     </div>
 
 <?php } ?>
+
+<div class="botones__scroll">
+    <div class="botones__scroll--boton">
+        <picture>
+            <source srcset="/build/img/scroll.avif" type="image/avif">
+            <source srcset="/build/img/scroll.webp" type="image/webp">
+            <img id="arriba" loading="lazy" width="20" height="20" src="/build/img/scroll.png" alt="botón para aceptar">
+        </picture>
+    </div>
+    <div class="botones__scroll--boton">
+        <picture>
+            <source srcset="/build/img/scroll.avif" type="image/avif">
+            <source srcset="/build/img/scroll.webp" type="image/webp">
+            <img id="abajo" loading="lazy" width="20" height="20" src="/build/img/scroll.png" alt="botón para aceptar">
+        </picture>
+    </div>
+</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
