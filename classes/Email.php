@@ -125,7 +125,7 @@ class Email
             $mail->CharSet = 'UTF-8';
 
             $contenido = '<html>';
-            $contenido .= "Hola, <strong>" . $this->nombre .  "</strong><br><br>El Administrador ha restablecido tu perfil de la web de gestión del IMD. Sigue el siguiente enlace para crear tu nueva contraseña.</p>";
+            $contenido .= " Hola, <strong>" . $this->nombre .  "</strong><br><br>El Administrador ha restablecido tu perfil de la web de gestión del IMD. Sigue el siguiente enlace para crear tu nueva contraseña.</p>";
             $contenido .= "<p>Presiona aquí: <a href='" . $_ENV['HOST'] . "/admin/perfiles/restablecer?email=" . $this->email . "'>Crear contraseña</a>";
             $contenido .= '</html>';
             $mail->Body = $contenido;
