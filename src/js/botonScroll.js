@@ -40,15 +40,38 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 300);
     });
 
+    // Función de desplazamiento suave con easing
+    const smoothScroll = (targetY, duration) => {
+        const startY = window.scrollY; // Posición inicial
+        const distance = targetY - startY; // Distancia a desplazar
+        const startTime = performance.now(); // Tiempo inicial
+
+        const easeInOutQuad = (t) => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+
+        const animateScroll = (currentTime) => {
+            const timeElapsed = currentTime - startTime;
+            const progress = Math.min(timeElapsed / duration, 1); // Limitar el progreso entre 0 y 1
+            const easedProgress = easeInOutQuad(progress); // Aplicar easing
+
+            window.scrollTo(0, startY + distance * easedProgress);
+
+            if (timeElapsed < duration) {
+                requestAnimationFrame(animateScroll);
+            }
+        };
+
+        requestAnimationFrame(animateScroll);
+    };
+
     // Funcionalidad de los botones
     const scrollUpButton = document.getElementById('arriba');
     const scrollDownButton = document.getElementById('abajo');
 
     scrollUpButton.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        smoothScroll(0, 1000); // Desplazarse hacia arriba con duración de 1000ms
     });
 
     scrollDownButton.addEventListener('click', () => {
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        smoothScroll(document.body.scrollHeight, 1000); // Desplazarse hacia abajo con duración de 1000ms
     });
 });
