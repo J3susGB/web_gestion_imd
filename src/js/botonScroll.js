@@ -30,17 +30,15 @@ document.addEventListener('DOMContentLoaded', function () {
             scrollButtons.style.bottom = '2rem';
         }
 
-        // Ocultar botones mientras se hace scroll
         scrollButtons.classList.add('hidden');
 
-        // Detener el temporizador y programar la reaparición
         clearTimeout(isScrolling);
         isScrolling = setTimeout(() => {
             scrollButtons.classList.remove('hidden');
         }, 300);
     });
 
-    // Función de desplazamiento suave con easing
+    // Función de desplazamiento suave con duración ajustada por tamaño de pantalla
     const smoothScroll = (targetY, duration) => {
         const startY = window.scrollY; // Posición inicial
         const distance = targetY - startY; // Distancia a desplazar
@@ -63,15 +61,17 @@ document.addEventListener('DOMContentLoaded', function () {
         requestAnimationFrame(animateScroll);
     };
 
-    // Funcionalidad de los botones
+    // Funcionalidad de los botones con velocidad ajustada
     const scrollUpButton = document.getElementById('arriba');
     const scrollDownButton = document.getElementById('abajo');
 
     scrollUpButton.addEventListener('click', () => {
-        smoothScroll(0, 1000); // Desplazarse hacia arriba con duración de 1000ms
+        const duration = mediaQuery.matches ? 1000 : 2000; // 1000ms para >= 760px, 2000ms para < 760px
+        smoothScroll(0, duration);
     });
 
     scrollDownButton.addEventListener('click', () => {
-        smoothScroll(document.body.scrollHeight, 1000); // Desplazarse hacia abajo con duración de 1000ms
+        const duration = mediaQuery.matches ? 1000 : 2000; // 1000ms para >= 760px, 2000ms para < 760px
+        smoothScroll(document.body.scrollHeight, duration);
     });
 });
