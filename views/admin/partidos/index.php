@@ -391,7 +391,7 @@
                             <form class="partidos__acciones--enviar" method="post" action="/admin/partidos/enviar?id=<?php echo $p->id; ?>">
                                 <button class="arbitros__card-acciones--eliminar <?php echo ($p->estado == 0 || $p->estado == 2) ? 'disabled' : ''; ?>"
                                     type="submit"
-                                    <?php echo ($p->estado == 0 || $p->estado == 2 || $p->partido == 3) ? 'disabled' : ''; ?>>
+                                    <?php echo ($p->estado == 0 || $p->estado == 2 || $p->estado == 3) ? 'disabled' : ''; ?>>
                                     <picture>
                                         <source srcset="/build/img/enviar.avif" type="image/avif">
                                         <source srcset="/build/img/enviar.webp" type="image/webp">
