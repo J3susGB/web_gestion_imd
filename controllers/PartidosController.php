@@ -163,9 +163,10 @@ class PartidosController
                 //     return false;
                 // }
                 // Filtro por Estado
-                if (isset($filtros['estado']) && (string)$partido->estado !== (string)$filtros['estado']) {
+                if (isset($filtros['estado']) && $filtros['estado'] !== '' && (string)$partido->estado !== (string)$filtros['estado']) {
                     return false;
                 }
+
 
                 // Filtro por Deporte (Modalidad)
                 if (!empty($filtros['deporte']) && strtolower(trim($partido->nombre_modalidad)) != strtolower(trim($filtros['deporte']))) {
