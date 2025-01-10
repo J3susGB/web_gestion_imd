@@ -203,6 +203,26 @@ class FacturasController
 
             // debuguear($designacion);
 
+            // if($designacion->modalidad == 1) { //Si es futbol
+            //     if($designacion->unidad == 1.00) {
+
+            //     } else if($designacion->unidad == 0.50) {
+
+            //     } else if($designacion->unidad == 0.25) {
+
+            //     }
+
+            // } else if ($designacion->modalidad ==2) { //Si es Sala
+            //     if($designacion->unidad == 1.00) {
+
+            //     } else if($designacion->unidad == 0.50) {
+
+            //     } else if($designacion->unidad == 0.25) {
+                    
+            //     }
+
+            // }
+
             $alertas = $designacion->validar_designacion();
 
             // debuguear($alertas);
