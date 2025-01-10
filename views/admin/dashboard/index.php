@@ -18,6 +18,28 @@
 <div class="radial-menu">
     <ul class="radial-menu__menu-list">
 
+    <li class="radial-menu__menu-item">
+            <div class="radial-menu__menu-link-bg"></div>
+            <div class="radial-menu__menu-icon">
+                <pictures class="dashboard__caja--icono agregar">
+                    <source srcset="/build/img/categorias.avif" type="image/avif">
+                    <source srcset="/build/img/categorias.webp" type="image/webp">
+                    <img loading="lazy" width="20" height="20" src="/build/img/categorias.png" alt="botón para añadir árbitro">
+                </pictures>
+            </div>
+            <div class="radial-menu__menu-content">
+                <div class="radial-menu__menu-content-wrapper">
+                    <h6 class="radial-menu__menu-content-title">
+                        Categorías
+                    </h6>
+                    <p class="radial-menu__menu-content-description">
+                        Categorías
+                    </p>
+                </div>
+            </div>
+            <a href="/admin/categorias" class="radial-menu__menu-link"></a>
+        </li>
+
         <li class="radial-menu__menu-item">
             <div class="radial-menu__menu-link-bg"></div>
             <div class="radial-menu__menu-icon">

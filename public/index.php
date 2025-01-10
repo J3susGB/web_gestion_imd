@@ -6,6 +6,7 @@ use MVC\Router;
 use Controllers\AuthController;
 use Controllers\PaginasController;
 use Controllers\ArbitrosController;
+use Controllers\CategoriasController;
 use Controllers\PartidosController;
 use Controllers\PerfilesController;
 use Controllers\DashboardController;
@@ -61,6 +62,10 @@ $router->post('/admin/perfiles/restablecer_password', [PerfilesController::class
 $router->get('/admin/perfiles/restablecer', [PerfilesController::class, 'restablecer']);
 $router->post('/admin/perfiles/restablecer', [PerfilesController::class, 'restablecer']);
 $router->post('/admin/perfiles/eliminar', [PerfilesController::class, 'eliminar']);
+
+$router->get('/admin/categorias', [CategoriasController::class, 'index']);
+$router->get('/admin/categorias/agregar', [CategoriasController::class, 'agregar']);
+$router->post('/admin/categorias/agregar', [CategoriasController::class, 'agregar']);
 
 $router->get('/admin/facturas', [FacturasController::class, 'index']);
 $router->post('/admin/facturas', [FacturasController::class, 'index']);
