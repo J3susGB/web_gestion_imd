@@ -60,7 +60,7 @@
             </div>
 
             <div class="partidos__acciones">
-                <a title="Editar" class="arbitros__card-acciones--editar" href="/admin/facturas/editar?id=<?php echo $d->id; ?>">
+                <a title="Editar" class="arbitros__card-acciones--editar" href="/admin/categorias/editar?id=<?php echo $d->id; ?>">
                     <picture>
                         <source srcset="/build/img/edit.avif" type="image/avif">
                         <source srcset="/build/img/edit.webp" type="image/webp">
@@ -68,7 +68,7 @@
                     </picture>
                 </a>
                 <form class="partidos__acciones--eliminar" method="post" action="/admin/categorias/eliminar?id=<?php echo $d->id; ?>">
-                    <button class="alert4 arbitros__card-acciones--eliminar" type="button">
+                    <button class="alert5 arbitros__card-acciones--eliminar" type="button">
                         <picture>
                             <source srcset="/build/img/envase.avif" type="image/avif">
                             <source srcset="/build/img/envase.webp" type="image/webp">

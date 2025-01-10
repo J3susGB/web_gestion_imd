@@ -66,6 +66,9 @@ $router->post('/admin/perfiles/eliminar', [PerfilesController::class, 'eliminar'
 $router->get('/admin/categorias', [CategoriasController::class, 'index']);
 $router->get('/admin/categorias/agregar', [CategoriasController::class, 'agregar']);
 $router->post('/admin/categorias/agregar', [CategoriasController::class, 'agregar']);
+$router->get('/admin/categorias/editar', [CategoriasController::class, 'editar']);
+$router->post('/admin/categorias/editar', [CategoriasController::class, 'editar']);
+$router->post('/admin/categorias/eliminar', [CategoriasController::class, 'eliminar']);
 
 $router->get('/admin/facturas', [FacturasController::class, 'index']);
 $router->post('/admin/facturas', [FacturasController::class, 'index']);

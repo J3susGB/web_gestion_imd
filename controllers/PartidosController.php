@@ -739,28 +739,6 @@ class PartidosController
         echo json_encode($arbitros ?: [], JSON_UNESCAPED_UNICODE);
     }
 
-    // public static function autocompletarArbitrosAction()
-    // {
-    //     // Asegurar el encabezado JSON con codificación UTF-8
-    //     header('Content-Type: application/json; charset=utf-8');
-
-    //     // Obtener el parámetro de búsqueda
-    //     $busqueda = $_POST['q'] ?? '';
-
-    //     // Validar si hay algo que buscar
-    //     if (empty($busqueda)) {
-    //         echo json_encode([]);
-    //         return;
-    //     }
-
-    //     // Evitar problemas con caracteres especiales
-    //     $busqueda = htmlentities($busqueda, ENT_QUOTES, 'UTF-8');
-    //     $arbitros = Arbitros::busquedaParcial($busqueda);
-
-    //     // Enviar respuesta JSON con codificación UTF-8
-    //     echo json_encode($arbitros ?: [], JSON_UNESCAPED_UNICODE);
-    // }
-
     public static function nombrar(Router $router)
     {
 

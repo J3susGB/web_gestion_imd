@@ -1,5 +1,5 @@
 <div class="dashboard__caja">
-    <a href="/admin/categorias" title="Volver a categorías">
+    <a href="/admin/categorias" title="Volver a categorias">
         <pictures class="dashboard__caja--icono">
             <source srcset="/build/img/arrow.avif" type="image/avif">
             <source srcset="/build/img/arrow.webp" type="image/webp">
@@ -14,8 +14,7 @@
 require_once __DIR__ . '/../../templates/alertas.php';
 ?>
 
-<!-- <h3 class="partidos__titulo-filtro">Agregar árbitro/a:</h3> -->
-<form action="/admin/categorias/agregar" method="post" class="partidos__partido partidos__filtro partidos__filtro-especifico">
+<form  method="post" class="partidos__partido partidos__filtro partidos__filtro-especifico">
     <div class="partidos__campo">
         <h4 class="partidos__titulo-filtros">Nombre</h4>
         <input
@@ -80,18 +79,17 @@ require_once __DIR__ . '/../../templates/alertas.php';
         <h4 class="partidos__titulo-filtros">Elije modalidad</h4>
         <div class="estado-opciones">
             <label class="estado-label">
-                <input <?php echo $categoria->id_modalidad === 1 ? 'checked' : ''; ?> type="radio" name="id_modalidad" value="1">
+                <input <?php echo $categoria->id_modalidad == 1 ? 'checked' : ''; ?> type="radio" name="id_modalidad" value="1">
                 <span class="radio-custom"></span>
                 Fútbol
             </label>
             <label class="estado-label">
-                <input <?php echo $categoria->id_modalidad === 2 ? 'checked' : ''; ?> type="radio" name="id_modalidad" value="2">
+                <input <?php echo $categoria->id_modalidad == 2 ? 'checked' : ''; ?> type="radio" name="id_modalidad" value="2">
                 <span class="radio-custom"></span>
                 Fútbol Sala
             </label>
         </div>
     </div>
-
 
     <div class="partidos__campo">
         <button class=" alert partidos__boton-filtro" type="submit">Guardar</button>

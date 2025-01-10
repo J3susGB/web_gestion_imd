@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const deleteButtons = document.querySelectorAll('.alert4');
+    const deleteButtons = document.querySelectorAll('.alert5');
 
     deleteButtons.forEach(button => {
         button.addEventListener('click', function (e) {
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const form = this.closest('form');
 
             Swal.fire({
-                title: "Al pulsar Sí, el partido será eliminado, ¿Desea confirmar?",
+                title: "Al pulsar Sí, la categoría será eliminada, ¿Desea confirmar?",
                 showCancelButton: true,
                 confirmButtonText: "Sí",
                 cancelButtonText: "No",
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             if (data.success) {
                                 Swal.fire({
                                     title: 'Eliminado',
-                                    text: 'El partido ha sido eliminado.',
+                                    text: 'La categoría ha sido eliminada.',
                                     icon: 'success',
                                     confirmButtonText: "Aceptar",
                                     confirmButtonColor: "#71B100",
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                         confirmButton: 'custom-button',  // Clase personalizada para el botón de confirmación
                                     }
                                 }).then(() => {
-                                    window.location.href = '/admin/partidos'; // Redirige al usuario
+                                    window.location.href = '/admin/categorias'; // Redirige al usuario
                                 });
                             } else {
                                 Swal.fire({
