@@ -402,7 +402,7 @@
     }
 
     &__partido--id,
-    &__partido--id1  {
+    &__partido--id1 {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -517,7 +517,21 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-           
+
+        button {
+            cursor: pointer;
+            padding: .1rem .3rem;
+            width: 4.2rem;
+            border-radius: .5rem;
+            border: none;
+            background-color: darken(v.$gris, 3);
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
+            p {
+                margin: 0;
+            }
+        }
+
         p {
             margin: 0;
             margin: .2rem 5rem;
@@ -527,9 +541,9 @@
     &__partido--facturacion {
         margin-top: .21rem;
         padding-top: 2rem;
-        box-shadow: 1px  1px 6px rgb(163, 163, 163) inset;
+        box-shadow: 1px 1px 6px rgb(163, 163, 163) inset;
     }
-    
+
 
     &__partido--fecha {
         display: flex;
@@ -703,46 +717,13 @@
     }
 }
 
-// @media (min-width: 601px) {
-//     .partidos__filtro {
-//         display: flex;
-//         flex-wrap: wrap;
-//         gap: 1.5rem; /* Espacio entre los elementos */
-//     }
-
-//     .partidos__campo {
-//         display: flex;
-//         align-items: center; /* Alinea los elementos verticalmente al centro */
-//         gap: 1rem; /* Espacio entre los elementos */
-
-//         h4, legend {
-//             margin: 0; /* Elimina márgenes para que estén alineados con los inputs */
-//             width: 19.3rem;
-//         }
-
-//         input[type="text"] {
-//             width: auto; /* Ajusta el ancho para que no ocupe todo el espacio */
-//             margin: 0; /* Elimina márgenes innecesarios */
-//         }
-//     }
-// }
-
-// .disabled:disabled {
-//     opacity: 0.5;
-//     pointer-events: none;
-//     cursor: not-allowed;
-//     transform: none; 
-// }
-// button.disabled:hover {
-//     transform: none;               /* Elimina transformaciones en el hover */
-// }
-
 #send,
 #nombrado {
     width: 3.1rem;
 }
 
 #save,
+#save1,
 #rechazado {
     width: 3.8rem;
 }
@@ -926,4 +907,138 @@
 
 #arbitro_suggestions li:hover {
     background-color: #f1f1f1;
+}
+
+//____________________________________________
+
+@import url('https://fonts.googleapis.com/css?family=Lato:100,300,400');
+@import url('https://fonts.googleapis.com/css?family=Roboto:100');
+
+@mixin button($bcolor,
+    $url,
+    $x1,
+    $y1,
+    $bor,
+    $col) {
+    background: $bcolor;
+    -webkit-mask: url($url);
+    mask: url($url);
+    -webkit-mask-size: $x1 $y1;
+    mask-size: $x1 $y1;
+    border: $bor;
+    color: $col;
+}
+
+.button-container-1 {
+    position: relative;
+    width: 100px;
+    height: 45px;
+    margin-right: 5%;
+    margin-top: 5vh;
+    overflow: hidden;
+    border: 1px solid v.$gris;
+    font-weight: 300;
+    font-size: 20px;
+    transition: 0.5s;
+    letter-spacing: 1px;
+    border-radius: 8px;
+    float: right; /* Alinea el contenedor del botón a la derecha */
+
+}
+
+
+.button-container-1 button {
+    width: 101%;
+    height: 100%;
+    // font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    background: v.$gris;
+    -webkit-mask: url("https://raw.githubusercontent.com/robin-dela/css-mask-animation/master/img/nature-sprite.png");
+    mask: url("https://raw.githubusercontent.com/robin-dela/css-mask-animation/master/img/nature-sprite.png");
+    -webkit-mask-size: 2300% 100%;
+    mask-size: 2300% 100%;
+    border: none;
+    color: v.$azul-oscuro;
+    cursor: pointer;
+    -webkit-animation: ani2 0.7s steps(22) forwards;
+    animation: ani2 0.7s steps(22) forwards;
+    align-self: right;
+}
+
+.button-container-1 button:hover {
+    -webkit-animation: ani 0.7s steps(22) forwards;
+    animation: ani 0.7s steps(22) forwards;
+}
+
+.mas {
+    position: absolute;
+    color: v.$gris;
+    text-align: center;
+    width: 101%;
+    // font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+    // margin-top: 7px;
+    overflow: hidden;
+    font-weight: bold;
+}
+
+#button__factura {
+    margin-right: 12%;
+}
+
+#button_factura button {
+    margin: 0 auto;
+    padding: 0 auto;
+}
+
+@-webkit-keyframes ani {
+    from {
+        -webkit-mask-position: 0 0;
+        mask-position: 0 0;
+    }
+
+    to {
+        -webkit-mask-position: 100% 0;
+        mask-position: 100% 0;
+    }
+}
+
+@keyframes ani {
+    from {
+        -webkit-mask-position: 0 0;
+        mask-position: 0 0;
+    }
+
+    to {
+        -webkit-mask-position: 100% 0;
+        mask-position: 100% 0;
+    }
+}
+
+@-webkit-keyframes ani2 {
+    from {
+        -webkit-mask-position: 100% 0;
+        mask-position: 100% 0;
+    }
+
+    to {
+        -webkit-mask-position: 0 0;
+        mask-position: 0 0;
+    }
+}
+
+@keyframes ani2 {
+    from {
+        -webkit-mask-position: 100% 0;
+        mask-position: 100% 0;
+    }
+
+    to {
+        -webkit-mask-position: 0 0;
+        mask-position: 0 0;
+    }
 }

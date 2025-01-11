@@ -12,11 +12,13 @@
         align-items: center;
         margin: 0 3rem;
         border-bottom: solid 1px v.$gris;
+        margin-top: 1.5rem;
 
         @include m.telefono_small {
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: space-around;
             align-items: center;
+            margin-top: 0;
         }
 
         &:last-child {
@@ -34,4 +36,56 @@
         align-items: center;
         gap: 1rem;
     }
+
+    /* Estilo base del checkbox */
+    input[type="checkbox"] {
+        -webkit-appearance: none;
+        /* Elimina el estilo predeterminado */
+        -moz-appearance: none;
+        appearance: none;
+        width: 1.7rem;
+        /* Anchura del checkbox */
+        height: 1.7rem;
+        /* Altura del checkbox */
+        border: 2px solid darken(v.$gris, 5);
+        /* Borde del checkbox */
+        border-radius: .5rem;
+        /* Bordes redondeados */
+        background-color: v.$gris;
+        /* Fondo blanco */
+        cursor: pointer;
+        /* Cambia el cursor al pasar por encima */
+        display: inline-block;
+        position: relative;
+        transition: all 0.2s ease;
+        /* Transición para suavizar los cambios */
+    }
+
+    /* Estilo cuando el checkbox está marcado */
+    input[type="checkbox"]:checked {
+        background-color: #28a745;
+        /* Fondo verde al seleccionar */
+        border-color: #28a745;
+        /* Borde verde al seleccionar */
+    }
+
+    /* Check personalizado dentro del checkbox */
+    input[type="checkbox"]:checked::after {
+        content: "✓";
+        /* Icono del check */
+        color: white;
+        /* Color del check */
+        font-size: 1.1rem;
+        /* Tamaño del check */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 }
+
+// #submitFactura {
+//     @include m.desktop {
+//         margin-right: 10%;
+//     }
+// }

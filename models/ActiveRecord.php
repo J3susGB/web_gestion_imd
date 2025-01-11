@@ -188,6 +188,13 @@ class ActiveRecord {
         $resultado = self::consultarSQL($query);
         return $resultado; // Devuelve todos los resultados
     }
+
+    public static function where_all_ordered_by_fecha($columna, $valor) {
+        $query = "SELECT * FROM " . static::$tabla . " WHERE {$columna} = '{$valor}' ORDER BY fecha ASC";
+        $resultado = self::consultarSQL($query);
+        return $resultado; // Devuelve todos los resultados ordenados por fecha ascendente
+    }
+    
     
 
     // Retornar los registros por un orden 

@@ -771,6 +771,9 @@ class PartidosController
             $partido = Partidos::find($id_partido);
             // debuguear($partido);
 
+            //Traemos las categorias
+            $categorias = Categorias::all();
+
             //Se crea desgignacion
             $designacion = new Designaciones();
 
@@ -789,6 +792,15 @@ class PartidosController
             $designacion->visitante = $partido->visitante;
             $designacion->observaciones = $partido->observaciones;
             $designacion->modalidad = (int)$partido->modalidad;
+
+            foreach($categorias as $c) {
+                if($designacion->categoria == $c->nombre2 && $designacion->modalidad == $c->id_modalidad) {
+                    $designacion->facturar = $c->facturar;
+                    $designacion->tarifa = $c->tarifa;
+                    $designacion->pago_arbitro = $c->pago_arbitro;
+                    $designacion->oa = $c->oa;
+                }
+            }
             //cambiamos estado a nombrado:
             $designacion->estado = 1;
 

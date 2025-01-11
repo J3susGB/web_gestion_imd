@@ -7,7 +7,8 @@ class Designaciones extends ActiveRecord {
     protected static $columnasDB = [
         'id', 'id_usuario', 'id_arbitro', 'id_partido', 'categoria', 'grupo', 
         'fecha', 'hora', 'terreno', 'distrito', 'jornada', 'local', 'visitante', 
-        'observaciones', 'modalidad', 'estado', 'unidad', 'jornada_editada'
+        'observaciones', 'modalidad', 'estado', 'unidad', 'jornada_editada', 'oa',
+        'pago_arbitro', 'facturar', 'tarifa'
     ];
 
     public $id;
@@ -28,6 +29,10 @@ class Designaciones extends ActiveRecord {
     public $estado;
     public $unidad;
     public $jornada_editada;
+    public $oa;
+    public $pago_arbitro;
+    public $facturar;
+    public $tarifa;
     
     public function __construct($args = [])
     {
@@ -49,6 +54,10 @@ class Designaciones extends ActiveRecord {
         $this->estado = $args['estado'] ?? 0;
         $this->unidad = $args['unidad'] ?? 1;
         $this->jornada_editada = $args['jornada_editada'] ?? 0;
+        $this->oa = $args['oa'] ?? 0.00;
+        $this->pago_arbitro = $args['pago_arbitro'] ?? 0.00;
+        $this->facturar = $args['facturar'] ?? 0.00;
+        $this->tarifa = $args['tarifa'] ?? 0.00;
     }
 
     public function validar_generar_designacion() {

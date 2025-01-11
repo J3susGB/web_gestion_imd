@@ -78,6 +78,9 @@ $router->get('/admin/facturas/ver', [FacturasController::class, 'ver']);
 $router->post('/admin/facturas/ver', [FacturasController::class, 'ver']);
 $router->get('/admin/facturas/editar', [FacturasController::class, 'editar']);
 $router->post('/admin/facturas/editar', [FacturasController::class, 'editar']);
+$router->post('/admin/facturas/cambiar_unidad', [FacturasController::class, 'cambiar_unidad']);
+$router->post('/admin/facturas/generar_excel_jornada', [FacturasController::class, 'generar_excel_jornada']);
+$router->post('/admin/facturas/generar_factura', [FacturasController::class, 'generar_factura']);
 
 // Crear Cuenta
 $router->get('/registro', [AuthController::class, 'registro']);

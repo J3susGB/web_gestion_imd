@@ -238,9 +238,9 @@
                             <!-- Acción de editar -->
                             <a title="Editar" class="arbitros__card-acciones--editar" href="/admin/partidos/editar?id=<?php echo $p->id; ?>">
                                 <picture>
-                                    <source srcset="/build/img/editar-partido.avif" type="image/avif">
-                                    <source srcset="/build/img/editar-partido.webp" type="image/webp">
-                                    <img loading="lazy" width="20" height="20" src="/build/img/editar-partido.png" alt="botón para resetear">
+                                    <source srcset="/build/img/editar_jornada.avif" type="image/avif">
+                                    <source srcset="/build/img/editar_jornada.webp" type="image/webp">
+                                    <img loading="lazy" width="20" height="20" src="/build/img/editar_jornada.png" alt="botón para resetear">
                                 </picture>
                             </a>
                             <form class="partidos__acciones--guardar" method="post" action="/admin/partidos/guardar?id=<?php echo $p->id; ?>">
@@ -374,9 +374,9 @@
                             <!-- Acción de editar -->
                             <a title="Editar" class="arbitros__card-acciones--editar" href="/admin/partidos/editar?id=<?php echo $p->id; ?>">
                                 <picture>
-                                    <source srcset="/build/img/editar-partido.avif" type="image/avif">
-                                    <source srcset="/build/img/editar-partido.webp" type="image/webp">
-                                    <img loading="lazy" width="20" height="20" src="/build/img/editar-partido.png" alt="botón para resetear">
+                                    <source srcset="/build/img/editar_jornada.avif" type="image/avif">
+                                    <source srcset="/build/img/editar_jornada.webp" type="image/webp">
+                                    <img loading="lazy" width="20" height="20" src="/build/img/editar_jornada.png" alt="botón para resetear">
                                 </picture>
                             </a>
                             <form class="partidos__acciones--guardar" method="post" action="/admin/partidos/borrar_nombramiento?id=<?php echo $p->id; ?>">
@@ -430,8 +430,12 @@
             <?php } ?> <!--cierre foreach de partidos-->
         </div>
         <!-- Botón para procesar los partidos seleccionados -->
-        <div class="partidos__container">
+        <!-- <div class="partidos__container">
             <button class="partidos__enviar" type="submit" id="submitButton">Enviar</button>
+        </div> -->
+        <div class="button-container-1 partidos__container">
+            <span class="mas">Enviar</span>
+            <button class="partidos__enviar" type="submit" id="submitButton" name="Hover">Enviar</button>
         </div>
     </form>
 

@@ -1,4 +1,6 @@
 @charset "UTF-8";
+@import url("https://fonts.googleapis.com/css?family=Lato:100,300,400");
+@import url("https://fonts.googleapis.com/css?family=Roboto:100");
 html {
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
@@ -758,6 +760,25 @@ input[type=date] {
   width: 3.2rem;
 }
 .dashboard__caja .agregar_partido img {
+  width: 6rem;
+}
+.dashboard__caja-excel {
+  width: min(95%, 100rem);
+  margin: 0 auto;
+  text-align: right;
+  margin-bottom: 3rem;
+}
+.dashboard__caja-excel button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+.dashboard__caja-excel button:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease-in-out;
+}
+.dashboard__caja-excel button img {
   width: 6rem;
 }
 .dashboard__caja-routing {
@@ -1635,6 +1656,18 @@ input[type=date] {
   justify-content: center;
   align-items: center;
 }
+.partidos__partido__unidad button {
+  cursor: pointer;
+  padding: 0.1rem 0.3rem;
+  width: 4.2rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: rgb(213.35, 213.35, 213.35);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+.partidos__partido__unidad button p {
+  margin: 0;
+}
 .partidos__partido__unidad p {
   margin: 0;
   margin: 0.2rem 5rem;
@@ -1795,6 +1828,7 @@ input[type=date] {
 }
 
 #save,
+#save1,
 #rechazado {
   width: 3.8rem;
 }
@@ -1970,6 +2004,107 @@ input[type=date] {
   background-color: #f1f1f1;
 }
 
+.button-container-1 {
+  position: relative;
+  width: 100px;
+  height: 45px;
+  margin-right: 5%;
+  margin-top: 5vh;
+  overflow: hidden;
+  border: 1px solid #DDDDDD;
+  font-weight: 300;
+  font-size: 20px;
+  transition: 0.5s;
+  letter-spacing: 1px;
+  border-radius: 8px;
+  float: right; /* Alinea el contenedor del botón a la derecha */
+}
+
+.button-container-1 button {
+  width: 101%;
+  height: 100%;
+  font-weight: 300;
+  font-size: 18px;
+  letter-spacing: 1px;
+  font-weight: bold;
+  background: #DDDDDD;
+  -webkit-mask: url("https://raw.githubusercontent.com/robin-dela/css-mask-animation/master/img/nature-sprite.png");
+  mask: url("https://raw.githubusercontent.com/robin-dela/css-mask-animation/master/img/nature-sprite.png");
+  -webkit-mask-size: 2300% 100%;
+  mask-size: 2300% 100%;
+  border: none;
+  color: #30475E;
+  cursor: pointer;
+  -webkit-animation: ani2 0.7s steps(22) forwards;
+  animation: ani2 0.7s steps(22) forwards;
+  align-self: right;
+}
+
+.button-container-1 button:hover {
+  -webkit-animation: ani 0.7s steps(22) forwards;
+  animation: ani 0.7s steps(22) forwards;
+}
+
+.mas {
+  position: absolute;
+  color: #DDDDDD;
+  text-align: center;
+  width: 101%;
+  font-weight: 300;
+  font-size: 18px;
+  overflow: hidden;
+  font-weight: bold;
+}
+
+#button__factura {
+  margin-right: 12%;
+}
+
+#button_factura button {
+  margin: 0 auto;
+  padding: 0 auto;
+}
+
+@-webkit-keyframes ani {
+  from {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+  to {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+  }
+}
+@keyframes ani {
+  from {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+  to {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+  }
+}
+@-webkit-keyframes ani2 {
+  from {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+  }
+  to {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+}
+@keyframes ani2 {
+  from {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+  }
+  to {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+}
 .arbitros {
   margin-bottom: 5rem !important;
   width: min(95%, 120rem);
@@ -2228,6 +2363,9 @@ input[type=date] {
   width: min(95%, 80rem);
   margin: 0 auto;
   border: 5px double #DDDDDD;
+  /* Estilo base del checkbox */
+  /* Estilo cuando el checkbox está marcado */
+  /* Check personalizado dentro del checkbox */
 }
 .facturas__caja {
   display: flex;
@@ -2236,12 +2374,14 @@ input[type=date] {
   align-items: center;
   margin: 0 3rem;
   border-bottom: solid 1px #DDDDDD;
+  margin-top: 1.5rem;
 }
 @media (min-width: 390px) {
   .facturas__caja {
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
+    margin-top: 0;
   }
 }
 .facturas__caja:last-child {
@@ -2255,6 +2395,46 @@ input[type=date] {
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+}
+.facturas input[type=checkbox] {
+  -webkit-appearance: none;
+  /* Elimina el estilo predeterminado */
+  -moz-appearance: none;
+  appearance: none;
+  width: 1.7rem;
+  /* Anchura del checkbox */
+  height: 1.7rem;
+  /* Altura del checkbox */
+  border: 2px solid rgb(208.25, 208.25, 208.25);
+  /* Borde del checkbox */
+  border-radius: 0.5rem;
+  /* Bordes redondeados */
+  background-color: #DDDDDD;
+  /* Fondo blanco */
+  cursor: pointer;
+  /* Cambia el cursor al pasar por encima */
+  display: inline-block;
+  position: relative;
+  transition: all 0.2s ease;
+  /* Transición para suavizar los cambios */
+}
+.facturas input[type=checkbox]:checked {
+  background-color: #28a745;
+  /* Fondo verde al seleccionar */
+  border-color: #28a745;
+  /* Borde verde al seleccionar */
+}
+.facturas input[type=checkbox]:checked::after {
+  content: "✓";
+  /* Icono del check */
+  color: white;
+  /* Color del check */
+  font-size: 1.1rem;
+  /* Tamaño del check */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .formulario {
