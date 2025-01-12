@@ -130,6 +130,14 @@ class ActiveRecord {
         $resultado = self::consultarSQL($query);
         return $resultado;
     }
+
+    // Obtener todos los Registros
+    public static function all_orden_fecha($orden = 'ASC') {
+        $query = "SELECT * FROM " . static::$tabla . " ORDER BY fecha {$orden}";
+        $resultado = self::consultarSQL($query);
+        return $resultado;
+    }
+
     // Obtener todos los Registros
     public static function all_apellido1($orden = 'DESC') {
         $query = "SELECT * FROM " . static::$tabla . " ORDER BY apellido1 {$orden}";
@@ -159,6 +167,14 @@ class ActiveRecord {
         $query = "SELECT * FROM " . static::$tabla . " WHERE id_partido = '{$id_partido}'";
         $resultado = self::consultarSQL($query);
         return array_shift( $resultado ) ;
+    }
+
+     // Busca las designaciones por su jornada editada
+     public static function encuentra_jornada($jornada_editada) {
+        $jornada_editada = self::$db->escape_string($jornada_editada); // Asegura escape
+        $query = "SELECT * FROM " . static::$tabla . " WHERE jornada_editada = '{$jornada_editada}'";
+        $resultado = self::consultarSQL($query);
+        return $resultado;
     }
 
     // Obtener Registros con cierta cantidad

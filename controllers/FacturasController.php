@@ -615,169 +615,191 @@ class FacturasController
         }
     }
 
-    public static function generar_factura ()
+    public static function generar_factura()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            debuguear($_POST);
+            $jornadas_seleccionadas = $_POST['seleccionar'];
 
-            // Traemos las designaciones
-            $designaciones = Designaciones::all('ASC');
+            // Traigo todas las designaciones
+            $designaciones_bruto = Designaciones::all_orden_fecha();
 
-            // Traemos todos los arbitros
-            $arbitros = Arbitros::all();
+            // Traigo todas las categorías
+            $categorias = Categorias::all();
 
-            // Crear un nuevo Spreadsheet
+            $designaciones = [];
+            foreach ($jornadas_seleccionadas as $j) {
+                foreach ($designaciones_bruto as $d) {
+                    if ($j == $d->jornada_editada) {
+                        $designaciones[] = $d;
+                    }
+                }
+            }
+
+            // Cambio nombre de las categorías
+            foreach ($designaciones as $d) {
+                foreach ($categorias as $c) {
+                    if ($d->categoria == $c->nombre2 && $d->modalidad == $c->id_modalidad) {
+                        $d->categoria = $c->nombre;
+                    }
+                }
+            }
+
+            // Almaceno en variables nombres de categorías senior y juvenil de Sala
+            $nombre_sx_sala = '';
+            $nombre_jx_sala = '';
+
+            foreach ($categorias as $c) {
+                if ($c->id_modalidad == 2) {
+                    if ($c->nombre2 == 'SX') {
+                        $nombre_sx_sala = $c->nombre;
+                    } else if ($c->nombre2 == 'JX') {
+                        $nombre_jx_sala = $c->nombre;
+                    }
+                }
+            }
+
+            // Cambio importes de tarifa y facturar de JX y SX Sala y elimino los jugados
+            foreach ($designaciones as $key => $d) {
+                if ($d->modalidad == 2) {
+                    if ($d->categoria == $nombre_sx_sala) {
+                        $d->tarifa = 25.00;
+
+                        // Eliminar si unidad es igual a 1.00
+                        if ($d->unidad == 1.00) {
+                            unset($designaciones[$key]); // Eliminar la designación del array
+                        }
+                    } else if ($d->categoria == $nombre_jx_sala) {
+                        $d->tarifa = 22.00;
+
+                        // Eliminar si unidad es igual a 1.00
+                        if ($d->unidad == 1.00) {
+                            unset($designaciones[$key]); // Eliminar la designación del array
+                        }
+                    }
+                }
+            }
+
+            // Reindexar el array
+            $designaciones = array_values($designaciones);
+
+
+            //AQUI INTENTAR CREAR LAS MESAS DE SX Y JX DE SALA
+
+            // Ordenar por fecha de menor a mayor
+            usort($designaciones, function ($a, $b) {
+                return strtotime($a->fecha) - strtotime($b->fecha);
+            });
+
+            // Crear hoja de cálculo
             $spreadsheet = new Spreadsheet();
             $sheet = $spreadsheet->getActiveSheet();
 
-            // Estilo para los encabezados
-            $headerStyle = [
-                'font' => [
-                    'bold' => true,
-                    'color' => ['rgb' => '000000'],  // Color negro
-                    'size' => 12,
-                ],
-                'fill' => [
-                    'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
-                    'startColor' => ['rgb' => 'FFC000'], // Color de fondo (naranja)
-                ],
-                'alignment' => [
-                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-                ],
-                'borders' => [
-                    'allBorders' => [
-                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                        'color' => ['rgb' => '000000'], // Bordes negros
-                    ],
-                ],
-            ];
-
-            // Estilo para filas impares (fondo gris claro)
-            $rowStyle = [
-                'fill' => [
-                    'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
-                    'startColor' => ['rgb' => 'D3D3D3'], // Color de fondo gris claro
-                ],
-            ];
-
-            // Formatos de número para las columnas
-            $numericStyle = [
-                'numberFormat' => [
-                    'formatCode' => '0.00', // Sin separador de miles y dos decimales
-                ],
-            ];
-
-            $currencyStyle = [
-                'numberFormat' => [
-                    'formatCode' => '#,##0.00€', // Formato de moneda en Euros
-                ],
-            ];
-
-            // Estilo para centrar contenido
-            $centerStyle = [
-                'alignment' => [
-                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-                ],
-            ];
-
-            // Encabezados del Excel
-            $headers = [
-                'A1' => 'M',
-                'B1' => 'C',
-                'C1' => 'G',
-                'D1' => 'ID',
-                'E1' => 'FECHA',
-                'F1' => 'HORA',
-                'G1' => 'TERRENO',
-                'H1' => 'DISTRITO',
-                'I1' => 'J',
-                'J1' => 'LOCAL',
-                'K1' => 'VISITANTE',
-                'L1' => 'ARBITRO',
-                'M1' => 'UNIDAD',
-                'N1' => 'TARIFA',
-                'O1' => 'FACTURAR',
-                'P1' => 'PAGO ARBITRO',
-                'Q1' => 'OA',
-                'R1' => 'OBSERVACIONES',
-            ];
-
-            // Aplicar estilo a los encabezados
-            foreach ($headers as $cell => $value) {
-                $sheet->setCellValue($cell, $value);
-                $sheet->getStyle($cell)->applyFromArray($headerStyle);
+            // Añadir logo
+            $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+            $logoPath = $_SERVER['DOCUMENT_ROOT'] . '/build/img/logo_factura.png';
+            if (file_exists($logoPath)) {
+                $drawing->setName('Logo');
+                $drawing->setDescription('Logo');
+                $drawing->setPath($logoPath);
+                $drawing->setHeight(80);
+                $drawing->setCoordinates('A1');
+                $drawing->setWorksheet($sheet);
+            } else {
+                error_log("Logo not found at: " . $logoPath);
             }
 
-            // Llenar filas con datos
-            $row = 2;
+            // Título
+            $sheet->setCellValue('A6', 'DETALLE DE FACTURA');
+            $sheet->getStyle('A6')->applyFromArray([
+                'font' => [
+                    'bold' => true,
+                    'size' => 14,
+                ]
+            ]);
+
+            // Encabezados
+            $headers = [
+                'A' => 'M',
+                'B' => 'C',
+                'C' => 'G',
+                'D' => 'ID',
+                'E' => 'FECHA',
+                'F' => 'DISTRITO',
+                'G' => 'J',
+                'H' => 'LOCAL',
+                'I' => 'VISITANTE',
+                'J' => 'UNIDAD',
+                'K' => 'TARIFA',
+                'L' => 'FACTURAR',
+                'M' => 'OBSERVACIONES',
+            ];
+
+            $row = 8;
+            foreach ($headers as $col => $value) {
+                $sheet->setCellValue($col . $row, $value);
+                $sheet->getStyle($col . $row)->applyFromArray([
+                    'font' => ['bold' => true, 'color' => ['rgb' => 'FFFFFF']],
+                    'fill' => [
+                        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                        'startColor' => ['rgb' => '1E5128']
+                    ]
+                ]);
+            }
+
+            // Añadir datos a la tabla
+            $row = 9;
             foreach ($designaciones as $d) {
-                // Ajustar modalidad
                 $d->modalidad = $d->modalidad == 1 ? 'F7' : 'FS';
 
-                // Buscar árbitro correspondiente
-                $arbitro = '';
-                foreach ($arbitros as $a) {
-                    if ($d->id_arbitro == $a->id) {
-                        $arbitro = $a->apellido1 . " " . $a->apellido2 . ", " . $a->nombre;
-                        break; // Salimos del loop si encontramos al árbitro
-                    }
-                }
-
-                // Llenar datos en las celdas
                 $sheet->setCellValue("A$row", $d->modalidad);
                 $sheet->setCellValue("B$row", $d->categoria);
                 $sheet->setCellValue("C$row", $d->grupo);
                 $sheet->setCellValue("D$row", $d->id_partido);
                 $sheet->setCellValue("E$row", $d->fecha);
-                $sheet->setCellValue("F$row", $d->hora);
-                $sheet->setCellValue("G$row", $d->terreno);
-                $sheet->setCellValue("H$row", $d->distrito);
-                $sheet->setCellValue("I$row", $d->jornada);
-                $sheet->setCellValue("J$row", $d->local);
-                $sheet->setCellValue("K$row", $d->visitante);
-                $sheet->setCellValue("L$row", $arbitro);
-                $sheet->setCellValue("M$row", $d->unidad);
-                $sheet->setCellValue("N$row", $d->tarifa);
-                $sheet->setCellValue("O$row", $d->facturar);
-                $sheet->setCellValue("P$row", $d->pago_arbitro);
-                $sheet->setCellValue("Q$row", $d->oa);
-                $sheet->setCellValue("R$row", $d->observaciones);
-
-                // Aplicar formato de fila impares (gris claro)
-                if ($row % 2 != 0) {
-                    $sheet->getStyle("A$row:R$row")->applyFromArray($rowStyle);
-                }
-
-                // Aplicar formato numérico y centrado a la columna M
-                $sheet->getStyle("M$row")->applyFromArray($numericStyle + $centerStyle);
-
-                // Aplicar formato de moneda (euros) y centrado a las columnas N, O, P y Q
-                $sheet->getStyle("N$row")->applyFromArray($currencyStyle + $centerStyle);
-                $sheet->getStyle("O$row")->applyFromArray($currencyStyle + $centerStyle);
-                $sheet->getStyle("P$row")->applyFromArray($currencyStyle + $centerStyle);
-                $sheet->getStyle("Q$row")->applyFromArray($currencyStyle + $centerStyle);
+                $sheet->setCellValue("F$row", $d->distrito);
+                $sheet->setCellValue("G$row", $d->jornada);
+                $sheet->setCellValue("H$row", $d->local);
+                $sheet->setCellValue("I$row", $d->visitante);
+                $sheet->setCellValue("J$row", $d->unidad); // Unidad sin formatear aquí
+                $sheet->setCellValue("K$row", $d->tarifa);
+                $sheet->setCellValue("L$row", $d->facturar);
+                $sheet->setCellValue("M$row", $d->observaciones);
 
                 $row++;
             }
 
-            // Ajustar el ancho de las columnas automáticamente
-            foreach (range('A', 'R') as $col) {
+            // Aplicar formato a columnas específicas
+            foreach (range('A', 'M') as $col) {
                 $sheet->getColumnDimension($col)->setAutoSize(true);
             }
 
-            // Generar el archivo Excel
-            $writer = new Xlsx($spreadsheet);
+            // Centrar las columnas J, K y L
+            $sheet->getStyle('J8:J' . ($row - 1))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('K8:K' . ($row - 1))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('L8:L' . ($row - 1))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
-            // Enviar al navegador para descarga
+            // Formato decimal para columna J
+            $sheet->getStyle('J8:J' . ($row - 1))->getNumberFormat()->setFormatCode('#0.00');
+
+            // Formato moneda en columnas K y L
+            $currencyFormat = '#,##0.00 €';
+            $sheet->getStyle('K8:K' . ($row - 1))->getNumberFormat()->setFormatCode($currencyFormat);
+            $sheet->getStyle('L8:L' . ($row - 1))->getNumberFormat()->setFormatCode($currencyFormat);
+
+            // Limpiar buffers y generar archivo
+            while (ob_get_level()) {
+                ob_end_clean();
+            }
+
             header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             header('Content-Disposition: attachment; filename="facturas.xlsx"');
             header('Cache-Control: max-age=0');
 
+            $writer = new Xlsx($spreadsheet);
             $writer->save('php://output');
             exit;
         }
     }
+
 }

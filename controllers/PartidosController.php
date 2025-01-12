@@ -197,7 +197,7 @@ class PartidosController
             // debuguear($envio_partidos);
 
             //Nos traemos todos los partidos
-            $partidos = Partidos::all();
+            $partidos = Partidos::all_orden_fecha();
             // debuguear($partidos);
 
             foreach ($partidos as $p) {
