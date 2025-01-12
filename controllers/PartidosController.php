@@ -218,6 +218,25 @@ class PartidosController
                                 $partido->estado = 2;
                                 $designacion->estado = 2;
 
+                                //Añadimos campos facturar, tarifa, pago_arbitro y oa a designacion
+                                $categorias = Categorias::all();
+                                foreach($categorias as $c) {
+                                    if($designacion->categoria == $c->nombre2 && $designacion->modalidad == $c->id_modalidad) {
+                                        $designacion->tarifa = $c->tarifa;
+                                        $designacion->facturar = $c->facturar;
+                                        $designacion->pago_arbitro = $c->pago_arbitro;
+                                        $designacion->oa = $c->oa;
+                                    }
+
+                                    //Lo mismo pero para delegados de campo
+                                    if($designacion->categoria == $c->nombre && $designacion->modalidad == $c->id_modalidad) {
+                                        $designacion->tarifa = $c->tarifa;
+                                        $designacion->facturar = $c->facturar;
+                                        $designacion->pago_arbitro = $c->pago_arbitro;
+                                        $designacion->oa = $c->oa;
+                                    }
+                                }
+
                                 //Guardamos cambios en la BD
                                 $resultado = $partido->guardar();
                                 $resultado2 = $designacion->guardar();
@@ -972,6 +991,25 @@ class PartidosController
 
             //Resetear la designacion en la base de datos
             $designacion->estado = 2; // Pasamos a estado 1 (enviado)
+
+            //Añadimos campos facturar, tarifa, pago_arbitro y oa a designacion
+            $categorias = Categorias::all();
+            foreach($categorias as $c) {
+                if($designacion->categoria == $c->nombre2 && $designacion->modalidad == $c->id_modalidad) {
+                    $designacion->tarifa = $c->tarifa;
+                    $designacion->facturar = $c->facturar;
+                    $designacion->pago_arbitro = $c->pago_arbitro;
+                    $designacion->oa = $c->oa;
+                }
+
+                //Lo mismo pero para delegados de campo
+                if($designacion->categoria == $c->nombre && $designacion->modalidad == $c->id_modalidad) {
+                    $designacion->tarifa = $c->tarifa;
+                    $designacion->facturar = $c->facturar;
+                    $designacion->pago_arbitro = $c->pago_arbitro;
+                    $designacion->oa = $c->oa;
+                }
+            }
 
             $resultado = $designacion->guardar();
             $resultado2 = $partido->guardar();

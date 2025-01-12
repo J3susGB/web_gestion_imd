@@ -686,6 +686,8 @@ class FacturasController
 
             //AQUI INTENTAR CREAR LAS MESAS DE SX Y JX DE SALA
 
+            //AQUI GESTION DE DELEGADOS DE CAMPO
+
             // Ordenar por fecha de menor a mayor
             usort($designaciones, function ($a, $b) {
                 return strtotime($a->fecha) - strtotime($b->fecha);
