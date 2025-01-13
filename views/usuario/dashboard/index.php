@@ -359,7 +359,7 @@
         <!-- <div class="partidos__container">
             <button class="partidos__enviar" type="submit" id="submitButton">Enviar</button>
         </div> -->
-        <div class="button-container">
+        <div class="button-container-1 button-container-1">
             <span class="mas">Enviar</span>
             <button class="partidos__enviar" type="submit" id="submitButton" name="Hover">Enviar</button>
         </div>
