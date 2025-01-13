@@ -57,7 +57,7 @@
                 <button title="Generar facturas seleccionadas" class="partidos__enviar" type="submit" id="submitFactura">Factura</button>
             </div> -->
             <div class="button-container-1 partidos__container" id="button__factura">
-                <span class="mas">Enviar</span>
+                <span class="mas">Recibo</span>
                 <button title="Generar facturas seleccionadas" class="partidos__enviar" type="submit" id="submitFactura" name="Hover">Enviar</button>
             </div>
         </form>
