@@ -25,8 +25,8 @@
 
 
 <?php foreach ($designaciones as $d) { ?>
-    <form method="post" action="/admin/facturas/cambiar_unidad" id="<?php echo $d->id_partido; ?>" class="partidos__partido" data-partido-id="<?php echo $d->id_partido; ?>">
-        <div class="partidos__partido--id1" data-categoria="<?php echo $d->categoria; ?>">
+    <form data-categoria="<?php echo $d->categoria; ?>" method="post" action="/admin/facturas/cambiar_unidad" id="<?php echo $d->id_partido; ?>" class="partidos__partido" data-partido-id="<?php echo $d->id_partido; ?>">
+        <div class="partidos__partido--id1">
             <div class="partidos__partido--logos">
                 <?php foreach ($modalidades as $m) { ?>
                     <p>

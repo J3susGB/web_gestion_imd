@@ -1,9 +1,11 @@
 // Esperar a que el DOM esté completamente cargado
 document.addEventListener("DOMContentLoaded", function () {
     // Valores para cambiar el texto
-    var valores = ["1.00", "0.00", "0.50", "0.25"];
+    var valoresGlobales = ["1.00", "0.00", "0.50", "0.25"]; // Todas las opciones
+    var valoresLimitados = ["1.00", "0.50"]; // Opciones limitadas para otras categorías
+    var categoriasCompleta = ["SX", "JX", "UNIFEM"]; // Categorías que permiten todas las opciones
     var coloresTexto = {
-        "0.00": "#7008A8", //Morado
+        "0.00": "#7008A8", // Morado
         "1.00": "#30475E", // Azul oscuro
         "0.50": "#E08709", // Naranja
         "0.25": "#F05454"  // Rojo claro
@@ -15,6 +17,11 @@ document.addEventListener("DOMContentLoaded", function () {
         if (event.target.closest(".unidad-boton")) {
             var boton = event.target.closest(".unidad-boton"); // El botón específico clicado
             var texto = boton.querySelector("#unidad-texto"); // Párrafo interno del botón
+            var partido = boton.closest(".partidos__partido"); // Obtener el formulario padre
+            var categoria = partido.getAttribute("data-categoria"); // Leer el atributo data-categoria
+
+            // Determinar los valores a usar según la categoría
+            var valores = categoriasCompleta.includes(categoria) ? valoresGlobales : valoresLimitados;
 
             // Verificar y establecer el índice del botón
             var indice = parseInt(boton.dataset.indice || 0, 10);
@@ -30,6 +37,12 @@ document.addEventListener("DOMContentLoaded", function () {
     // Inicializar el estado para todos los botones al cargar la página
     document.querySelectorAll(".unidad-boton").forEach(function (boton) {
         var texto = boton.querySelector("#unidad-texto"); // Párrafo interno
+        var partido = boton.closest(".partidos__partido"); // Obtener el formulario padre
+        var categoria = partido.getAttribute("data-categoria"); // Leer el atributo data-categoria
+
+        // Determinar los valores a usar según la categoría
+        var valores = categoriasCompleta.includes(categoria) ? valoresGlobales : valoresLimitados;
+
         var valorActual = texto.innerHTML.trim(); // Obtener el valor actual del texto
         var indiceActual = valores.indexOf(valorActual); // Buscar el índice del valor actual
 
