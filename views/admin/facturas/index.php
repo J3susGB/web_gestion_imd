@@ -84,7 +84,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
 
-        // ✅ Validación del formulario de envío
+        // Validación del formulario de envío
         const submitButton = document.getElementById('submitFactura');
         const formPartidos = document.getElementById('formJornada');
 

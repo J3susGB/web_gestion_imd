@@ -1,8 +1,9 @@
 // Esperar a que el DOM esté completamente cargado
 document.addEventListener("DOMContentLoaded", function () {
     // Valores para cambiar el texto
-    var valores = ["1.00", "0.50", "0.25"];
+    var valores = ["1.00", "0.00", "0.50", "0.25"];
     var coloresTexto = {
+        "0.00": "#7008A8", //Morado
         "1.00": "#30475E", // Azul oscuro
         "0.50": "#E08709", // Naranja
         "0.25": "#F05454"  // Rojo claro

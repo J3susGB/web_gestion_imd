@@ -280,6 +280,24 @@ class FacturasController
 
             if ($designacion->modalidad == 1) { //Si es futbol
                 foreach ($categorias as $c) {
+                    if ($designacion->unidad == 0.00) {
+                        if ($designacion->categoria == $c->nombre2 && $designacion->modalidad == $c->id_modalidad) {
+                            switch ($designacion->categoria) {
+                                case "JX":
+                                case "SX":
+                                case "UNIFEM":
+                                    $designacion->facturar = 0.00;
+                                    $designacion->oa = $c->oa / 2;
+                                    $designacion->pago_arbitro = -$c->oa / 2;
+                                    break;
+
+                                default:
+                                    http_response_code(500); // Código HTTP: Internal Server Error
+                                    echo json_encode(["success" => false, "message" => "Error al guardar los datos."]);
+                                    return;
+                            }
+                        }
+                    }
                     if ($designacion->unidad == 0.25) {
                         if ($designacion->categoria == $c->nombre2 && $designacion->modalidad == $c->id_modalidad) {
                             switch ($designacion->categoria) {
@@ -354,6 +372,24 @@ class FacturasController
                 }
             } else if ($designacion->modalidad == 2) { //Si es Sala
                 foreach ($categorias as $c) {
+                    if ($designacion->unidad == 0.00) {
+                        if ($designacion->categoria == $c->nombre2 && $designacion->modalidad == $c->id_modalidad) {
+                            switch ($designacion->categoria) {
+                                case "JX":
+                                case "SX":
+                                case "UNIFEM":
+                                    $designacion->facturar = 0.00;
+                                    $designacion->oa = $c->oa / 2;
+                                    $designacion->pago_arbitro = -$c->oa / 2;
+                                    break;
+
+                                default:
+                                    http_response_code(500); // Código HTTP: Internal Server Error
+                                    echo json_encode(["success" => false, "message" => "Error al guardar los datos."]);
+                                    return;
+                            }
+                        }
+                    }
                     if ($designacion->unidad == 0.25) {
                         if ($designacion->categoria == $c->nombre2 && $designacion->modalidad == $c->id_modalidad) {
                             switch ($designacion->categoria) {

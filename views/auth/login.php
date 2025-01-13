@@ -26,8 +26,8 @@ require_once __DIR__ . '/../templates/alertas.php';
             <input type="submit" class="boton" value="Iniciar Sesión">
         </form>
 
-        <div class="acciones">
+        <!-- <div class="acciones">
             <a href="/olvide">¿Olvidaste tu contraseña?</a>
-        </div>
+        </div> -->
     </div>
 </div>
