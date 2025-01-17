@@ -885,7 +885,7 @@ class FacturasController
                 return strtotime($a->fecha) - strtotime($b->fecha);
             });
 
-            debuguear($designaciones);
+            // debuguear($designaciones);
 
             // Crear hoja de cálculo
             $spreadsheet = new Spreadsheet();
