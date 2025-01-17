@@ -765,15 +765,127 @@ class FacturasController
             // Reindexar el array
             $designaciones = array_values($designaciones);
 
+            foreach ($designaciones as $key => $d) { // Usa $key para acceder al índice del array
+                if ($d->modalidad == 1) {
+                    switch ($d->categoria) {
+                        case "FUTBOL7_SX_ARBITRO":
+                        case "FUTBOL7_JX_ARBITRO":
+                        case "FUTBOL7_UNIFEM_ARBITRO":
+                            if ($d->unidad == 1.00) {
+                                unset($designaciones[$key]); // Eliminar la designación del array
+                            }
+                            break;
+                    }
+                }
+            }
 
-            //AQUI INTENTAR CREAR LAS MESAS DE SX Y JX DE SALA
+            //Añadimos las mesas de los senior, unifem y juv de sala suspendidos
+            foreach ($designaciones as $key => $d) {
+                if ($d->modalidad == 2) { // Si es FS
+                    switch ($d->categoria) {
+                        case "SALA_SX_ARBITRO":
+                            if ($d->unidad == 0.25) {
+                                // Crear nueva designación
+                                $nueva_designacion = clone $d; // Clonar la designación actual
+                                $nueva_designacion->categoria = "SALA_SX_MESA"; // Cambiar la categoría
+                                $nueva_designacion->tarifa = 9.50; // Establecer nueva tarifa
+                                $nueva_designacion->facturar = 9.50 / 4; // Calcular el valor de facturar
 
-            //AQUI GESTION DE DELEGADOS DE CAMPO
+                                // Añadir la nueva designación al array
+                                $designaciones[] = $nueva_designacion;
+                            } else if ($d->unidad == 0.50) {
+                                // Crear nueva designación
+                                $nueva_designacion = clone $d; // Clonar la designación actual
+                                $nueva_designacion->categoria = "SALA_SX_MESA"; // Cambiar la categoría
+                                $nueva_designacion->tarifa = 9.50; // Establecer nueva tarifa
+                                $nueva_designacion->facturar = 9.50 / 2; // Calcular el valor de facturar
+
+                                // Añadir la nueva designación al array
+                                $designaciones[] = $nueva_designacion;
+                            } else if ($d->unidad == 2.00) {
+                                // Crear nueva designación
+                                $nueva_designacion = clone $d; // Clonar la designación actual
+                                $nueva_designacion->categoria = "SALA_SX_MESA"; // Cambiar la categoría
+                                $nueva_designacion->tarifa = 9.50; // Establecer nueva tarifa
+                                $nueva_designacion->facturar = 9.50; // Calcular el valor de facturar
+
+                                // Añadir la nueva designación al array
+                                $designaciones[] = $nueva_designacion;
+                            }
+
+                            break;
+                        case "SALA_UNIFEM_ARBITRO":
+                            if ($d->unidad == 0.25) {
+                                // Crear nueva designación
+                                $nueva_designacion = clone $d; // Clonar la designación actual
+                                $nueva_designacion->categoria = "SALA_UNIFEM_MESA"; // Cambiar la categoría
+                                $nueva_designacion->tarifa = 9.50; // Establecer nueva tarifa
+                                $nueva_designacion->facturar = 9.50 / 4; // Calcular el valor de facturar
+
+                                // Añadir la nueva designación al array
+                                $designaciones[] = $nueva_designacion;
+                            } else if ($d->unidad == 0.50) {
+                                // Crear nueva designación
+                                $nueva_designacion = clone $d; // Clonar la designación actual
+                                $nueva_designacion->categoria = "SALA_UNIFEM_MESA"; // Cambiar la categoría
+                                $nueva_designacion->tarifa = 9.50; // Establecer nueva tarifa
+                                $nueva_designacion->facturar = 9.50 / 2; // Calcular el valor de facturar
+
+                                // Añadir la nueva designación al array
+                                $designaciones[] = $nueva_designacion;
+                            } else if ($d->unidad == 2.00) {
+                                // Crear nueva designación
+                                $nueva_designacion = clone $d; // Clonar la designación actual
+                                $nueva_designacion->categoria = "SALA_UNIFEM_MESA"; // Cambiar la categoría
+                                $nueva_designacion->tarifa = 9.50; // Establecer nueva tarifa
+                                $nueva_designacion->facturar = 9.50; // Calcular el valor de facturar
+
+                                // Añadir la nueva designación al array
+                                $designaciones[] = $nueva_designacion;
+                            }
+                            break;
+                        case "SALA_JX_ARBITRO":
+                            if ($d->unidad == 0.25) {
+                                // Crear nueva designación
+                                $nueva_designacion = clone $d; // Clonar la designación actual
+                                $nueva_designacion->categoria = "SALA_JX_MESA"; // Cambiar la categoría
+                                $nueva_designacion->tarifa = 9.50; // Establecer nueva tarifa
+                                $nueva_designacion->facturar = 9.50 / 4; // Calcular el valor de facturar
+
+                                // Añadir la nueva designación al array
+                                $designaciones[] = $nueva_designacion;
+                            } else if ($d->unidad == 0.50) {
+                                // Crear nueva designación
+                                $nueva_designacion = clone $d; // Clonar la designación actual
+                                $nueva_designacion->categoria = "SALA_JX_MESA"; // Cambiar la categoría
+                                $nueva_designacion->tarifa = 9.50; // Establecer nueva tarifa
+                                $nueva_designacion->facturar = 9.50 / 2; // Calcular el valor de facturar
+
+                                // Añadir la nueva designación al array
+                                $designaciones[] = $nueva_designacion;
+                            } else if ($d->unidad == 2.00) {
+                                // Crear nueva designación
+                                $nueva_designacion = clone $d; // Clonar la designación actual
+                                $nueva_designacion->categoria = "SALA_JX_MESA"; // Cambiar la categoría
+                                $nueva_designacion->tarifa = 9.50; // Establecer nueva tarifa
+                                $nueva_designacion->facturar = 9.50; // Calcular el valor de facturar
+
+                                // Añadir la nueva designación al array
+                                $designaciones[] = $nueva_designacion;
+                            }
+                            break;
+                    }
+                }
+            }
+
+            //AQUI GESTION DE DELEGADOS DE CAMPO. BORRAR EL id_partido
 
             // Ordenar por fecha de menor a mayor
             usort($designaciones, function ($a, $b) {
                 return strtotime($a->fecha) - strtotime($b->fecha);
             });
+
+            debuguear($designaciones);
 
             // Crear hoja de cálculo
             $spreadsheet = new Spreadsheet();

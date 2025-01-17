@@ -893,6 +893,7 @@ class PartidosController
                 $partido->id_usuario = 0;
                 $partido->id_arbitro = 0;
                 $partido->estado = 0;
+                $partido->observaciones = '';
 
                 // Guardar cambios en el partido
                 if (!$partido->guardar()) {
