@@ -747,29 +747,28 @@ class FacturasController
             // Cambio importes de tarifa y facturar de JX y SX Sala y elimino los jugados
             foreach ($designaciones as $key => $d) {
                 if ($d->modalidad == 2) {
-                    if ($d->categoria == $nombre_sx_sala || $d->categoria == $nombre_unifem_sala ) {
+                    if ($d->categoria == $nombre_sx_sala || $d->categoria == $nombre_unifem_sala) {
                         $d->tarifa = 25.00;
-                        
+
                         // Modificar facturar
                         if ($d->unidad == 0.25) {
-                            $d->facturar = 25.00 /4;
+                            $d->facturar = 25.00 / 4;
                         } else if ($d->unidad == 0.50) {
-                            $d->facturar = 25.00 /2;
+                            $d->facturar = 25.00 / 2;
                         }
 
                         // Eliminar si unidad es igual a 1.00
                         if ($d->unidad == 1.00 || $d->unidad == 0.00) {
                             unset($designaciones[$key]); // Eliminar la designación del array
                         }
-
                     } else if ($d->categoria == $nombre_jx_sala) {
                         $d->tarifa = 22.00;
 
                         // Modificar facturar
                         if ($d->unidad == 0.25) {
-                            $d->facturar = 25.00 /4;
+                            $d->facturar = 25.00 / 4;
                         } else if ($d->unidad == 0.50) {
-                            $d->facturar = 25.00 /2;
+                            $d->facturar = 25.00 / 2;
                         }
 
                         // Eliminar si unidad es igual a 1.00 o 0.00
@@ -896,7 +895,21 @@ class FacturasController
                 }
             }
 
-            //AQUI GESTION DE DELEGADOS DE CAMPO. BORRAR EL id_partido
+            //GESTION DE DELEGADOS DE CAMPO. BORRAR EL id_partido
+            foreach ($designaciones as $d) {
+                switch ($d->categoria) {
+                    case "F7_DC_3H_DELEGADO DE CAMPO":
+                    case "F7_DC_4H_DELEGADO DE CAMPO":
+                    case "F7_DC_5H_DELEGADO DE CAMPO":
+                    case "F7_DC_6H_DELEGADO DE CAMPO":
+                    case "SALA_DC_3H_DELEGADO DE CAMPO":
+                    case "SALA_DC_4H_DELEGADO DE CAMPO":
+                    case "SALA_DC_5H_DELEGADO DE CAMPO":
+                    case "SALA_DC_6H_DELEGADO DE CAMPO":
+                        $d->id_partido = '';
+                        break;
+                }
+            }
 
             // Ordenar por fecha de menor a mayor
             usort($designaciones, function ($a, $b) {
