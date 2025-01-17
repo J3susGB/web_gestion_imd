@@ -373,6 +373,24 @@ class FacturasController
                                     return;
                             }
                         }
+                    } else if ($designacion->unidad == 2.00) {
+                        if ($designacion->categoria == $c->nombre2 && $designacion->modalidad == $c->id_modalidad) {
+                            switch ($designacion->categoria) {
+                                case "SX":
+                                case "JX":
+                                case "UNIFEM":
+                                    $designacion->tarifa = $c->tarifa;
+                                    $designacion->facturar = $c->tarifa;
+                                    $designacion->oa = $c->oa;
+                                    $designacion->pago_arbitro = $c->tarifa - $c->oa;
+                                    break;
+
+                                default:
+                                    http_response_code(500); // Código HTTP: Internal Server Error
+                                    echo json_encode(["success" => false, "message" => "Error al guardar los datos."]);
+                                    return;
+                            }
+                        }
                     }
                 }
             } else if ($designacion->modalidad == 2) { //Si es Sala
@@ -462,6 +480,24 @@ class FacturasController
                                     $designacion->facturar = $c->facturar;
                                     $designacion->oa = $c->oa;
                                     $designacion->pago_arbitro = $c->pago_arbitro;
+                                    break;
+
+                                default:
+                                    http_response_code(500); // Código HTTP: Internal Server Error
+                                    echo json_encode(["success" => false, "message" => "Error al guardar los datos."]);
+                                    return;
+                            }
+                        }
+                    } else if ($designacion->unidad == 2.00) {
+                        if ($designacion->categoria == $c->nombre2 && $designacion->modalidad == $c->id_modalidad) {
+                            switch ($designacion->categoria) {
+                                case "SX":
+                                case "JX":
+                                case "UNIFEM":
+                                    $designacion->tarifa = $c->tarifa;
+                                    $designacion->facturar = $c->tarifa;
+                                    $designacion->oa = $c->oa;
+                                    $designacion->pago_arbitro = $c->tarifa - $c->oa;
                                     break;
 
                                 default:
@@ -849,5 +885,4 @@ class FacturasController
             exit;
         }
     }
-
 }
