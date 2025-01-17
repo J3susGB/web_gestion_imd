@@ -69,11 +69,23 @@
             </select>
         </div>
 
+        <!-- Estado
+        <div class="partidos__campo">
+            <h4 class="partidos__titulo-filtros">Búsqueda por estado</h4>
+            <select name="estado">
+                <option value="">Ver todos</option>
+                <option value="1" <?php echo (isset($_GET['estado']) && $_GET['estado'] === '1') ? 'selected' : ''; ?>>Nombrado</option>
+                <option value="2" <?php echo (isset($_GET['estado']) && $_GET['estado'] === '2') ? 'selected' : ''; ?>>Enviado</option>
+                <option value="3" <?php echo (isset($_GET['estado']) && $_GET['estado'] === '3') ? 'selected' : ''; ?>>Aceptado</option>
+                <option value="4" <?php echo (isset($_GET['estado']) && $_GET['estado'] === '4') ? 'selected' : ''; ?>>Rechazado</option>
+            </select>
+        </div> -->
         <!-- Estado -->
         <div class="partidos__campo">
             <h4 class="partidos__titulo-filtros">Búsqueda por estado</h4>
             <select name="estado">
                 <option value="">Ver todos</option>
+                <option value="0" <?php echo (isset($_GET['estado']) && $_GET['estado'] === '0') ? 'selected' : ''; ?>>Pendiente</option>
                 <option value="1" <?php echo (isset($_GET['estado']) && $_GET['estado'] === '1') ? 'selected' : ''; ?>>Nombrado</option>
                 <option value="2" <?php echo (isset($_GET['estado']) && $_GET['estado'] === '2') ? 'selected' : ''; ?>>Enviado</option>
                 <option value="3" <?php echo (isset($_GET['estado']) && $_GET['estado'] === '3') ? 'selected' : ''; ?>>Aceptado</option>
