@@ -730,6 +730,7 @@ class FacturasController
             // Almaceno en variables nombres de categorías senior y juvenil de Sala
             $nombre_sx_sala = '';
             $nombre_jx_sala = '';
+            $nombre_unifem_sala = '';
 
             foreach ($categorias as $c) {
                 if ($c->id_modalidad == 2) {
@@ -737,6 +738,8 @@ class FacturasController
                         $nombre_sx_sala = $c->nombre;
                     } else if ($c->nombre2 == 'JX') {
                         $nombre_jx_sala = $c->nombre;
+                    } else if ($c->nombre2 == 'UNIFEM') {
+                        $nombre_unifem_sala = $c->nombre;
                     }
                 }
             }
@@ -744,11 +747,11 @@ class FacturasController
             // Cambio importes de tarifa y facturar de JX y SX Sala y elimino los jugados
             foreach ($designaciones as $key => $d) {
                 if ($d->modalidad == 2) {
-                    if ($d->categoria == $nombre_sx_sala) {
+                    if ($d->categoria == $nombre_sx_sala || $d->categoria == $nombre_unifem_sala ) {
                         $d->tarifa = 25.00;
 
                         // Eliminar si unidad es igual a 1.00
-                        if ($d->unidad == 1.00) {
+                        if ($d->unidad == 1.00 || $d->unidad == 0.00) {
                             unset($designaciones[$key]); // Eliminar la designación del array
                         }
                     } else if ($d->categoria == $nombre_jx_sala) {
