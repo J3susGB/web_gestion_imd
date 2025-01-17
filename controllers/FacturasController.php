@@ -43,7 +43,7 @@ class FacturasController
             $jornada_generada = false;
         }
 
-        // ✅ Agrupar designaciones por jornada_editada
+        //  Agrupar designaciones por jornada_editada
         $jornadas_agrupadas = [];
         foreach ($jornada as $j) {
             $jornada_editada = $j->jornada_editada;
@@ -86,7 +86,7 @@ class FacturasController
                 $jornada = Designaciones::all();
 
                 foreach ($jornada as $j) {
-                    // ✅ Solo modificar si jornada_editada es 0
+                    // Solo modificar si jornada_editada es 0
                     if ($j->jornada_editada == 0) {
                         $j->jornada_editada = $numero_jornada;
 
@@ -357,6 +357,10 @@ class FacturasController
                                 case "IX":
                                 case "CX":
                                 case "MINIFE":
+                                case "F7_DC_3H_DELEGADO DE CAMPO":
+                                case "F7_DC_4H_DELEGADO DE CAMPO":
+                                case "F7_DC_5H_DELEGADO DE CAMPO":
+                                case "F7_DC_6H_DELEGADO DE CAMPO":
                                     $designacion->facturar = $c->facturar;
                                     $designacion->oa = $c->oa;
                                     $designacion->pago_arbitro = $c->pago_arbitro;
@@ -449,6 +453,10 @@ class FacturasController
                                 case "IX":
                                 case "CX":
                                 case "MINIFE":
+                                case "SALA_DC_3H_DELEGADO DE CAMPO":
+                                case "SALA_DC_4H_DELEGADO DE CAMPO":
+                                case "SALA_DC_5H_DELEGADO DE CAMPO":
+                                case "SALA_DC_6H_DELEGADO DE CAMPO":
                                     $designacion->facturar = $c->facturar;
                                     $designacion->oa = $c->oa;
                                     $designacion->pago_arbitro = $c->pago_arbitro;
