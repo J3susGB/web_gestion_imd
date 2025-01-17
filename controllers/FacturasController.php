@@ -754,8 +754,8 @@ class FacturasController
                     } else if ($d->categoria == $nombre_jx_sala) {
                         $d->tarifa = 22.00;
 
-                        // Eliminar si unidad es igual a 1.00
-                        if ($d->unidad == 1.00) {
+                        // Eliminar si unidad es igual a 1.00 o 0.00
+                        if ($d->unidad == 1.00 || $d->unidad == 0.00) {
                             unset($designaciones[$key]); // Eliminar la designación del array
                         }
                     }
@@ -771,7 +771,7 @@ class FacturasController
                         case "FUTBOL7_SX_ARBITRO":
                         case "FUTBOL7_JX_ARBITRO":
                         case "FUTBOL7_UNIFEM_ARBITRO":
-                            if ($d->unidad == 1.00) {
+                            if ($d->unidad == 1.00 || $d->unidad == 0.00) {
                                 unset($designaciones[$key]); // Eliminar la designación del array
                             }
                             break;
