@@ -104,8 +104,10 @@ $router->post('/usuario/dashboard', [DashboardController::class, 'index_usuario'
 
 //CUALQUIER PERSONA QUE ENTRE A ACEPTAR O RECHAZAR
 $router->get('/paginas/aceptar', [PaginasController::class, 'aceptar']);
+$router->get('/paginas/error_aceptar', [PaginasController::class, 'error_aceptar']);
 $router->get('/paginas/motivo_rechazo', [PaginasController::class, 'motivo_rechazo']);
 $router->post('/paginas/motivo_rechazo', [PaginasController::class, 'motivo_rechazo']);
 $router->get('/paginas/rechazar', [PaginasController::class, 'rechazar']);
+$router->get('/paginas/error_rechazar', [PaginasController::class, 'error_rechazar']);
 
 $router->comprobarRutas();

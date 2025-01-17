@@ -24,6 +24,11 @@ class PaginasController
         $designacion = Designaciones::encuentra_partido($id_partido);
         // debuguear($designacion);
 
+        if($designacion->estado == 3) {
+            header('Location: /paginas/error_aceptar');
+            exit;
+        } 
+
         if ($partido->estado == 2 || $partido->estado == 4) {
 
             //Cambiamos estado al partido y a la designación
@@ -43,6 +48,22 @@ class PaginasController
         ]);
     }
 
+    public static function error_aceptar(Router $router)
+    {
+        $id_partido = $_GET['id_partido']; // Leer el id de la url
+        // debuguear($id_partido);
+
+        //Localizamos designacion a traves del id partido en la bd
+        $designacion = Designaciones::encuentra_partido($id_partido);
+        // debuguear($designacion);
+
+        // Render a la vista 
+        $router->render('paginas/error_aceptar', [
+            'titulo' => 'El partido '. $id_partido. ' ya fue aceptadooo!!',
+            'designacion' => $designacion
+        ]);
+    }
+
     public static function motivo_rechazo(Router $router)
     {
 
@@ -56,6 +77,16 @@ class PaginasController
         //Localizamos designacion a traves del id partido en la bd
         $designacion = Designaciones::encuentra_partido($id_partido);
         // debuguear($designacion);
+
+        if($designacion->estado==4) {
+            header('Location: /paginas/error_rechazar');
+            exit;
+        }
+
+        if($designacion->estado==3) {
+            header('Location: /paginas/error_aceptar');
+            exit;
+        }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // debuguear($_POST);
@@ -103,10 +134,30 @@ class PaginasController
 
         $id_partido = $_GET['id_partido']; // Leer el id de la url
 
+        //Localizamos designacion a traves del id partido en la bd
+        $designacion = Designaciones::encuentra_partido($id_partido);
+        // debuguear($designacion);
+
         // Render a la vista 
         $router->render('paginas/rechazar', [
             'titulo' => 'Partido rechazado',
             'id_partido' => $id_partido
+        ]);
+    }
+
+    public static function error_rechazar(Router $router)
+    {
+        $id_partido = $_GET['id_partido']; // Leer el id de la url
+        // debuguear($id_partido);
+
+        //Localizamos designacion a traves del id partido en la bd
+        $designacion = Designaciones::encuentra_partido($id_partido);
+        // debuguear($designacion);
+
+        // Render a la vista 
+        $router->render('paginas/error_rechazar', [
+            'titulo' => 'El partido ' . $id_partido . " ya está rechazadooo!!",
+            'designacion' => $designacion
         ]);
     }
 }
