@@ -361,6 +361,7 @@ class FacturasController
                                 case "F7_DC_4H_DELEGADO DE CAMPO":
                                 case "F7_DC_5H_DELEGADO DE CAMPO":
                                 case "F7_DC_6H_DELEGADO DE CAMPO":
+                                    $designacion->tarifa = $c->tarifa;
                                     $designacion->facturar = $c->facturar;
                                     $designacion->oa = $c->oa;
                                     $designacion->pago_arbitro = $c->pago_arbitro;
@@ -457,6 +458,7 @@ class FacturasController
                                 case "SALA_DC_4H_DELEGADO DE CAMPO":
                                 case "SALA_DC_5H_DELEGADO DE CAMPO":
                                 case "SALA_DC_6H_DELEGADO DE CAMPO":
+                                    $designacion->tarifa = $c->tarifa;
                                     $designacion->facturar = $c->facturar;
                                     $designacion->oa = $c->oa;
                                     $designacion->pago_arbitro = $c->pago_arbitro;
