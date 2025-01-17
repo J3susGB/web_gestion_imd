@@ -749,13 +749,28 @@ class FacturasController
                 if ($d->modalidad == 2) {
                     if ($d->categoria == $nombre_sx_sala || $d->categoria == $nombre_unifem_sala ) {
                         $d->tarifa = 25.00;
+                        
+                        // Modificar facturar
+                        if ($d->unidad == 0.25) {
+                            $d->facturar = 25.00 /4;
+                        } else if ($d->unidad == 0.50) {
+                            $d->facturar = 25.00 /2;
+                        }
 
                         // Eliminar si unidad es igual a 1.00
                         if ($d->unidad == 1.00 || $d->unidad == 0.00) {
                             unset($designaciones[$key]); // Eliminar la designación del array
                         }
+
                     } else if ($d->categoria == $nombre_jx_sala) {
                         $d->tarifa = 22.00;
+
+                        // Modificar facturar
+                        if ($d->unidad == 0.25) {
+                            $d->facturar = 25.00 /4;
+                        } else if ($d->unidad == 0.50) {
+                            $d->facturar = 25.00 /2;
+                        }
 
                         // Eliminar si unidad es igual a 1.00 o 0.00
                         if ($d->unidad == 1.00 || $d->unidad == 0.00) {
