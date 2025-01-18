@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Valores para cambiar el texto
     var valoresGlobales = ["1.00", "0.00", "0.50", "0.25", "2.00"]; // Todas las opciones
     var valoresLimitados = ["1.00", "0.50"]; // Opciones limitadas para otras categorías
-    var categoriasCompleta = ["SX", "JX", "UNIFEM"]; // Categorías que permiten todas las opciones
+    var categoriasCompleta = ["SX", "JX"]; // Categorías que permiten todas las opciones
     var coloresTexto = {
         "0.00": "#7008A8", // Morado
         "1.00": "#30475E", // Azul oscuro

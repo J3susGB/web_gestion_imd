@@ -285,7 +285,7 @@ class FacturasController
                             switch ($designacion->categoria) {
                                 case "JX":
                                 case "SX":
-                                case "UNIFEM":
+                                // case "UNIFEM":
                                     $designacion->facturar = 0.00;
                                     $designacion->oa = $c->oa / 2;
                                     $designacion->pago_arbitro = -$c->oa / 2;
@@ -303,7 +303,7 @@ class FacturasController
                             switch ($designacion->categoria) {
                                 case "JX":
                                 case "SX":
-                                case "UNIFEM":
+                                // case "UNIFEM":
                                     $designacion->facturar = $c->tarifa / 4;
                                     $designacion->oa = $c->oa / 2;
                                     $designacion->pago_arbitro = (($c->tarifa - $c->oa) / 2)  - $designacion->facturar;
@@ -320,7 +320,7 @@ class FacturasController
                             switch ($designacion->categoria) {
                                 case "JX":
                                 case "SX":
-                                case "UNIFEM":
+                                // case "UNIFEM":
                                     $designacion->facturar = $c->tarifa / 2;
                                     $designacion->oa = $c->oa / 2;
                                     $designacion->pago_arbitro = (($c->tarifa - $c->oa) / 2);
@@ -333,6 +333,7 @@ class FacturasController
                                 case "IX":
                                 case "CX":
                                 case "MINIFE":
+                                case "UNIFEM":
                                     $designacion->facturar = $c->tarifa / 2;
                                     $designacion->oa = $c->oa / 2;
                                     $designacion->pago_arbitro = $c->pago_arbitro / 2;
@@ -378,7 +379,7 @@ class FacturasController
                             switch ($designacion->categoria) {
                                 case "SX":
                                 case "JX":
-                                case "UNIFEM":
+                                // case "UNIFEM":
                                     $designacion->tarifa = $c->tarifa;
                                     $designacion->facturar = $c->tarifa;
                                     $designacion->oa = $c->oa;
@@ -400,7 +401,7 @@ class FacturasController
                             switch ($designacion->categoria) {
                                 case "JX":
                                 case "SX":
-                                case "UNIFEM":
+                                // case "UNIFEM":
                                     $designacion->facturar = 0.00;
                                     $designacion->oa = $c->oa / 2;
                                     $designacion->pago_arbitro = -$c->oa / 2;
@@ -418,7 +419,7 @@ class FacturasController
                             switch ($designacion->categoria) {
                                 case "JX":
                                 case "SX":
-                                case "UNIFEM":
+                                // case "UNIFEM":
                                     $designacion->facturar = $c->tarifa / 4;
                                     $designacion->oa = $c->oa / 2;
                                     $designacion->pago_arbitro = (($c->tarifa - $c->oa) / 2)  - ($c->tarifa / 4);
@@ -435,7 +436,7 @@ class FacturasController
                             switch ($designacion->categoria) {
                                 case "JX":
                                 case "SX":
-                                case "UNIFEM":
+                                // case "UNIFEM":
                                     $designacion->facturar = $c->tarifa / 2;
                                     $designacion->oa = $c->oa / 2;
                                     $designacion->pago_arbitro = (($c->tarifa - $c->oa) / 2);
@@ -448,6 +449,7 @@ class FacturasController
                                 case "IX":
                                 case "CX":
                                 case "MINIFE":
+                                case "UNIFEM":
                                     $designacion->facturar = $c->tarifa / 2;
                                     $designacion->oa = $c->oa / 2;
                                     $designacion->pago_arbitro = $c->pago_arbitro / 2;
@@ -493,7 +495,7 @@ class FacturasController
                             switch ($designacion->categoria) {
                                 case "SX":
                                 case "JX":
-                                case "UNIFEM":
+                                // case "UNIFEM":
                                     $designacion->tarifa = $c->tarifa;
                                     $designacion->facturar = $c->tarifa;
                                     $designacion->oa = $c->oa;
