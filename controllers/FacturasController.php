@@ -749,7 +749,7 @@ class FacturasController
             // Cambio importes de tarifa y facturar de JX y SX Sala y elimino los jugados
             foreach ($designaciones as $key => $d) {
                 if ($d->modalidad == 2) {
-                    if ($d->categoria == $nombre_sx_sala || $d->categoria == $nombre_unifem_sala) {
+                    if ($d->categoria == $nombre_sx_sala) {
                         $d->tarifa = 25.00;
 
                         // Modificar facturar
@@ -777,6 +777,15 @@ class FacturasController
                         if ($d->unidad == 1.00 || $d->unidad == 0.00) {
                             unset($designaciones[$key]); // Eliminar la designación del array
                         }
+                    } else if ($d->categoria == $nombre_unifem_sala) {
+                        $d->tarifa = 25.00;
+
+                        // Modificar facturar
+                        if ($d->unidad == 1.00) {
+                            $d->facturar = 25.00;
+                        } else if ($d->unidad == 0.50) {
+                            $d->facturar = 25.00 / 2;
+                        }
                     }
                 }
             }
@@ -789,7 +798,7 @@ class FacturasController
                     switch ($d->categoria) {
                         case "FUTBOL7_SX_ARBITRO":
                         case "FUTBOL7_JX_ARBITRO":
-                        case "FUTBOL7_UNIFEM_ARBITRO":
+                        // case "FUTBOL7_UNIFEM_ARBITRO":
                             if ($d->unidad == 1.00 || $d->unidad == 0.00) {
                                 unset($designaciones[$key]); // Eliminar la designación del array
                             }
@@ -834,16 +843,7 @@ class FacturasController
 
                             break;
                         case "SALA_UNIFEM_ARBITRO":
-                            if ($d->unidad == 0.25) {
-                                // Crear nueva designación
-                                $nueva_designacion = clone $d; // Clonar la designación actual
-                                $nueva_designacion->categoria = "SALA_UNIFEM_MESA"; // Cambiar la categoría
-                                $nueva_designacion->tarifa = 9.50; // Establecer nueva tarifa
-                                $nueva_designacion->facturar = 9.50 / 4; // Calcular el valor de facturar
-
-                                // Añadir la nueva designación al array
-                                $designaciones[] = $nueva_designacion;
-                            } else if ($d->unidad == 0.50) {
+                            if ($d->unidad == 0.50) {
                                 // Crear nueva designación
                                 $nueva_designacion = clone $d; // Clonar la designación actual
                                 $nueva_designacion->categoria = "SALA_UNIFEM_MESA"; // Cambiar la categoría
@@ -852,7 +852,7 @@ class FacturasController
 
                                 // Añadir la nueva designación al array
                                 $designaciones[] = $nueva_designacion;
-                            } else if ($d->unidad == 2.00) {
+                            } else if ($d->unidad == 1.00) {
                                 // Crear nueva designación
                                 $nueva_designacion = clone $d; // Clonar la designación actual
                                 $nueva_designacion->categoria = "SALA_UNIFEM_MESA"; // Cambiar la categoría
