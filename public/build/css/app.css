@@ -1523,6 +1523,7 @@ input[type=date] {
 .partidos__partido, .partidos__partido-1 {
   width: min(95%, 100rem);
   margin: 0 auto;
+  margin-bottom: 2rem;
   margin-bottom: 1rem;
   border: 5px double #DDDDDD;
   border-radius: 0.5rem;
@@ -1535,6 +1536,7 @@ input[type=date] {
   .partidos__partido, .partidos__partido-1 {
     width: min(95%, 160rem);
     margin: 0 auto;
+    margin-bottom: 2rem;
   }
 }
 .partidos__partido .check, .partidos__partido-1 .check {

@@ -335,6 +335,7 @@
     &__partido {
         @include m.xl_desktop {
             @include m.contenedor_xl;
+            // margin-bottom: 2rem;
         }
 
         &--logos {
@@ -349,8 +350,10 @@
     &__partido,
     &__partido-1 {
         @include m.contenedor-md2;
+        margin-bottom: 2rem;
         @include m.xl_desktop {
             @include m.contenedor_xl;
+            margin-bottom: 2rem;
         }
         margin-bottom: 1rem;
         border: 5px double v.$gris;
