@@ -5,6 +5,10 @@
     @include m.contenedor-md;
     border: 5px double v.$gris;
 
+    @include m.xl_desktop {
+        @include m.contenedor_xl;
+    }
+
     &__caja {
         display: flex;
         flex-direction: column;

@@ -4,6 +4,10 @@
 .partidos {
     @include m.contenedor-md2;
 
+    @include m.xl_desktop {
+        @include m.contenedor_xl;
+    }
+
     &__titulo-filtro {
         margin-left: 3%;
         font-size: 1.9rem;
@@ -138,10 +142,15 @@
 
     &__subir {
         @include m.contenedor-md2;
+        margin-bottom: 2rem;
+        @include m.xl_desktop {
+            @include m.contenedor_xl;
+            margin-bottom: 2rem;
+        }
         border: 5px double v.$gris;
         padding: 2rem;
         border-radius: .5rem;
-        margin-bottom: 2rem;
+        
 
         form {
             display: flex;
@@ -215,6 +224,9 @@
 
     &__reset {
         @include m.contenedor-md2;
+        @include m.xl_desktop {
+            @include m.contenedor_xl;
+        }
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -321,6 +333,10 @@
     }
 
     &__partido {
+        @include m.xl_desktop {
+            @include m.contenedor_xl;
+        }
+
         &--logos {
             display: flex;
             flex-direction: row;
@@ -333,6 +349,9 @@
     &__partido,
     &__partido-1 {
         @include m.contenedor-md2;
+        @include m.xl_desktop {
+            @include m.contenedor_xl;
+        }
         margin-bottom: 1rem;
         border: 5px double v.$gris;
         border-radius: .5rem;
