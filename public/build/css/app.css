@@ -2484,6 +2484,95 @@ input[type=date] {
   transform: translate(-50%, -50%);
 }
 
+.ajustes {
+  width: min(95%, 100rem);
+  margin: 0 auto;
+  background-color: rgb(30.7605633803, 45.5, 60.2394366197);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+@media (min-width: 732px) {
+  .ajustes__cajas {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.ajustes__caja {
+  background-color: rgb(58.3436619718, 86.3, 114.2563380282);
+  padding: 1rem;
+  margin-bottom: 2.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 3px 3px 5px 1px rgb(108, 108, 105);
+}
+.ajustes__caja:last-child {
+  margin-bottom: 0;
+}
+@media (min-width: 732px) {
+  .ajustes__caja:last-child {
+    margin-bottom: 0.5rem;
+  }
+}
+@media (min-width: 732px) {
+  .ajustes__caja {
+    margin-bottom: 0.5rem;
+  }
+}
+.ajustes__caja-titulo {
+  font-size: 3.5rem;
+  text-align: center;
+  color: #F05454;
+}
+.ajustes__caja-titulo a {
+  color: inherit;
+  text-decoration: none;
+}
+.ajustes__caja-texto {
+  color: #DDDDDD;
+  margin: auto 5%;
+}
+.ajustes__caja-texto--parrafo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+@media (min-width: 480px) {
+  .ajustes__caja-texto--parrafo {
+    justify-content: center;
+    gap: 2rem;
+  }
+}
+.ajustes__caja-texto--parrafo .accion {
+  border-radius: 50%;
+  cursor: pointer;
+  border: inset;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 0.3em 0.3em, rgba(0, 0, 0, 0.25) 0px 0.3em 0.8em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+  transition: transform 0.3s ease-in-out;
+}
+.ajustes__caja-texto--parrafo .accion:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease-in-out;
+}
+.ajustes__caja-texto #menos-futbol-partidos:disabled,
+.ajustes__caja-texto #menos-futbol-sxjx:disabled,
+.ajustes__caja-texto #menos-sala-partidos:disabled,
+.ajustes__caja-texto #menos-sala-sxjx:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  transform: none;
+}
+.ajustes__caja-texto #guardar-futbol,
+.ajustes__caja-texto #guardar-sala {
+  margin: 0 85%;
+}
+@media (min-width: 1024px) {
+  .ajustes__caja-texto #guardar-futbol,
+  .ajustes__caja-texto #guardar-sala {
+    margin-left: 90%;
+  }
+}
+
 .formulario {
   width: 100%;
 }

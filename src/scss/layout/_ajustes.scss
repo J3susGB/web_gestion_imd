@@ -1,0 +1,115 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.ajustes {
+    @include m.contenedor-md2;
+    background-color: darken(v.$azul-oscuro, 10);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+
+
+    &__cajas {
+
+        @include m.tablet_small2 {
+            @include m.grid(2, 2rem);
+        }
+    }
+
+    &__caja {
+        background-color: lighten(v.$azul-oscuro, 6);
+        padding: 1rem;
+        margin-bottom: 2.5rem;
+        border-radius: 1.5rem;
+        box-shadow: 3px 3px 5px 1px rgb(108, 108, 105);
+
+        &:last-child {
+            margin-bottom: 0; // Quita el margin-bottom del último elemento
+
+            @include m.tablet_small2 {
+                margin-bottom: .5rem;
+            }
+        }
+
+        @include m.tablet_small2 {
+            margin-bottom: 0.5rem;
+        }
+
+        &-titulo {
+            font-size: 3.5rem;
+            text-align: center;
+            color: v.$botones;
+
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+        }
+
+        &-texto {
+            color: v.$gris;
+            margin: auto 5%;
+
+            &--parrafo {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                @include m.telefono {
+                    justify-content: center;
+                    gap: 2rem;
+                }
+
+
+                .accion {
+                    border-radius: 50%;
+                    cursor: pointer;
+                    border: inset;
+                    // padding: 1.2rem 0;
+                    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.3em 0.3em, rgba(0, 0, 0, 0.25) 0px 0.3em 0.8em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+                    transition: transform .3s ease-in-out;
+
+                    &:hover {
+                        transform: scale(1.1);
+                        transition: transform .3s ease-in-out;
+                    }
+                }
+            }
+
+            #menos-futbol-partidos:disabled,
+            #menos-futbol-sxjx:disabled,
+            #menos-sala-partidos:disabled,
+            #menos-sala-sxjx:disabled {
+                cursor: not-allowed;
+                opacity: 0.5;
+                transform: none;
+            }
+
+            #guardar-futbol,
+            #guardar-sala {
+                margin: 0 85% ;
+                @include m.desktop {
+                    margin-left: 90%;
+                }
+            }
+        }
+    }
+
+    // &__campo {
+    //     display: flex;
+    //     justify-content: space-around;
+    //     align-items: center;
+
+    //     #modalidad {
+    //         width: 15rem;
+    //     }
+
+    //     @include m.telefono {
+    //         #modalidad {
+    //             width: 22rem;
+    //         }
+    //     }
+
+    // }
+
+}

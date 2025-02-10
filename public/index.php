@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../includes/app.php';
 
+use Controllers\AccionesController;
 use MVC\Router;
 use Controllers\AuthController;
 use Controllers\PaginasController;
@@ -81,6 +82,10 @@ $router->post('/admin/facturas/editar', [FacturasController::class, 'editar']);
 $router->post('/admin/facturas/cambiar_unidad', [FacturasController::class, 'cambiar_unidad']);
 $router->post('/admin/facturas/generar_excel_jornada', [FacturasController::class, 'generar_excel_jornada']);
 $router->post('/admin/facturas/generar_factura', [FacturasController::class, 'generar_factura']);
+
+$router->get('/admin/acciones', [AccionesController::class, 'index']);
+$router->post('/admin/acciones/guardar_futbol', [AccionesController::class, 'guardar_futbol']);
+$router->post('/admin/acciones/guardar_sala', [AccionesController::class, 'guardar_sala']);
 
 // Crear Cuenta
 $router->get('/registro', [AuthController::class, 'registro']);

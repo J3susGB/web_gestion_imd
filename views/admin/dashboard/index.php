@@ -120,14 +120,14 @@
             <div class="radial-menu__menu-content">
                 <div class="radial-menu__menu-content-wrapper">
                     <h6 class="radial-menu__menu-content-title">
-                        Perfil
+                    Ajustes
                     </h6>
                     <p class="radial-menu__menu-content-description">
-                        Editar datos de perfil
+                        Ajustes
                     </p>
                 </div>
             </div>
-            <a href="#" class="radial-menu__menu-link"></a>
+            <a href="/admin/acciones" class="radial-menu__menu-link"></a>
         </li>
 
         <li class="radial-menu__menu-item">
