@@ -4,7 +4,7 @@ namespace Model;
 
 class Partidos extends ActiveRecord {
     protected static $tabla = 'partidos';
-    protected static $columnasDB = ['id', 'id_usuario', 'id_arbitro', 'id_partido', 'categoria', 'grupo', 'fecha', 'hora', 'terreno', 'distrito', 'jornada', 'local', 'visitante', 'observaciones', 'modalidad', 'estado'];
+    protected static $columnasDB = ['id', 'id_usuario', 'id_arbitro', 'id_partido', 'categoria', 'grupo', 'fecha', 'hora', 'terreno', 'distrito', 'jornada', 'local', 'visitante', 'observaciones', 'modalidad', 'estado', 'id_designacion'];
 
     public $id;
     public $id_usuario;
@@ -22,6 +22,7 @@ class Partidos extends ActiveRecord {
     public $observaciones;
     public $modalidad;
     public $estado;
+    public $id_designacion;
     
     public function __construct($args = [])
     {
@@ -41,6 +42,7 @@ class Partidos extends ActiveRecord {
         $this->observaciones = $args['observaciones'] ?? '';
         $this->modalidad = $args['modalidad'] ?? 0;
         $this->estado = $args['estado'] ?? 0;
+        $this->id_designacion = $args['id_designacion'] ?? 0;
     }
 
     public function validar_partido() {

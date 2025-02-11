@@ -253,6 +253,7 @@ class FacturasController
 
             $id_partido = $data['id_partido'];
             $unidad = $data['unidad'];
+            $id_designacion = $data['id_designacion'];
 
             //traemos del get el numero de jornada
             $jornada_editada = $_GET['jornada_editada'];
@@ -267,7 +268,7 @@ class FacturasController
                 return;
             }
 
-            $designacion = Designaciones::encuentra_partido($id_partido);
+            $designacion = Designaciones::find($id_designacion);
 
             if (!$designacion) {
                 http_response_code(404); // Código HTTP: Not Found

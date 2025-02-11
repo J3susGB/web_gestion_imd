@@ -205,7 +205,7 @@ class PartidosController
                     if ($p->id_partido == $id_partido) {
                         //Traemos partido y designación
                         $partido = Partidos::encuentra_partido($id_partido);
-                        $designacion = Designaciones::encuentra_partido($id_partido);
+                        $designacion = Designaciones::find($partido->id_designacion);
 
                         //Traemos todos los arbitros
                         $arbitros = Arbitros::all();
@@ -220,8 +220,8 @@ class PartidosController
 
                                 //Añadimos campos facturar, tarifa, pago_arbitro y oa a designacion
                                 $categorias = Categorias::all();
-                                foreach($categorias as $c) {
-                                    if($designacion->categoria == $c->nombre2 && $designacion->modalidad == $c->id_modalidad) {
+                                foreach ($categorias as $c) {
+                                    if ($designacion->categoria == $c->nombre2 && $designacion->modalidad == $c->id_modalidad) {
                                         $designacion->tarifa = $c->tarifa;
                                         $designacion->facturar = $c->facturar;
                                         $designacion->pago_arbitro = $c->pago_arbitro;
@@ -229,7 +229,7 @@ class PartidosController
                                     }
 
                                     //Lo mismo pero para delegados de campo
-                                    if($designacion->categoria == $c->nombre && $designacion->modalidad == $c->id_modalidad) {
+                                    if ($designacion->categoria == $c->nombre && $designacion->modalidad == $c->id_modalidad) {
                                         $designacion->tarifa = $c->tarifa;
                                         $designacion->facturar = $c->facturar;
                                         $designacion->pago_arbitro = $c->pago_arbitro;
@@ -554,6 +554,7 @@ class PartidosController
             if (!$id) {
                 desconectar();
             }
+            
 
             // Obtener el partido a editar:
             $partido = Partidos::find($id);
@@ -582,8 +583,20 @@ class PartidosController
                     $partido->observaciones = $_POST['observaciones'];
 
                     //Traemos la designacion para cambiar estado:
-                    $designacion = Designaciones::encuentra_partido($partido->id_partido);
+                    $designacion = Designaciones::find($partido->id_designacion); 
                     // debuguear($designacion);
+
+                    //Actualizamos datos cambiados en la designación
+                    $designacion->categoria = $partido->categoria; 
+                    $designacion->grupo = $partido->grupo; 
+                    $designacion->fecha = $partido->fecha; 
+                    $designacion->hora = $partido->hora; 
+                    $designacion->terreno = $partido->terreno; 
+                    $designacion->distrito = $partido->distrito; 
+                    $designacion->jornada = $partido->jornada; 
+                    $designacion->local = $partido->local; 
+                    $designacion->visitante = $partido->visitante; 
+                    $designacion->modalidad = $partido->modalidad; 
 
                     //Cambiamos estado designacion a enviado (estado 2) Y añadimos observaciones
                     $designacion->estado = $partido->estado;
@@ -599,7 +612,7 @@ class PartidosController
 
                         //enviar email al árbitro con los cambios
                         $email = new Email([
-                            'id' => $partido->id,
+                            'id' => $designacion->id,
                             'id_partido' => $partido->id_partido,
                             'email' => $arbitro->email,
                             'apellido1' => $arbitro->apellido1,
@@ -681,7 +694,7 @@ class PartidosController
                     exit;
                 }
 
-                $designacion = Designaciones::encuentra_partido($partido->id_partido);
+                $designacion = Designaciones::find($partido->id_designacion);
 
                 if (!$designacion) {
                     echo json_encode(['success' => false, 'message' => 'Elemento no encontrado']);
@@ -695,7 +708,7 @@ class PartidosController
                 if ($resultado && $resultado2) {
                     // Crear el objeto Email para enviar la cancelación
                     $email = new Email([
-                        'id' => $partido->id,
+                        'id' => $designacion->id,
                         'id_partido' => $partido->id_partido,
                         'email' => $arbitro->email,
                         'apellido1' => $arbitro->apellido1,
@@ -812,8 +825,8 @@ class PartidosController
             $designacion->observaciones = $partido->observaciones;
             $designacion->modalidad = (int)$partido->modalidad;
 
-            foreach($categorias as $c) {
-                if($designacion->categoria == $c->nombre2 && $designacion->modalidad == $c->id_modalidad) {
+            foreach ($categorias as $c) {
+                if ($designacion->categoria == $c->nombre2 && $designacion->modalidad == $c->id_modalidad) {
                     $designacion->facturar = $c->facturar;
                     $designacion->tarifa = $c->tarifa;
                     $designacion->pago_arbitro = $c->pago_arbitro;
@@ -823,14 +836,22 @@ class PartidosController
             //cambiamos estado a nombrado:
             $designacion->estado = 1;
 
-            // debuguear($designacion);
+            // error_log("designacion_id: $designacion->id");
 
             //Añadir al objeto partido los datos que faltan
             $partido->id_usuario = $usuario->id;
             $partido->id_arbitro = $arbitro->id;
             $partido->estado = 1;
 
-            $resultado = $designacion->guardar();
+            $resultado = $designacion->guardar_designacion();
+
+            //Asociamos id de la designacion guardada al partido nombrado
+            // Depuración: Verificar si el ID de designación es válido antes de asignarlo
+            error_log("ID de designación asignado: " . var_export($designacion->id, true));
+
+            $partido->id_designacion = !empty($designacion->id) ? (int)$designacion->id : 0;
+
+
             $resultado2 = $partido->guardar();
 
             if ($resultado && $resultado2) {
@@ -877,7 +898,7 @@ class PartidosController
                 }
 
                 // Obtener designación
-                $designacion = Designaciones::encuentra_partido($partido->id_partido);
+                $designacion = Designaciones::find($partido->id_designacion);
                 if ($designacion && !$designacion->eliminar()) {
                     echo json_encode(['success' => false, 'message' => 'Error al eliminar la designación.']);
                     exit;
@@ -894,6 +915,7 @@ class PartidosController
                 $partido->id_arbitro = 0;
                 $partido->estado = 0;
                 $partido->observaciones = '';
+                $partido->id_designacion = 0;
 
                 // Guardar cambios en el partido
                 if (!$partido->guardar()) {
@@ -907,7 +929,7 @@ class PartidosController
                     if ($arbitro) {
 
                         $email = new Email([
-                            'id' => $partido->id,
+                            'id' => $designacion->id,
                             'id_partido' => $partido->id_partido,
                             'email' => $arbitro->email,
                             'apellido1' => $arbitro->apellido1,
@@ -985,7 +1007,7 @@ class PartidosController
             $partido_id = $partido->id_partido;
 
             // Traemos la designación
-            $designacion = Designaciones::encuentra_partido($partido_id);
+            $designacion = Designaciones::find($partido->id_designacion);
 
             //Resetear el partido en la base de datos
             $partido->estado = 2; // Pasamos a estado 1 (enviado)
@@ -995,8 +1017,8 @@ class PartidosController
 
             //Añadimos campos facturar, tarifa, pago_arbitro y oa a designacion
             $categorias = Categorias::all();
-            foreach($categorias as $c) {
-                if($designacion->categoria == $c->nombre2 && $designacion->modalidad == $c->id_modalidad) {
+            foreach ($categorias as $c) {
+                if ($designacion->categoria == $c->nombre2 && $designacion->modalidad == $c->id_modalidad) {
                     $designacion->tarifa = $c->tarifa;
                     $designacion->facturar = $c->facturar;
                     $designacion->pago_arbitro = $c->pago_arbitro;
@@ -1004,7 +1026,7 @@ class PartidosController
                 }
 
                 //Lo mismo pero para delegados de campo
-                if($designacion->categoria == $c->nombre && $designacion->modalidad == $c->id_modalidad) {
+                if ($designacion->categoria == $c->nombre && $designacion->modalidad == $c->id_modalidad) {
                     $designacion->tarifa = $c->tarifa;
                     $designacion->facturar = $c->facturar;
                     $designacion->pago_arbitro = $c->pago_arbitro;
@@ -1081,7 +1103,7 @@ class PartidosController
                 }
 
                 // Obtener designación
-                $designacion = Designaciones::encuentra_partido($partido->id_partido);
+                $designacion = Designaciones::find($partido->id_designacion);
                 if (!$designacion) {
                     echo json_encode(['success' => false, 'message' => 'Designación no encontrada.']);
                     exit;

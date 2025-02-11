@@ -21,7 +21,7 @@ class PaginasController
         // debuguear($partido);
 
         //Localizamos designacion a traves del id partido en la bd
-        $designacion = Designaciones::encuentra_partido($id_partido);
+        $designacion = Designaciones::find($partido->id_designacion);
         // debuguear($designacion);
 
         if($designacion->estado == 3) {
@@ -75,7 +75,7 @@ class PaginasController
         // debuguear($partido);
 
         //Localizamos designacion a traves del id partido en la bd
-        $designacion = Designaciones::encuentra_partido($id_partido);
+        $designacion = Designaciones::find($partido->id_designacion);
         // debuguear($designacion);
 
         if($designacion->estado==4) {
@@ -99,7 +99,7 @@ class PaginasController
             // debuguear($partido);
 
             //Localizamos designacion a traves del id partido en la bd
-            $designacion = Designaciones::encuentra_partido($id_partido);
+            $designacion = Designaciones::find($partido->id_designacion);
             // debuguear($designacion);
 
             if ($partido->estado == 2) {
@@ -134,8 +134,10 @@ class PaginasController
 
         $id_partido = $_GET['id_partido']; // Leer el id de la url
 
+        $partido = Partidos::encuentra_partido($id_partido);
+
         //Localizamos designacion a traves del id partido en la bd
-        $designacion = Designaciones::encuentra_partido($id_partido);
+        $designacion = Designaciones::find($partido->id_designacion);
         // debuguear($designacion);
 
         // Render a la vista 
@@ -149,6 +151,7 @@ class PaginasController
     {
         $id_partido = $_GET['id_partido']; // Leer el id de la url
         // debuguear($id_partido);
+
 
         //Localizamos designacion a traves del id partido en la bd
         $designacion = Designaciones::encuentra_partido($id_partido);

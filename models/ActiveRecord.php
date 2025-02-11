@@ -104,6 +104,25 @@ class ActiveRecord {
         return $resultado;
     }
 
+    public function guardar_designacion() {
+        if (!is_null($this->id)) {
+            // Actualizar si el ID ya existe
+            return $this->actualizar();
+        } else {
+            // Crear un nuevo registro y obtener el ID
+            $resultado = $this->crear();
+            
+            if ($resultado['resultado']) {
+                $this->id = $resultado['id']; // Asigna el ID generado
+                error_log("ID asignado en guardarConId(): " . $this->id); // Depuración
+            } else {
+                error_log("Error al guardar la designación");
+            }
+    
+            return $resultado['resultado'];
+        }
+    }
+
     public static function truncate($table) {
         try {
             // Deshabilitar claves foráneas para evitar restricciones
