@@ -402,7 +402,7 @@ class FacturasController
                             switch ($designacion->categoria) {
                                 case "JX":
                                 case "SX":
-                                // case "UNIFEM":
+                                case "UNIFEM":
                                     $designacion->facturar = 0.00;
                                     $designacion->oa = $c->oa / 2;
                                     $designacion->pago_arbitro = -$c->oa / 2;
@@ -420,7 +420,7 @@ class FacturasController
                             switch ($designacion->categoria) {
                                 case "JX":
                                 case "SX":
-                                // case "UNIFEM":
+                                case "UNIFEM":
                                     $designacion->facturar = $c->tarifa / 4;
                                     $designacion->oa = $c->oa / 2;
                                     $designacion->pago_arbitro = (($c->tarifa - $c->oa) / 2)  - ($c->tarifa / 4);
@@ -437,7 +437,7 @@ class FacturasController
                             switch ($designacion->categoria) {
                                 case "JX":
                                 case "SX":
-                                // case "UNIFEM":
+                                case "UNIFEM":
                                     $designacion->facturar = $c->tarifa / 2;
                                     $designacion->oa = $c->oa / 2;
                                     $designacion->pago_arbitro = (($c->tarifa - $c->oa) / 2);
@@ -450,7 +450,7 @@ class FacturasController
                                 case "IX":
                                 case "CX":
                                 case "MINIFE":
-                                case "UNIFEM":
+                                // case "UNIFEM":
                                     $designacion->facturar = $c->tarifa / 2;
                                     $designacion->oa = $c->oa / 2;
                                     $designacion->pago_arbitro = $c->pago_arbitro / 2;
@@ -496,7 +496,7 @@ class FacturasController
                             switch ($designacion->categoria) {
                                 case "SX":
                                 case "JX":
-                                // case "UNIFEM":
+                                case "UNIFEM":
                                     $designacion->tarifa = $c->tarifa;
                                     $designacion->facturar = $c->tarifa;
                                     $designacion->oa = $c->oa;
@@ -758,6 +758,8 @@ class FacturasController
                             $d->facturar = 25.00 / 4;
                         } else if ($d->unidad == 0.50) {
                             $d->facturar = 25.00 / 2;
+                        } else if ($d->unidad == 2.00) {
+                            $d->facturar = 25.00;
                         }
 
                         // Eliminar si unidad es igual a 1.00
@@ -769,9 +771,11 @@ class FacturasController
 
                         // Modificar facturar
                         if ($d->unidad == 0.25) {
-                            $d->facturar = 25.00 / 4;
+                            $d->facturar = 22.00 / 4;
                         } else if ($d->unidad == 0.50) {
-                            $d->facturar = 25.00 / 2;
+                            $d->facturar = 22.00 / 2;
+                        } else if ($d->unidad == 2.00) {
+                            $d->facturar = 22.00;
                         }
 
                         // Eliminar si unidad es igual a 1.00 o 0.00
@@ -782,11 +786,26 @@ class FacturasController
                         $d->tarifa = 25.00;
 
                         // Modificar facturar
-                        if ($d->unidad == 1.00) {
-                            $d->facturar = 25.00;
+                        if ($d->unidad == 0.25) {
+                            $d->facturar = 25.00 / 4;
                         } else if ($d->unidad == 0.50) {
                             $d->facturar = 25.00 / 2;
+                        } else if ($d->unidad == 2.00) {
+                            $d->facturar = 25.00;
                         }
+
+                        // Eliminar si unidad es igual a 1.00
+                        if ($d->unidad == 1.00 || $d->unidad == 0.00) {
+                            unset($designaciones[$key]); // Eliminar la designación del array
+                        }
+
+                        // Modificar facturar
+                        // if ($d->unidad == 1.00) {
+                        //     $d->facturar = 25.00;
+                        // } else if ($d->unidad == 0.50) {
+                        //     $d->facturar = 25.00 / 2;
+                        // }
+
                     }
                 }
             }
@@ -822,6 +841,7 @@ class FacturasController
 
                                 // Añadir la nueva designación al array
                                 $designaciones[] = $nueva_designacion;
+
                             } else if ($d->unidad == 0.50) {
                                 // Crear nueva designación
                                 $nueva_designacion = clone $d; // Clonar la designación actual
@@ -831,6 +851,7 @@ class FacturasController
 
                                 // Añadir la nueva designación al array
                                 $designaciones[] = $nueva_designacion;
+
                             } else if ($d->unidad == 2.00) {
                                 // Crear nueva designación
                                 $nueva_designacion = clone $d; // Clonar la designación actual
@@ -844,16 +865,27 @@ class FacturasController
 
                             break;
                         case "SALA_UNIFEM_ARBITRO":
-                            if ($d->unidad == 0.50) {
+                            if ($d->unidad == 0.25) {
                                 // Crear nueva designación
                                 $nueva_designacion = clone $d; // Clonar la designación actual
                                 $nueva_designacion->categoria = "SALA_UNIFEM_MESA"; // Cambiar la categoría
                                 $nueva_designacion->tarifa = 9.50; // Establecer nueva tarifa
-                                $nueva_designacion->facturar = 9.50 / 2; // Calcular el valor de facturar
+                                $nueva_designacion->facturar = 9.50 / 4; // Calcular el valor de facturar
 
                                 // Añadir la nueva designación al array
                                 $designaciones[] = $nueva_designacion;
-                            } else if ($d->unidad == 1.00) {
+
+                            } else if ($d->unidad == 0.50) {
+                                // Crear nueva designación
+                                $nueva_designacion = clone $d; // Clonar la designación actual
+                                $nueva_designacion->categoria = "SALA_UNIFEM_MESA"; // Cambiar la categoría
+                                $nueva_designacion->tarifa = 9.50; // Establecer nueva tarifa
+                                $nueva_designacion->facturar = 9.50/2; // Calcular el valor de facturar
+
+                                // Añadir la nueva designación al array
+                                $designaciones[] = $nueva_designacion;
+
+                            } else if ($d->unidad == 2.00) {
                                 // Crear nueva designación
                                 $nueva_designacion = clone $d; // Clonar la designación actual
                                 $nueva_designacion->categoria = "SALA_UNIFEM_MESA"; // Cambiar la categoría
@@ -864,6 +896,7 @@ class FacturasController
                                 $designaciones[] = $nueva_designacion;
                             }
                             break;
+
                         case "SALA_JX_ARBITRO":
                             if ($d->unidad == 0.25) {
                                 // Crear nueva designación
@@ -883,6 +916,7 @@ class FacturasController
 
                                 // Añadir la nueva designación al array
                                 $designaciones[] = $nueva_designacion;
+                                
                             } else if ($d->unidad == 2.00) {
                                 // Crear nueva designación
                                 $nueva_designacion = clone $d; // Clonar la designación actual
