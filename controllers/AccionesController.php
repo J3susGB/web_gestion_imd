@@ -83,7 +83,9 @@ class AccionesController
             // Asignamos valores
             $restriccion->numero_partidos = $maxPartidos;
             $restriccion->numero_metalico = $maxSXJX;
-            $restriccion->activo = ($maxPartidos > 0 && $maxSXJX > 0) ? 1 : 0; // Activo solo si ambos valores son > 0
+
+            // Ajustamos la lógica de "activo"
+            $restriccion->activo = ($maxPartidos === 0 && $maxSXJX === 0) ? 0 : 1;
 
             // Guardar en la base de datos
             $resultado = $restriccion->guardar();
@@ -163,7 +165,9 @@ class AccionesController
             // Asignamos valores
             $restriccion->numero_partidos = $maxPartidos;
             $restriccion->numero_metalico = $maxSXJX;
-            $restriccion->activo = ($maxPartidos > 0 && $maxSXJX > 0) ? 1 : 0; // Activo solo si ambos valores son > 0
+
+            // Ajustamos la lógica de "activo"
+            $restriccion->activo = ($maxPartidos === 0 && $maxSXJX === 0) ? 0 : 1;
 
             // Guardar en la base de datos
             $resultado = $restriccion->guardar();

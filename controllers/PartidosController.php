@@ -2,16 +2,17 @@
 
 namespace Controllers;
 
-use Classes\Email;
 use Exception;
-use Model\Arbitros;
 use MVC\Router;
+use Classes\Email;
+use Model\Arbitros;
 use Model\Partidos;
 use Model\Perfiles;
 use Model\Modalidad;
 use Model\Categorias;
-use Model\Designaciones;
 use Model\Modalidades;
+use Model\Designaciones;
+use Model\Restricciones;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 
@@ -554,7 +555,7 @@ class PartidosController
             if (!$id) {
                 desconectar();
             }
-            
+
 
             // Obtener el partido a editar:
             $partido = Partidos::find($id);
@@ -583,20 +584,20 @@ class PartidosController
                     $partido->observaciones = $_POST['observaciones'];
 
                     //Traemos la designacion para cambiar estado:
-                    $designacion = Designaciones::find($partido->id_designacion); 
+                    $designacion = Designaciones::find($partido->id_designacion);
                     // debuguear($designacion);
 
                     //Actualizamos datos cambiados en la designación
-                    $designacion->categoria = $partido->categoria; 
-                    $designacion->grupo = $partido->grupo; 
-                    $designacion->fecha = $partido->fecha; 
-                    $designacion->hora = $partido->hora; 
-                    $designacion->terreno = $partido->terreno; 
-                    $designacion->distrito = $partido->distrito; 
-                    $designacion->jornada = $partido->jornada; 
-                    $designacion->local = $partido->local; 
-                    $designacion->visitante = $partido->visitante; 
-                    $designacion->modalidad = $partido->modalidad; 
+                    $designacion->categoria = $partido->categoria;
+                    $designacion->grupo = $partido->grupo;
+                    $designacion->fecha = $partido->fecha;
+                    $designacion->hora = $partido->hora;
+                    $designacion->terreno = $partido->terreno;
+                    $designacion->distrito = $partido->distrito;
+                    $designacion->jornada = $partido->jornada;
+                    $designacion->local = $partido->local;
+                    $designacion->visitante = $partido->visitante;
+                    $designacion->modalidad = $partido->modalidad;
 
                     //Cambiamos estado designacion a enviado (estado 2) Y añadimos observaciones
                     $designacion->estado = $partido->estado;
@@ -754,21 +755,152 @@ class PartidosController
         }
     }
 
+    // public static function autocompletarArbitrosAction()
+    // {
+    //     header('Content-Type: application/json; charset=utf-8');
+
+    //     $busqueda = $_POST['q'] ?? '';
+
+    //     if (empty($busqueda)) {
+    //         echo json_encode([]);
+    //         return;
+    //     }
+
+    //     $busqueda = htmlentities($busqueda, ENT_QUOTES, 'UTF-8');
+    //     $arbitros = Arbitros::busquedaParcial($busqueda);
+
+    //     // // //Traemos la restricciones activas
+    //     // $restricciones = Restricciones::all();
+    //     // error_log("🔍 Restricciones: " . json_encode($restricciones));
+
+    //     // //Cotejamos el numero de partidos y numero de senior y juveniles
+    //     // $partidos = Partidos::all();
+    //     // $numPartidos = 0;
+    //     // $numMetalico = 0;
+    //     // $idArbitrosPartidos = [];
+    //     // $idArbitrosMetalico = [];
+
+    //     // foreach($partidos as $p) {
+    //     //     foreach($arbitros as $a) {
+
+    //     //     }
+    //     // }
+
+    //     echo json_encode($arbitros ?: [], JSON_UNESCAPED_UNICODE);
+    // }
+
     public static function autocompletarArbitrosAction()
     {
         header('Content-Type: application/json; charset=utf-8');
 
+        // Datos recibidos desde el frontend
         $busqueda = $_POST['q'] ?? '';
+        $categoriaDelPartido = strtoupper($_POST['categoria'] ?? '');
+        $modalidadDelPartido = $_POST['modalidad'] ?? '';
 
-        if (empty($busqueda)) {
+        if (empty($busqueda) || empty($modalidadDelPartido)) {
             echo json_encode([]);
             return;
         }
 
+        // Limpiar la búsqueda
         $busqueda = htmlentities($busqueda, ENT_QUOTES, 'UTF-8');
+
+        // Obtener árbitros que coincidan con la búsqueda
         $arbitros = Arbitros::busquedaParcial($busqueda);
 
-        echo json_encode($arbitros ?: [], JSON_UNESCAPED_UNICODE);
+        // Restricciones activas por modalidad
+        $restricciones = Restricciones::all();
+        $restriccionesActivas = array_filter($restricciones, fn($r) => $r->activo == '1');
+
+        // Estructura las restricciones por modalidad
+        $restriccionesPorModalidad = [];
+        foreach ($restriccionesActivas as $restriccion) {
+            $restriccionesPorModalidad[$restriccion->modalidad] = [
+                'numero_partidos' => (int) $restriccion->numero_partidos,
+                'numero_metalico' => (int) $restriccion->numero_metalico
+            ];
+        }
+
+        // Categorías metálicas
+        $categoriasMetalicas = ['SX', 'JX', 'UNIFEM'];
+
+        // Obtener todos los partidos para calcular contadores
+        $partidos = Partidos::all();
+
+        // Contadores por árbitro y modalidad
+        $contadorTotales = [];    // Total partidos por árbitro y modalidad
+        $contadorMetalicos = [];  // Partidos metálicos por árbitro y modalidad
+
+        foreach ($partidos as $partido) {
+            $idArbitro = $partido->id_arbitro;
+            $modalidad = $partido->modalidad;
+            $categoria = strtoupper($partido->categoria);
+
+            if (!$idArbitro || !$modalidad) continue;
+
+            // Total partidos por modalidad
+            if (!isset($contadorTotales[$idArbitro][$modalidad])) {
+                $contadorTotales[$idArbitro][$modalidad] = 0;
+            }
+            $contadorTotales[$idArbitro][$modalidad]++;
+
+            // Metalicos por modalidad
+            if (in_array($categoria, $categoriasMetalicas)) {
+                if (!isset($contadorMetalicos[$idArbitro][$modalidad])) {
+                    $contadorMetalicos[$idArbitro][$modalidad] = 0;
+                }
+                $contadorMetalicos[$idArbitro][$modalidad]++;
+            }
+        }
+
+        // Recorremos los árbitros para construir el resultado
+        $resultado = [];
+
+        foreach ($arbitros as $arbitro) {
+            $id = $arbitro->id;
+
+            // Defaults
+            $restringido = false;
+            $detalleRestricciones = [];
+
+            // Verifica si hay restricciones para la modalidad actual
+            $restriccionActual = $restriccionesPorModalidad[$modalidadDelPartido] ?? null;
+
+            if ($restriccionActual) {
+                $totalPartidos = $contadorTotales[$id][$modalidadDelPartido] ?? 0;
+                $metalicos = $contadorMetalicos[$id][$modalidadDelPartido] ?? 0;
+
+                $limitePartidos = $restriccionActual['numero_partidos'];
+                $limiteMetalico = $restriccionActual['numero_metalico'];
+
+                // ✅ Restricción de total de partidos (sin importar categoría)
+                if ($limitePartidos > 0 && $totalPartidos >= $limitePartidos) {
+                    $restringido = true;
+                    $detalleRestricciones[] = "Total de partidos: {$totalPartidos} (máx {$limitePartidos})";
+                }
+
+                // ✅ Restricción de metálicos (solo si el partido actual es metálico)
+                $esMetalico = in_array($categoriaDelPartido, $categoriasMetalicas);
+
+                if (!$restringido && $esMetalico && $limiteMetalico > 0 && $metalicos >= $limiteMetalico) {
+                    $restringido = true;
+                    $detalleRestricciones[] = "Partidos metálicos: {$metalicos} (máx {$limiteMetalico})";
+                }
+            }
+
+            // Resultado final para el árbitro
+            $resultado[] = [
+                'id' => $arbitro->id,
+                'nombre' => $arbitro->nombre,
+                'apellido1' => $arbitro->apellido1,
+                'apellido2' => $arbitro->apellido2,
+                'restringido' => $restringido,
+                'detalle' => $detalleRestricciones
+            ];
+        }
+
+        echo json_encode($resultado, JSON_UNESCAPED_UNICODE);
     }
 
     public static function nombrar(Router $router)

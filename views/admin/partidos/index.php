@@ -228,7 +228,10 @@
                                         name="arbitro"
                                         placeholder="Pendiente designar"
                                         value=""
-                                        autocomplete="off" />
+                                        autocomplete="off"
+                                        data-modalidad="<?php echo $p->modalidad; ?>"
+                                        data-categoria="<?php echo $p->categoria; ?>" 
+                                    />
                                     <ul id="arbitro_suggestions" class="autocomplete-suggestions"></ul> <!-- Aquí aparecerán las sugerencias -->
                                 </div>
                             </div> <!--cierre partido__arbitro-->
