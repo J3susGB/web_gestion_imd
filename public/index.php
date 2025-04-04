@@ -12,6 +12,7 @@ use Controllers\PartidosController;
 use Controllers\PerfilesController;
 use Controllers\DashboardController;
 use Controllers\FacturasController;
+use Controllers\InformesController;
 
 $router = new Router();
 
@@ -86,6 +87,13 @@ $router->post('/admin/facturas/generar_factura', [FacturasController::class, 'ge
 $router->get('/admin/acciones', [AccionesController::class, 'index']);
 $router->post('/admin/acciones/guardar_futbol', [AccionesController::class, 'guardar_futbol']);
 $router->post('/admin/acciones/guardar_sala', [AccionesController::class, 'guardar_sala']);
+
+$router->get('/admin/informes', [InformesController::class, 'index']);
+$router->get('/admin/informes/informes_partidos', [InformesController::class, 'partidos']);
+$router->get('/admin/informes/informes_distritos', [InformesController::class, 'distritos']);
+$router->get('/admin/informes/informes_arbitros', [InformesController::class, 'arbitros']);
+$router->get('/admin/informes/informes_economicos', [InformesController::class, 'economicos']);
+$router->get('/admin/informes/informes_usuarios', [InformesController::class, 'usuarios']);
 
 // Crear Cuenta
 $router->get('/registro', [AuthController::class, 'registro']);

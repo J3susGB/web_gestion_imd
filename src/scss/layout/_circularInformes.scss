@@ -1,0 +1,70 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+$bg-color: #1e2a2f;
+$text-color: #c1dede;
+$hover-color: #4ca1af;
+$highlight-color: #91d8d8;
+$border-color: #ff4f4f;
+
+.grid-container {
+    margin: 2rem auto;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(6, 200px);
+    // grid-template-columns: repeat(3, 1fr);
+    // grid-template-rows: repeat(2, 200px);
+    gap: 1px;
+    width: 80%;
+    max-width: 1200px;
+    box-shadow: rgba(128, 128, 128, 0.2) 0px 2px 8px 0px;
+
+    @include m.tablet_small {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 200px);
+    }
+
+    @include m.tablet {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 200px);
+    }
+}
+
+.grid-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: v.$gris;
+    background-color: darken(v.$azul-oscuro, 10%);
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    position: relative;
+    transition: background-color 0.3s, transform 0.3s;
+
+    &:hover {
+        background-color: lighten(v.$azul-oscuro, 20);
+        color: v.$gris;
+        transform: scale(1.02);
+    }
+}
+
+.home {
+    background-color: lighten($highlight-color, 10%);
+
+    &:hover {
+        background-color: $highlight-color;
+    }
+}
+
+.start-project {
+    border: 2px solid v.$botones;
+    border-left: none;
+    border-right: none;
+    color: $text-color;
+
+    &:hover {
+        background-color: $border-color;
+        color: #fff;
+    }
+}

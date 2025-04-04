@@ -2581,6 +2581,65 @@ input[type=date] {
   }
 }
 
+.grid-container {
+  margin: 2rem auto;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(6, 200px);
+  gap: 1px;
+  width: 80%;
+  max-width: 1200px;
+  box-shadow: rgba(128, 128, 128, 0.2) 0px 2px 8px 0px;
+}
+@media (min-width: 600px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 200px);
+  }
+}
+@media (min-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 200px);
+  }
+}
+
+.grid-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: #DDDDDD;
+  background-color: rgb(30.7605633803, 45.5, 60.2394366197);
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  position: relative;
+  transition: background-color 0.3s, transform 0.3s;
+}
+.grid-item:hover {
+  background-color: rgb(82.4788732394, 122, 161.5211267606);
+  color: #DDDDDD;
+  transform: scale(1.02);
+}
+
+.home {
+  background-color: rgb(182.6510067114, 229.3489932886, 229.3489932886);
+}
+.home:hover {
+  background-color: #91d8d8;
+}
+
+.start-project {
+  border: 2px solid #F05454;
+  border-left: none;
+  border-right: none;
+  color: #c1dede;
+}
+.start-project:hover {
+  background-color: #ff4f4f;
+  color: #fff;
+}
+
 .formulario {
   width: 100%;
 }

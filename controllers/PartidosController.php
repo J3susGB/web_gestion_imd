@@ -293,8 +293,11 @@ class PartidosController
             header('Location: /');
         }
 
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         // debuguear($_SESSION);
+
         $usuario = new Perfiles($_SESSION);
         // debuguear($usuario);
 
@@ -304,8 +307,11 @@ class PartidosController
                 header('Location: /');
             }
 
-            session_start();
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
             // debuguear($_SESSION);
+            
             $usuario = new Perfiles($_SESSION);
             // debuguear($usuario);
 
@@ -320,6 +326,10 @@ class PartidosController
 
                 if (move_uploaded_file($_FILES['excel_file']['tmp_name'], $filePath)) {
                     try {
+
+                        // OPTIMIZACIÓN: Aumentar límite de memoria
+                        ini_set('memory_limit', '1024M');
+
                         // Cargar el archivo Excel
                         $spreadsheet = IOFactory::load($filePath);
                         $sheet = $spreadsheet->getActiveSheet();

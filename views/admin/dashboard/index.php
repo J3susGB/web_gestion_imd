@@ -105,7 +105,7 @@
                     </p>
                 </div>
             </div>
-            <a href="#" class="radial-menu__menu-link"></a>
+            <a href="/admin/informes" class="radial-menu__menu-link"></a>
         </li>
 
         <li class="radial-menu__menu-item">
